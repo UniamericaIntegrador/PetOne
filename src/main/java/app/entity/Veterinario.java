@@ -23,8 +23,8 @@ public class Veterinario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotBlank(message = "O nome do cliente não pode estar vazio")
-	@Pattern(regexp = "^[\\p{L}.]+\\s[\\p{L}.]+$", message = "O nome do cliente deve conter pelo menos dois nomes e apenas caracteres alfabéticos e pontos.")
+	@NotBlank(message = "O nome do veterinario não pode estar vazio")
+	@Pattern(regexp = "^[\\p{L}.]+\\s[\\p{L}.]+$", message = "O nome do veterinario deve conter pelo menos dois nomes e apenas caracteres alfabéticos e pontos.")
 	private String nome;
 	
 	@NotBlank
