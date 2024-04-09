@@ -1,9 +1,17 @@
 package app.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,12 +33,20 @@ public class Paciente {
 	@NotBlank
 	private String nome;
 	
-	@NotNull
-	private boolean especie;
+	@NotBlank
+	private String especie;
 	
 	@NotBlank
 	private String dataNascimento;
 	
 	@NotBlank
 	private String raca;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("pacientes")
+	private Tutor tutor;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "paciente_procedimento")
+	private List<Procedimento> procedimentos;
 }
