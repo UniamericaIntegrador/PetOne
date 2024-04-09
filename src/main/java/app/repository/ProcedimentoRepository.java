@@ -1,5 +1,9 @@
 package app.repository;
 
-public interface ProcedimentoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import app.entity.Procedimento;
+
+public interface ProcedimentoRepository extends JpaRepository<Procedimento, Long>{
 
 }
