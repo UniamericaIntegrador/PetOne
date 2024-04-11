@@ -33,10 +33,8 @@ public class Procedimento {
 	@NotBlank
 	private String data;
 	
-	@NotBlank
 	private String resultado;
 	
-	@NotBlank
 	private String diagnostico;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
