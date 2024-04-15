@@ -27,7 +27,7 @@ public class Veterinario {
 	private long id;
 	
 	@NotBlank(message = "O nome do veterinario não pode estar vazio")
-	@Pattern(regexp = "^[\\p{L}.]+\\s[\\p{L}.]+$", message = "O nome do veterinario deve conter pelo menos dois nomes e apenas caracteres alfabéticos e pontos.")
+	@Pattern(regexp = "^(?:[\\p{L}.]+\\s?)+$", message = "O nome do tutor deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
 	private String nome;
 	
 	@NotBlank
