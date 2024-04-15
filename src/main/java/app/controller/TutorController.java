@@ -3,6 +3,7 @@ package app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Tutor;
@@ -73,5 +75,67 @@ public class TutorController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/findByNome")
+	public ResponseEntity<List<Tutor>>findByNome(@RequestParam String nome){
+		try {
+			List<Tutor> tutor = this.tutorService.findByNome(nome);
+			return new ResponseEntity<>(tutor, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByCpf")
+	public ResponseEntity<List<Tutor>>findByCpf(@RequestParam String cpf){
+		try {
+			List<Tutor> tutor = this.tutorService.findByPacienteNome(cpf);
+			return new ResponseEntity<>(tutor, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByEndereco")
+	public ResponseEntity<List<Tutor>>findByEndereco(@RequestParam String endereco){
+		try {
+			List<Tutor> tutor = this.tutorService.findByEndereco(endereco);
+			return new ResponseEntity<>(tutor, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByPacienteNome")
+	public ResponseEntity<List<Tutor>>findByPacienteNome(@RequestParam String nome){
+		try {
+			List<Tutor> tutor = this.tutorService.findByPacienteNome(nome);
+			return new ResponseEntity<>(tutor, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByTrechoNome")
+	public ResponseEntity<List<Tutor>>findByTrechoNome(@RequestParam String nome){
+		try {
+			List<Tutor> tutor = this.tutorService.findByTrechoNome(nome);
+			return new ResponseEntity<>(tutor, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByTrechoCpf")
+	public ResponseEntity<List<Tutor>>findByTrechoCpf(@RequestParam String cpf){
+		try {
+			List<Tutor> tutor = this.tutorService.findByTrechoCpf(cpf);
+			return new ResponseEntity<>(tutor, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
 
 }
