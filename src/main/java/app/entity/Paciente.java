@@ -49,4 +49,12 @@ public class Paciente {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "paciente_procedimento")
 	private List<Procedimento> procedimentos;
+
+	public Paciente(long id, String nome, String especie, String dataNascimento, String raca) {
+        this.id = id;
+        this.nome = nome;
+        this.especie = especie;
+        this.dataNascimento = dataNascimento;
+        this.raca = raca;
+    }
 }
