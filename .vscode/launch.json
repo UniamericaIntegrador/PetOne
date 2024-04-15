@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PetOneApplication<petOne>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "app.PetOneApplication",
+            "projectName": "petOne",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -18,60 +18,138 @@ import app.entity.Veterinario;
 import app.service.VeterinarioService;
 
 @RestController
-
 @RequestMapping("/api/veterinario")
 public class VeterinarioController {
-	@Autowired
-	private VeterinarioService veterinarioService;
-	
-	@PostMapping("/save")
-	public ResponseEntity<String>save(@RequestBody Veterinario veterinario){
-		try {
-			String mensagem = this.veterinarioService.save(veterinario);
-			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<String>("Algo deu errado ao tentar salvar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@PutMapping("/update/{id}")
-	public ResponseEntity<String>update(@RequestBody Veterinario veterinario, @PathVariable long id){
-		try {
-			String mensagem = this.veterinarioService.update(id, veterinario);
-			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String>delete(@PathVariable long id){
-		try {
-			String mensagem = this.veterinarioService.delete(id);
-			return new ResponseEntity<>(mensagem, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<String>("Algo deu errado ao tentar deletar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@GetMapping("/listAll")
-	public ResponseEntity<List<Veterinario>>listAll(){
-		try {
-			List<Veterinario>lista = this.veterinarioService.listAll();
-			return new ResponseEntity<>(lista, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@GetMapping("/findById/{id}")
-	public ResponseEntity<Veterinario>findById(@PathVariable long id){
-		try {
-			Veterinario veterinario = this.veterinarioService.findById(id);
-			return new ResponseEntity<>(veterinario, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
-	}
+    @Autowired
+    private VeterinarioService veterinarioService;
+    
+    // Método: POST
+    // URL: http://localhost:8080/api/veterinario/save
+    // Endpoint para salvar um novo veterinário (CRUD Básico)
+    @PostMapping("/save")
+    public ResponseEntity<String> save(@RequestBody Veterinario veterinario){
+        try {
+            String mensagem = this.veterinarioService.save(veterinario);
+            return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Algo deu errado ao tentar salvar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    // Método: PUT
+    // URL: http://localhost:8080/api/veterinario/update/{id}
+    // Endpoint para atualizar um veterinário existente pelo ID (CRUD Básico)
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> update(@RequestBody Veterinario veterinario, @PathVariable long id){
+        try {
+            String mensagem = this.veterinarioService.update(id, veterinario);
+            return new ResponseEntity<String>(mensagem, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    // Método: DELETE
+    // URL: http://localhost:8080/api/veterinario/delete/{id}
+    // Endpoint para deletar um veterinário pelo ID (CRUD Básico)
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable long id){
+        try {
+            String mensagem = this.veterinarioService.delete(id);
+            return new ResponseEntity<>(mensagem, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Algo deu errado ao tentar deletar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    // Método: GET
+    // URL: http://localhost:8080/api/veterinario/listAll
+    // Endpoint para listar todos os veterinários (CRUD Básico)
+    @GetMapping("/listAll")
+    public ResponseEntity<List<Veterinario>> listAll(){
+        try {
+            List<Veterinario> lista = this.veterinarioService.listAll();
+            return new ResponseEntity<>(lista, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    // Método: GET
+    // URL: http://localhost:8080/api/veterinario/findById/{id}
+    // Endpoint para encontrar um veterinário pelo ID (CRUD Básico)
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Veterinario> findById(@PathVariable long id){
+        try {
+            Veterinario veterinario = this.veterinarioService.findById(id);
+            return new ResponseEntity<>(veterinario, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    // Método: GET
+    // URL: http://localhost:8080/api/veterinario/findByNome/{nome}
+    // Endpoint para encontrar veterinários pelo nome (automatico)
+    @GetMapping("/findByNome/{nome}")
+    public ResponseEntity<List<Veterinario>> findByNome(@PathVariable String nome){
+        try {
+            List<Veterinario> veterinarios = this.veterinarioService.findByNome(nome);
+            return new ResponseEntity<>(veterinarios, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    // Método: GET
+    // URL: http://localhost:8080/api/veterinario/findByCrmv/{crmv}
+    // Endpoint para encontrar veterinário pelo CRMV (automatico)
+    @GetMapping("/findByCrmv/{crmv}")
+    public ResponseEntity<Veterinario> findByCrmv(@PathVariable String crmv){
+        try {
+            Veterinario veterinario = this.veterinarioService.findByCrmv(crmv);
+            return new ResponseEntity<>(veterinario, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    // Método: GET
+    // URL: http://localhost:8080/api/veterinario/findByEndereco/{endereco}
+    // Endpoint para encontrar veterinários pelo endereço (automatico)
+    @GetMapping("/findByEndereco/{endereco}")
+    public ResponseEntity<List<Veterinario>> findByEndereco(@PathVariable String endereco){
+        try {
+            List<Veterinario> veterinarios = this.veterinarioService.findByEndereco(endereco);
+            return new ResponseEntity<>(veterinarios, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    // Método: GET
+    // URL: http://localhost:8080/api/veterinario/findByNomeStartingWith/{letra}
+    // Endpoint para encontrar veterinários com nome iniciando com uma determinada letra (JPQL)
+    @GetMapping("/findByNomeStartingWith/{letra}")
+    public ResponseEntity<List<Veterinario>> findByNomeStartingWith(@PathVariable String letra){
+        try {
+            List<Veterinario> veterinarios = this.veterinarioService.findByNomeStartingWith(letra);
+            return new ResponseEntity<>(veterinarios, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Método: PUT
+    // URL: http://localhost:8080/api/veterinario/updateEnderecoById/{id}/{novoEndereco}
+    // Endpoint para atualizar o endereço do veterinário pelo ID (JPQL)
+    @PutMapping("/updateEnderecoById/{id}/{novoEndereco}")
+    public ResponseEntity<String> updateEnderecoById(@PathVariable long id, @PathVariable String novoEndereco){
+        try {
+            this.veterinarioService.updateEnderecoById(id, novoEndereco);
+            return new ResponseEntity<>("Endereço do veterinário atualizado com sucesso.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Algo deu errado ao tentar atualizar o endereço do veterinário. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
