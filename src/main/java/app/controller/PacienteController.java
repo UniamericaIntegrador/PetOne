@@ -105,10 +105,10 @@ public class PacienteController {
 	        }
 	    }
 	 
-	 @GetMapping("/findByAno")
-	    public ResponseEntity<List<Paciente>> findByAno(@RequestParam int ano) {
+	 @GetMapping("/findByAcimaAno")
+	    public ResponseEntity<List<Paciente>> findByAcimaAno(@RequestParam int ano) {
 	        try {
-	            List<Paciente> lista = this.pacienteService.findByAno(ano);
+	            List<Paciente> lista = this.pacienteService.findByAcimaAno(ano);
 	            return new ResponseEntity<>(lista, HttpStatus.OK);
 	        } catch (Exception e) {
 	            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

@@ -60,8 +60,8 @@ public class PacienteService {
         return pacienteRepository.findByEspecie(especie);
     }
 	
-	public List<Paciente> findByAno(int ano) {
-        return pacienteRepository.findByAno(ano);
+	public List<Paciente> findByAcimaAno(int ano) {
+        return pacienteRepository.findByAcimaAno(ano);
     }
 	
 	
