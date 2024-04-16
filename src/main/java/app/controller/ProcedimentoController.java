@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Procedimento;
@@ -28,6 +29,7 @@ public class ProcedimentoController {
 	@PostMapping("/save")
 	public ResponseEntity<String>save(@RequestBody Procedimento procedimento){
 		try {
+			
 			String mensagem = this.procedimentoService.save(procedimento);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -75,10 +77,10 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByData/{data}")
-	public ResponseEntity<List<Procedimento>>findByData(@PathVariable String data){
+	@GetMapping("/findByData/")
+	public ResponseEntity<List<Procedimento>>findAllByDataBetween(@RequestParam String data1, String data2){
 		try {
-			List<Procedimento> procedimento = this.procedimentoService.findByData(data);
+			List<Procedimento> procedimento = this.procedimentoService.findAllByDataBetween(data1, data2);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

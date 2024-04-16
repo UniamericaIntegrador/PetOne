@@ -1,5 +1,7 @@
 package app.entity;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -8,7 +10,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +33,9 @@ public class Procedimento {
 	@NotBlank
 	private String nomeProcedimento;
 	
-	@NotBlank
-	private String data;
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	private LocalDate agendamento;
 	
 	private String resultado;
 	
