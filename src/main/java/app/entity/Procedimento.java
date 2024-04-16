@@ -35,7 +35,7 @@ public class Procedimento {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private LocalDate agendamento;
+	private LocalDate data;
 	
 	private String resultado;
 	

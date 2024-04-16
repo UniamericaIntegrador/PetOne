@@ -68,7 +68,7 @@ public class ProcedimentoService {
 		if (data == null) {
 			throw new RuntimeException("inválido");
 		} else {
-			return this.procedimentoRepository.findAllByAgendamentoBetween(formatadordeData(data), formatadordeData(data2));
+			return this.procedimentoRepository.findAllByDataBetween(formatadordeData(data), formatadordeData(data2));
 		}
 	}
 
