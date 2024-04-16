@@ -27,11 +27,7 @@ public class Veterinario {
 	private long id;
 	
 	@NotBlank(message = "O nome do veterinario não pode estar vazio")
-<<<<<<< HEAD
 	@Pattern(regexp = "^(?=.*\\p{L}.*\\s\\p{L})(?=.*\\p{L}).*$", message = "O nome do veterinario deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
-=======
-	@Pattern(regexp = "^(?:[\\p{L}.]+\\s?)+$", message = "O nome do tutor deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
->>>>>>> refs/remotes/origin/master
 	private String nome;
 	
 	@NotBlank(message = "O CRMV do veterinario não pode estar vazio")
