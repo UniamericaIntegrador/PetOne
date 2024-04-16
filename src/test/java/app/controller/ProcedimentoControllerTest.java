@@ -1,7 +1,6 @@
 package app.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -21,38 +20,34 @@ import app.entity.Paciente;
 import app.entity.Procedimento;
 import app.repository.ProcedimentoRepository;
 
-@SpringBootTest
-=======
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import app.entity.Procedimento;
 import app.service.ProcedimentoService;
 
->>>>>>> refs/remotes/origin/master
 public class ProcedimentoControllerTest {
 	@Autowired
+	@InjectMocks
 	ProcedimentoController procedimentoController;
 
 	@MockBean
 	ProcedimentoRepository procedimentoRepository;
+
+	@Mock
+	private ProcedimentoService procedimentoServiceMock;
 
 	@BeforeEach
 	void setup() {
 		Procedimento procedimento = new Procedimento();
 
 		when(this.procedimentoRepository.save(procedimento)).thenReturn(procedimento);
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
@@ -64,7 +59,8 @@ public class ProcedimentoControllerTest {
 		assertTrue(response.getStatusCode() == HttpStatus.CREATED);
 	}
 
-	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTÉRES PARA O NOME DO PROCEDIMENTO - ANNOTATION @Size(min = 3)
+	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTÉRES PARA O NOME DO PROCEDIMENTO
+	// - ANNOTATION @Size(min = 3)
 	@Test
 	@DisplayName("Teste de integração com o método save retornando assertThrows")
 	void testSaveNomeProcedimento() {
@@ -94,7 +90,8 @@ public class ProcedimentoControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
-	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA O DIAGNOSTICO - ANNOTATION @Size(min = 7)
+	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA O DIAGNOSTICO -
+	// ANNOTATION @Size(min = 7)
 	@Test
 	@DisplayName("Teste de integração com o método update retornando assertThrows")
 	void testUpdateDiagnostico() {
@@ -106,84 +103,77 @@ public class ProcedimentoControllerTest {
 		});
 	}
 
-    @Mock
-    private ProcedimentoService procedimentoServiceMock;
+	@Test
+	public void testFindById_Normal() {
+		// Mock do objeto Procedimento retornado pelo serviço
+		Procedimento mockProcedimento = new Procedimento();
+		mockProcedimento.setId(1L);
+		mockProcedimento.setNomeProcedimento("Consulta");
 
-    @InjectMocks
-    private ProcedimentoController procedimentoController;
+		// Configura o comportamento do mock do serviço para retornar o mock do
+		// procedimento quando findById é chamado
+		when(procedimentoServiceMock.findById(1L)).thenReturn(mockProcedimento);
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+		// Chama o método findById do controlador
+		ResponseEntity<Procedimento> response = procedimentoController.findById(1L);
 
-    @Test
-    public void testFindById_Normal() {
-        // Mock do objeto Procedimento retornado pelo serviço
-        Procedimento mockProcedimento = new Procedimento();
-        mockProcedimento.setId(1L);
-        mockProcedimento.setNomeProcedimento("Consulta");
+		// Verifica se a resposta HTTP é OK (200)
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        // Configura o comportamento do mock do serviço para retornar o mock do procedimento quando findById é chamado
-        when(procedimentoServiceMock.findById(1L)).thenReturn(mockProcedimento);
+		// Verifica se o resultado retornado é igual ao mock do procedimento
+		assertEquals(mockProcedimento, response.getBody());
+	}
 
-        // Chama o método findById do controlador
-        ResponseEntity<Procedimento> response = procedimentoController.findById(1L);
+	@Test
+	public void testListAll_Normal() {
+		// Mock da lista de procedimentos retornada pelo serviço
+		List<Procedimento> mockProcedimentos = new ArrayList<>();
+		mockProcedimentos.add(new Procedimento(1L, "Consulta"));
+		mockProcedimentos.add(new Procedimento(2L, "Cirurgia"));
 
-        // Verifica se a resposta HTTP é OK (200)
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+		// Configura o comportamento do mock do serviço para retornar a lista de
+		// procedimentos quando listAll é chamado
+		when(procedimentoServiceMock.listAll()).thenReturn(mockProcedimentos);
 
-        // Verifica se o resultado retornado é igual ao mock do procedimento
-        assertEquals(mockProcedimento, response.getBody());
-    }
+		// Chama o método listAll do controlador
+		ResponseEntity<List<Procedimento>> response = procedimentoController.listAll();
 
-    @Test
-    public void testListAll_Normal() {
-        // Mock da lista de procedimentos retornada pelo serviço
-        List<Procedimento> mockProcedimentos = new ArrayList<>();
-        mockProcedimentos.add(new Procedimento(1L, "Consulta"));
-        mockProcedimentos.add(new Procedimento(2L, "Cirurgia"));
+		// Verifica se a resposta HTTP é OK (200)
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        // Configura o comportamento do mock do serviço para retornar a lista de procedimentos quando listAll é chamado
-        when(procedimentoServiceMock.listAll()).thenReturn(mockProcedimentos);
+		// Verifica se o resultado retornado é igual à lista mockada
+		assertEquals(mockProcedimentos, response.getBody());
+	}
 
-        // Chama o método listAll do controlador
-        ResponseEntity<List<Procedimento>> response = procedimentoController.listAll();
+	@Test
+	public void testFindById_Exception() {
+		// Configura o comportamento do mock do serviço para lançar uma exceção quando
+		// findById é chamado
+		when(procedimentoServiceMock.findById(1L)).thenThrow(new RuntimeException("Procedimento não encontrado"));
 
-        // Verifica se a resposta HTTP é OK (200)
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+		// Chama o método findById do controlador
+		ResponseEntity<Procedimento> response = procedimentoController.findById(1L);
 
-        // Verifica se o resultado retornado é igual à lista mockada
-        assertEquals(mockProcedimentos, response.getBody());
-    }
+		// Verifica se a resposta HTTP é BAD REQUEST (400)
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
-    @Test
-    public void testFindById_Exception() {
-        // Configura o comportamento do mock do serviço para lançar uma exceção quando findById é chamado
-        when(procedimentoServiceMock.findById(1L)).thenThrow(new RuntimeException("Procedimento não encontrado"));
+		// Verifica se o corpo da resposta é nulo
+		assertNull(response.getBody());
+	}
 
-        // Chama o método findById do controlador
-        ResponseEntity<Procedimento> response = procedimentoController.findById(1L);
+	@Test
+	public void testListAll_Exception() {
+		// Configura o comportamento do mock do serviço para lançar uma exceção quando
+		// listAll é chamado
+		when(procedimentoServiceMock.listAll()).thenThrow(new RuntimeException("Erro ao listar procedimentos"));
 
-        // Verifica se a resposta HTTP é BAD REQUEST (400)
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		// Chama o método listAll do controlador
+		ResponseEntity<List<Procedimento>> response = procedimentoController.listAll();
 
-        // Verifica se o corpo da resposta é nulo
-        assertNull(response.getBody());
-    }
+		// Verifica se a resposta HTTP é BAD REQUEST (400)
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
-    @Test
-    public void testListAll_Exception() {
-        // Configura o comportamento do mock do serviço para lançar uma exceção quando listAll é chamado
-        when(procedimentoServiceMock.listAll()).thenThrow(new RuntimeException("Erro ao listar procedimentos"));
-
-        // Chama o método listAll do controlador
-        ResponseEntity<List<Procedimento>> response = procedimentoController.listAll();
-
-        // Verifica se a resposta HTTP é BAD REQUEST (400)
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-        // Verifica se o corpo da resposta é nulo
-        assertNull(response.getBody());
-    }
+		// Verifica se o corpo da resposta é nulo
+		assertNull(response.getBody());
+	}
 }
