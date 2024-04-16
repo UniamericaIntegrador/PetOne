@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,16 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Tutor;
 import app.service.TutorService;
+import jakarta.validation.Valid;
 
 @RestController
 
 @RequestMapping("/api/tutor")
+@Validated
 public class TutorController {
 	@Autowired
 	private TutorService tutorService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<String>save(@RequestBody Tutor tutor){
+	public ResponseEntity<String>save(@Valid @RequestBody Tutor tutor){
 		try {
 			String mensagem = this.tutorService.save(tutor);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
@@ -35,7 +38,7 @@ public class TutorController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String>update(@RequestBody Tutor tutor, @PathVariable long id){
+	public ResponseEntity<String>update(@Valid @RequestBody Tutor tutor, @PathVariable long id){
 		try {
 			String mensagem = this.tutorService.update(id, tutor);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);

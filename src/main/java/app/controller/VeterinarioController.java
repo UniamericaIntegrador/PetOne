@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,16 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Veterinario;
 import app.service.VeterinarioService;
+import jakarta.validation.Valid;
 
 @RestController
 
 @RequestMapping("/api/veterinario")
+@Validated
 public class VeterinarioController {
 	@Autowired
 	private VeterinarioService veterinarioService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<String>save(@RequestBody Veterinario veterinario){
+	public ResponseEntity<String>save(@Valid @RequestBody Veterinario veterinario){
 		try {
 			String mensagem = this.veterinarioService.save(veterinario);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
@@ -35,7 +38,7 @@ public class VeterinarioController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String>update(@RequestBody Veterinario veterinario, @PathVariable long id){
+	public ResponseEntity<String>update(@Valid @RequestBody Veterinario veterinario, @PathVariable long id){
 		try {
 			String mensagem = this.veterinarioService.update(id, veterinario);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);

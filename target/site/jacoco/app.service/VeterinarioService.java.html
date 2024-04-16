@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VeterinarioService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">petOne</a> &gt; <a href="index.source.html" class="el_package">app.service</a> &gt; <span class="el_source">VeterinarioService.java</span></div><h1>VeterinarioService.java</h1><pre class="source lang-java linenums">package app.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import app.entity.Veterinario;
+import app.repository.VeterinarioRepository;
+
+@Service
+<span class="fc" id="L12">public class VeterinarioService {</span>
+	@Autowired
+	private VeterinarioRepository veterinarioRepository;
+	
+	public String save(Veterinario veterinario) {
+<span class="fc" id="L17">		this.veterinarioRepository.save(veterinario);</span>
+<span class="fc" id="L18">		return &quot;Vetarinário(a) &quot;+veterinario.getNome() + &quot; cadastrado com sucesso!&quot;;</span>
+	}
+	
+	// **************************** VERIFICAR POR QUE ESTÁ MUDANDO O ID. CADA ALTERACAO ELE DA UM NOVO ID **************************** 
+	//fazer validaçao se o id existe ou não
+	public String update(long id, Veterinario veterinario) {
+<span class="fc" id="L24">		veterinario.setId(id);</span>
+<span class="fc" id="L25">		this.veterinarioRepository.save(veterinario);</span>
+<span class="fc" id="L26">		return &quot;Cadastro do veterinário(a) &quot; +veterinario.getNome() + &quot; alterado com sucesso!&quot;;</span>
+		
+		/*if(id &lt; 0) {
+			throw new RuntimeException(&quot;ID inválido. O ID deve ser maior que 0.&quot;);
+		}else {
+			this.veterinarioRepository.save(veterinario);
+			return &quot;Cadastro do veterinário(a) &quot; +veterinario.getNome() + &quot; alterado com sucesso!&quot;;
+		}
+		*/
+	}
+	
+	//fazer validaçao se o id existe ou não
+	public String delete(long id) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">		if(id &lt; 0) {</span>
+<span class="nc" id="L40">			throw new RuntimeException(&quot;ID inválido. O ID deve ser maior que 0.&quot;);</span>
+		}else {
+<span class="nc" id="L42">			this.veterinarioRepository.deleteById(id);</span>
+<span class="nc" id="L43">			return &quot;Cadastro do veterinário(a) deletado com sucesso!&quot;;</span>
+		}
+	}
+	
+	//ver se tem como fazer uma verificação para dar mensagem de lista nula
+	public List&lt;Veterinario&gt;listAll(){
+<span class="nc" id="L49">		return this.veterinarioRepository.findAll();</span>
+	}
+	
+	public Veterinario findById(long id) {
+<span class="nc" id="L53">		Veterinario veterinario = this.veterinarioRepository.findById(id).get();</span>
+<span class="nc" id="L54">		return veterinario;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

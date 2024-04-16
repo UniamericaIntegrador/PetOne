@@ -33,15 +33,15 @@ public class Tutor {
 	private long id;
 	
 	@NotBlank(message = "O nome do tutor não pode estar vazio")
-	@Pattern(regexp = "^[\\p{L}.]+\\s[\\p{L}.]+$", message = "O nome do tutor deve conter pelo menos dois nomes e apenas caracteres alfabéticos e pontos.")
+	@Pattern(regexp = "^(?=.*\\p{L}.*\\s\\p{L})(?=.*\\p{L}).*$", message = "O nome do tutor deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
 	private String nome;
 	
-	@NotBlank
+	@NotBlank(message = "O CPF do tutor não pode estar vazio")
 	@CPF
 	@Column(unique = true)
 	private String cpf;
 	
-	@NotBlank
+	@NotBlank(message = "O endereço do tutor não pode estar vazio")
 	private String endereco;
 	
 	

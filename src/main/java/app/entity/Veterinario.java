@@ -27,14 +27,14 @@ public class Veterinario {
 	private long id;
 	
 	@NotBlank(message = "O nome do veterinario não pode estar vazio")
-	@Pattern(regexp = "^[\\p{L}.]+\\s[\\p{L}.]+$", message = "O nome do veterinario deve conter pelo menos dois nomes e apenas caracteres alfabéticos e pontos.")
+	@Pattern(regexp = "^(?=.*\\p{L}.*\\s\\p{L})(?=.*\\p{L}).*$", message = "O nome do veterinario deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
 	private String nome;
 	
-	@NotBlank
+	@NotBlank(message = "O CRMV do veterinario não pode estar vazio")
 	@Column(unique = true)
 	private String crmv;
 	
-	@NotBlank
+	@NotBlank(message = "O endereço do veterinario não pode estar vazio")
 	private String endereco;
 	
 	@OneToMany(mappedBy = "veterinario")

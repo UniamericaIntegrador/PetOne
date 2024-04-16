@@ -1,6 +1,6 @@
 package app.entity;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,16 +29,17 @@ public class Procedimento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotBlank
+	@Size(min=3)
+	@NotBlank(message = "O nome do procedimento não pode estar vazio")
 	private String nomeProcedimento;
 	
-	@NotBlank
-	private String data;
+	@NotNull
+	private LocalDate data;
 	
-	@NotBlank
+	@Size(min=5)
 	private String resultado;
 	
-	@NotBlank
+	@Size(min=7)
 	private String diagnostico;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
