@@ -10,6 +10,39 @@ import app.repository.VeterinarioRepository;
 
 @Service
 public class VeterinarioService {
+
+	@Autowired
+	private VeterinarioRepository veterinarioRepository;
+	
+	public String save(Veterinario veterinario) {
+		this.veterinarioRepository.save(veterinario);
+		return "Vetarinário(a) "+veterinario.getNome() + " cadastrado com sucesso!";
+	}
+	
+	public String update(long id, Veterinario veterinario) {
+		veterinario.setId(id);
+		this.veterinarioRepository.save(veterinario);
+		return "Cadastro do veterinário(a) " +veterinario.getNome() + " alterado com sucesso!";
+	}
+	
+	public String delete(long id) {
+		if(id < 0) {
+			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
+		}else {
+			this.veterinarioRepository.deleteById(id);
+			return "Cadastro do veterinário(a) deletado com sucesso!";
+		}
+	}
+	
+	public List<Veterinario>listAll(){
+		return this.veterinarioRepository.findAll();
+	}
+	
+	public Veterinario findById(long id) {
+		Veterinario veterinario = this.veterinarioRepository.findById(id).get();
+		return veterinario;
+	}
+=======
     @Autowired
     private VeterinarioRepository veterinarioRepository;
     
@@ -59,6 +92,7 @@ public class VeterinarioService {
     public List<Veterinario> findByNome(String nome) {
         return this.veterinarioRepository.findByNome(nome);
     }
+>>>>>>> refs/remotes/origin/master
 
     // Método para encontrar veterinários pelo CRMV
     public Veterinario findByCrmv(String crmv) {

@@ -18,23 +18,12 @@ public class TutorService {
 		return "Tutor(a) "+tutor.getNome() + " cadastrado com sucesso!";
 	}
 	
-	
-	//fazer validaçao se o id existe ou não
 	public String update(long id, Tutor tutor) {
 		tutor.setId(id);
 		this.tutorRepository.save(tutor);
 		return "Cadastro do tutor(a) " +tutor.getNome() + " alterado com sucesso!";
-		
-		/*if(id < 0) {
-			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
-		}else {
-			this.tutorRepositry.save(tutor);
-			return "Cadastro do tutor(a) " +tutor.getNome() + " alterado com sucesso!";
-		}
-		*/
 	}
 	
-	//fazer validaçao se o id existe ou não
 	public String delete(long id) {
 		if(id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
@@ -44,7 +33,6 @@ public class TutorService {
 		}
 	}
 	
-	//ver se tem como fazer uma verificação para dar mensagem de lista nula
 	public List<Tutor>listAll(){
 		return this.tutorRepository.findAll();
 	}

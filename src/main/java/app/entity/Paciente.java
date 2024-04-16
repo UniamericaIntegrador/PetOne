@@ -1,5 +1,6 @@
 package app.entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +15,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,16 +33,19 @@ public class Paciente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotBlank
+	@NotBlank(message = "O nome do paciente não pode estar vazio")
 	private String nome;
 	
-	@NotBlank
+	@Size(min = 3)
+	@NotBlank(message = "A especie do paciente não pode estar vazio")
 	private String especie;
 	
-	@NotBlank
-	private String dataNascimento;
+	@NotNull
+	@PastOrPresent
+	private LocalDate dataNascimento;
 	
-	@NotBlank
+	@Size(min = 3)
+	@NotBlank(message = "A raça do paciente não pode estar vazio")
 	private String raca;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
