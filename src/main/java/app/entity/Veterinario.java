@@ -36,6 +36,13 @@ public class Veterinario {
 	
 	@NotBlank
 	private String endereco;
+
+	public Veterinario(long id, String nome, String crmv, String endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.crmv = crmv;
+        this.endereco = endereco;
+    }
 	
 	@OneToMany(mappedBy = "veterinario")
 	private List<Procedimento> procedimentos;
