@@ -27,7 +27,11 @@ public class Veterinario {
 	private long id;
 	
 	@NotBlank(message = "O nome do veterinario não pode estar vazio")
+<<<<<<< HEAD
 	@Pattern(regexp = "^(?=.*\\p{L}.*\\s\\p{L})(?=.*\\p{L}).*$", message = "O nome do veterinario deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
+=======
+	@Pattern(regexp = "^(?:[\\p{L}.]+\\s?)+$", message = "O nome do tutor deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
+>>>>>>> refs/remotes/origin/master
 	private String nome;
 	
 	@NotBlank(message = "O CRMV do veterinario não pode estar vazio")
@@ -36,6 +40,13 @@ public class Veterinario {
 	
 	@NotBlank(message = "O endereço do veterinario não pode estar vazio")
 	private String endereco;
+
+	public Veterinario(long id, String nome, String crmv, String endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.crmv = crmv;
+        this.endereco = endereco;
+    }
 	
 	@OneToMany(mappedBy = "veterinario")
 	private List<Procedimento> procedimentos;

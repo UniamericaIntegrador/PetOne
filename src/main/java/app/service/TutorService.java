@@ -41,5 +41,31 @@ public class TutorService {
 		Tutor tutor = this.tutorRepository.findById(id).get();
 		return tutor;
 	}
+	
+	public List<Tutor> findByNome (String nome) {
+		return this.tutorRepository.findByNome(nome);
+	}
+	
+	public List<Tutor> findByCpf (String cpf){
+		return this.tutorRepository.findByCpf(cpf);
+	}
+	
+	public List<Tutor> findByEndereco (String endereco){
+		return this.tutorRepository.findByEndereco(endereco);
+	}
+	
+	public List<Tutor> findByPacienteNome (String nome){
+		return this.tutorRepository.findByPacienteNome(nome);
+	}
+	
+	// NOME QUE CONTENHA
+	public List<Tutor> findByTrechoNome(String nome) {
+		return this.tutorRepository.findByTrechoNome(nome);
+	}
+	
+	// CPF QUE CONTENHA
+	public List<Tutor> findByTrechoCpf(String cpf) {
+		return this.tutorRepository.findByTrechoNome(cpf);
+	}
 
 }
