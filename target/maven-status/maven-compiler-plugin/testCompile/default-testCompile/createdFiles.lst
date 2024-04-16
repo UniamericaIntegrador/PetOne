@@ -1,8 +1,0 @@
-app/controller/ProcedimentoControllerTest.class
-app/controller/TutorControllerTest.class
-app/service/VeterinarioServiceTest.class
-app/controller/VeterinarioControllerTest.class
-app/service/ProcedimentoServiceTest.class
-app/controller/PacienteControllerTest.class
-app/service/TutorServiceTest.class
-app/service/PacienteServiceTest.class
