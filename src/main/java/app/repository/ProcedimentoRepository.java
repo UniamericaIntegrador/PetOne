@@ -11,7 +11,7 @@ import app.entity.Veterinario;
 
 public interface ProcedimentoRepository extends JpaRepository<Procedimento, Long> {
 
-	public List<Procedimento> findAllByAgendamentoBetween(LocalDate dataStart, LocalDate dataEnd);
+	public List<Procedimento> findAllByDataBetween(LocalDate dataStart, LocalDate dataEnd);
 
 	public List<Procedimento> findByResultado(String resultado);
 

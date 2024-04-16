@@ -36,6 +36,7 @@ public class Procedimento {
 	private String nomeProcedimento;
 	
 	@NotNull
+	@Temporal(TemporalType.DATE)
 	private LocalDate data;
 	
 	@Size(min=5)
