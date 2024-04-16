@@ -18,15 +18,13 @@ public class PacienteService {
 		return "Paciente "+paciente.getNome() + " cadastrado com sucesso!";
 	}
 	
-	
-	//fazer validaçao se o id existe ou não
+
 	public String update(long id, Paciente paciente) {
 		paciente.setId(id);
 		this.pacienteRepository.save(paciente);
 		return "Cadastro do paciente " +paciente.getNome() + " alterado com sucesso!";
 	}
 	
-	//fazer validaçao se o id existe ou não
 	public String delete(long id) {
 		if(id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
@@ -36,7 +34,6 @@ public class PacienteService {
 		}
 	}
 	
-	//ver se tem como fazer uma verificação para dar mensagem de lista nula
 	public List<Paciente>listAll(){
 		return this.pacienteRepository.findAll();
 	}

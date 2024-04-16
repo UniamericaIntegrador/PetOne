@@ -14,6 +14,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,13 +31,15 @@ public class Procedimento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotBlank
+	@Size(min=3)
+	@NotBlank(message = "O nome do procedimento não pode estar vazio")
 	private String nomeProcedimento;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private LocalDate data;
 	
+	@Size(min=5)
 	private String resultado;
 	
 	private String diagnostico;
@@ -44,4 +47,14 @@ public class Procedimento {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("procedimentos")
 	private Veterinario veterinario;
+
+
+	public Procedimento(long id, String nomeProcedimento) {
+        this.id = id;
+        this.nomeProcedimento = nomeProcedimento;
+    }
+
+    public Procedimento(String nomeProcedimento) {
+        this.nomeProcedimento = nomeProcedimento;
+    }
 }
