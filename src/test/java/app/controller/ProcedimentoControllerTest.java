@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Procedimento;
+import app.entity.Veterinario;
 import app.repository.ProcedimentoRepository;
 
 import java.util.ArrayList;
@@ -127,8 +128,62 @@ public class ProcedimentoControllerTest {
 	@DisplayName("Teste de integração mocando o repository para o método findById com exception")
 	void testFindByIdException() {
 		long id = 0;
+		
 		ResponseEntity<Procedimento>response = procedimentoController.findById(id);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByVeterinarioNome")
+	void findByVeterinarioNome() {
+		String nome = "Dona Marocas";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVeterinarioNome(nome);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByVeterinarioCrmv")
+	void findByVeterinarioCrmv() {
+		String crmv = "8320A";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVetarinarioCrmv(crmv);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByNomeProcedimento")
+	void findByNomeProcedimento() {
+		String nomeProcedimento = "Castração";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByNomeProcedimento(nomeProcedimento);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByResultado")
+	void findByResultado() {
+		String resultado = "Negativo";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByResultado(resultado);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByVeterinario")
+	void findByVeterinario() {		
+		Veterinario id = null;
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVeterinario(id);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByDiagnostico")
+	void findByDiagnostico() {
+		String diagnostico = "Ansiedade";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByDiagnostico(diagnostico);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
 }

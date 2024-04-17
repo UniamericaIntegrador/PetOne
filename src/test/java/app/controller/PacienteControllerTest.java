@@ -44,7 +44,6 @@ public class PacienteControllerTest {
 
 		when(this.pacienteRepository.save(paciente)).thenReturn(paciente);
 		when(this.pacienteRepository.findAll()).thenReturn(listaPaciente);
-		when(this.pacienteRepository.findAllById(null)).thenReturn(listaPaciente);
 		when(this.pacienteRepository.findByEspecie(especie)).thenThrow(IllegalArgumentException.class);
 	}
 

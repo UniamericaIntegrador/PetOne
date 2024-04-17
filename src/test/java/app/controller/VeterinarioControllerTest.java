@@ -41,7 +41,6 @@ public class VeterinarioControllerTest {
 
 		when(this.veterinarioRepository.save(veterinario)).thenReturn(veterinario);
 		when(this.veterinarioRepository.findAll()).thenReturn(listaVeterinario);
-		when(this.veterinarioRepository.findAllById(null)).thenReturn(listaVeterinario);
 		when(this.veterinarioRepository.findByEndereco(endereco)).thenThrow(IllegalArgumentException.class);
 	}
 
@@ -130,7 +129,7 @@ public class VeterinarioControllerTest {
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
 	void testFindByEndereco() {
-		String endereco = null;
+		String endereco = "Brasil";
 		ResponseEntity<List<Veterinario>> response = veterinarioController.findByEndereco(endereco);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
