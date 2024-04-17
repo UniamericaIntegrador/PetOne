@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +45,8 @@ public class Tutor {
 	@NotBlank
 	private String endereco;
 	
+	@NotNull
+	private int idade;
 	
 	@OneToMany(mappedBy = "tutor")
 	private List<Paciente> paciente;

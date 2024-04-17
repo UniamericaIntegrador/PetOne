@@ -2,6 +2,8 @@ package app.service;
 
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ public class TutorService {
 	private TutorRepository tutorRepository;
 	
 	public String save(Tutor tutor) {
+		this.verificaIdadeTutor(tutor);
 		this.tutorRepository.save(tutor);
 		return "Tutor(a) "+tutor.getNome() + " cadastrado com sucesso!";
 	}
@@ -78,6 +81,11 @@ public class TutorService {
 	// CPF QUE CONTENHA
 	public List<Tutor> findByTrechoCpf(String cpf) {
 		return this.tutorRepository.findByTrechoNome(cpf);
+	}
+	
+	public void verificaIdadeTutor(Tutor tutor) {
+		if(tutor.getIdade()<18)
+			throw new RuntimeException();
 	}
 
 }
