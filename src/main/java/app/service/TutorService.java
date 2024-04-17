@@ -14,6 +14,7 @@ public class TutorService {
 	private TutorRepository tutorRepository;
 	
 	public String save(Tutor tutor) {
+		this.verificaIdadeTutor(tutor);
 		this.tutorRepository.save(tutor);
 		return "Tutor(a) "+tutor.getNome() + " cadastrado com sucesso!";
 	}
@@ -67,5 +68,13 @@ public class TutorService {
 	public List<Tutor> findByTrechoCpf(String cpf) {
 		return this.tutorRepository.findByTrechoNome(cpf);
 	}
-
+	
+	//VERIFICAÇÃO DE IDADE DO TUTOR
+	public Tutor verificaIdadeTutor(Tutor tutor) {
+		if (tutor.getIdade() < 18) {
+			throw new RuntimeException();
+		}
+		return tutor;
+	}
+	
 }

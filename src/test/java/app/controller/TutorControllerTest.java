@@ -36,27 +36,30 @@ import app.repository.TutorRepository;
 @SpringBootTest
 public class TutorControllerTest {
 	@Autowired
-	@InjectMocks
 	TutorController tutorController;
 
 	@MockBean
 	TutorRepository tutorRepository;
 
-	@Mock
-	private TutorService tutorServiceMock;
-
 	@BeforeEach
 	void setup() {
+		List<Tutor>listaTutor = new ArrayList<>();
+		listaTutor.add(new Tutor(5, "Magali Lima", "077.271.590-42", 7,"Rua do Limão, Bairro do Limoeiro", null));
+		listaTutor.add(new Tutor(6, "Nimbus Hiromashi", "800.951.440-30", 7,"Rua do Limão, Bairro do Limoeiro", null));
+		listaTutor.add(new Tutor(7, "Do Contra", "884.678.200-39", 7,"Rua do Limão, Bairro do Limoeiro", null));
+		listaTutor.add(null);
+		
 		Tutor tutor = new Tutor();
 
 		when(this.tutorRepository.save(tutor)).thenReturn(tutor);
+		when(this.tutorRepository.findAll()).thenReturn(listaTutor);
 	}
 
 	// ------- POR CAUSA DA VALIDAÇÀO @CPF, O CPF DEVE SER UM DOCUMENTO QUE REALMENTE EXISTA. NA HORA DE TESTAR, SUBSTITUIR O QUE ESTÁ COM X -------
 	@Test
 	@DisplayName("Teste de integração com o método save retornando sucesso")
 	void testSave() {
-		Tutor tutor = new Tutor(1, "Cebolinha Silva", "XXX.XXX.XXX-XX", "Rua do Limão, Bairro do Limoeiro", null);
+		Tutor tutor = new Tutor(1, "Cebolinha Silva", "246.683.220-83", 18, "Rua do Limão, Bairro do Limoeiro", null);
 
 		ResponseEntity<String> response = tutorController.save(tutor);
 		assertTrue(response.getStatusCode() == HttpStatus.CREATED);
@@ -66,7 +69,7 @@ public class TutorControllerTest {
 	@Test
 	@DisplayName("Teste de integração com o método save retornando assertThrows")
 	void testSaveCpf() {
-		Tutor tutor = new Tutor(2, "Monica de Sousa", "000.000.000-00", "Rua do Limão, Bairro do Limoeiro", null);
+		Tutor tutor = new Tutor(2, "Monica de Sousa", "000.000.000-00", 7, "Rua do Limão, Bairro do Limoeiro", null);
 
 		assertThrows(Exception.class, () -> {
 			ResponseEntity<String> response = tutorController.save(tutor);
@@ -87,7 +90,7 @@ public class TutorControllerTest {
 	@Test
 	@DisplayName("Teste de integração com o método update retornando sucesso")
 	void testUpdate() {
-		Tutor tutor = new Tutor(3, "Cascão Araujo", "XXX.XXX.XXX-XX", "Rua do Limão, Bairro do Limoeiro", null);
+		Tutor tutor = new Tutor(3, "Cascão Araujo", "893.933.920-72", 18, "Rua do Limão, Bairro do Limoeiro", null);
 		long id = 0;
 
 		ResponseEntity<String> response = tutorController.update(tutor, id);
@@ -101,90 +104,55 @@ public class TutorControllerTest {
 	@Test
 	@DisplayName("Teste de integração com o método update retornando assertThrows")
 	void testUpdateNome() {
-		Tutor tutor = new Tutor(3, "C", "XXX.XXX.XXX-XX", "Rua do Limão, Bairro do Limoeiro", null);
+		Tutor tutor = new Tutor(3, "C", "592.076.420-18", 7, "Rua do Limão, Bairro do Limoeiro", null);
 		long id = 0;
 
 		assertThrows(Exception.class, () -> {
 			ResponseEntity<String> response = tutorController.update(tutor, id);
 		});
 	}
-
-	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
-
+	
 	@Test
-	public void testFindById_Normal() {
-		// Mock do objeto Tutor retornado pelo serviço
-		Tutor mockTutor = new Tutor();
-		mockTutor.setId(1L);
-		mockTutor.setNome("João da Silva");
-
-		// Configura o comportamento do mock do serviço para retornar o mock do tutor
-		// quando findById é chamado
-		when(tutorServiceMock.findById(1L)).thenReturn(mockTutor);
-
-		// Chama o método findById do controlador
-		ResponseEntity<Tutor> response = tutorController.findById(1L);
-
-		// Verifica se a resposta HTTP é OK (200)
+	@DisplayName("Teste de integração mocando o repository para o método delete")
+	void testDelete() {
+		long id = 0;
+		ResponseEntity<String>response = tutorController.delete(id);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		// Verifica se o resultado retornado é igual ao mock do tutor
-		assertEquals(mockTutor, response.getBody());
 	}
-
+	
 	@Test
-	public void testFindById_Exception() {
-		// Configura o comportamento do mock do serviço para lançar uma exceção quando
-		// findById é chamado
-		when(tutorServiceMock.findById(1L)).thenThrow(new RuntimeException("Tutor não encontrado"));
-
-		// Chama o método findById do controlador
-		ResponseEntity<Tutor> response = tutorController.findById(1L);
-
-		// Verifica se a resposta HTTP é BAD REQUEST (400)
+	@DisplayName("Teste de integração mocando o repository para o método delete com exception")
+	void testDeleteException() {
+		long id = -1;
+		ResponseEntity<String>response = tutorController.delete(id);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());	
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findAll")
+	void testFindAll() {
+		ResponseEntity<List<Tutor>>response = this.tutorController.listAll();
+		List<Tutor>listaTutor = response.getBody();
+		
+		assertEquals(4, listaTutor.size());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findById com exception")
+	void testFindByIdException() {
+		long id = 0;
+		ResponseEntity<Tutor>response = tutorController.findById(id);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-		// Verifica se o corpo da resposta é nulo
-		assertNull(response.getBody());
 	}
-
+	
 	@Test
-	public void testListAll_Normal() {
-		// Mock da lista de tutores retornada pelo serviço
-		List<Tutor> mockTutors = new ArrayList<>();
-		mockTutors.add(new Tutor(1L, "João da Silva", "123.456.789-00", "Endereço João"));
-		mockTutors.add(new Tutor(2L, "Maria Oliveira", "987.654.321-00", "Endereço Maria"));
-
-		// Configura o comportamento do mock do serviço para retornar a lista de tutores
-		// quando listAll é chamado
-		when(tutorServiceMock.listAll()).thenReturn(mockTutors);
-
-		// Chama o método listAll do controlador
-		ResponseEntity<List<Tutor>> response = tutorController.listAll();
-
-		// Verifica se a resposta HTTP é OK (200)
+	@DisplayName("Teste de integração mocando o repository para o método findByCpf")
+	void testFindByCpf() {
+		String cpf = null;
+		ResponseEntity<List<Tutor>> response = tutorController.findByCpf(cpf);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		// Verifica se o resultado retornado é igual à lista mockada
-		assertEquals(mockTutors, response.getBody());
 	}
-
-	@Test
-	public void testListAll_Exception() {
-		// Configura o comportamento do mock do serviço para lançar uma exceção quando
-		// listAll é chamado
-		when(tutorServiceMock.listAll()).thenThrow(new RuntimeException("Erro ao listar tutores"));
-
-		// Chama o método listAll do controlador
-		ResponseEntity<List<Tutor>> response = tutorController.listAll();
-
-		// Verifica se a resposta HTTP é BAD REQUEST (400)
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-		// Verifica se o corpo da resposta é nulo
-		assertNull(response.getBody());
-	}
+	
+	
+	
 }

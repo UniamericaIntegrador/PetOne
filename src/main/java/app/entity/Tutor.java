@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,6 +38,9 @@ public class Tutor {
 	@Column(unique = true)
 	private String cpf;
 	
+	@NotNull
+	private int idade;
+	
 	@NotBlank(message = "O endereço do tutor não pode estar vazio")
 	private String endereco;
 	
@@ -50,6 +54,7 @@ public class Tutor {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
+        this.idade = idade;
         this.endereco = endereco;
     }
 }
