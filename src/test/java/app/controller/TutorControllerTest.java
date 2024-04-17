@@ -42,14 +42,13 @@ public class TutorControllerTest {
 
 		when(this.tutorRepository.save(tutor)).thenReturn(tutor);
 		when(this.tutorRepository.findAll()).thenReturn(listaTutor);
-		when(this.tutorRepository.findAllById(null)).thenReturn(listaTutor);
 	}
 
 	// ------- POR CAUSA DA VALIDAÇÀO @CPF, O CPF DEVE SER UM DOCUMENTO QUE REALMENTE EXISTA. NA HORA DE TESTAR, SUBSTITUIR O QUE ESTÁ COM X -------
 	@Test
 	@DisplayName("Teste de integração com o método save retornando sucesso")
 	void testSave() {
-		Tutor tutor = new Tutor(1, "Cebolinha Silva", "246.683.220-83", 7, "Rua do Limão, Bairro do Limoeiro", null);
+		Tutor tutor = new Tutor(1, "Cebolinha Silva", "246.683.220-83", 18, "Rua do Limão, Bairro do Limoeiro", null);
 
 		ResponseEntity<String> response = tutorController.save(tutor);
 		assertTrue(response.getStatusCode() == HttpStatus.CREATED);
@@ -80,7 +79,7 @@ public class TutorControllerTest {
 	@Test
 	@DisplayName("Teste de integração com o método update retornando sucesso")
 	void testUpdate() {
-		Tutor tutor = new Tutor(3, "Cascão Araujo", "893.933.920-72", 7, "Rua do Limão, Bairro do Limoeiro", null);
+		Tutor tutor = new Tutor(3, "Cascão Araujo", "893.933.920-72", 18, "Rua do Limão, Bairro do Limoeiro", null);
 		long id = 0;
 
 		ResponseEntity<String> response = tutorController.update(tutor, id);
@@ -133,6 +132,14 @@ public class TutorControllerTest {
 		long id = 0;
 		ResponseEntity<Tutor>response = tutorController.findById(id);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByCpf")
+	void testFindByCpf() {
+		String cpf = null;
+		ResponseEntity<List<Tutor>> response = tutorController.findByCpf(cpf);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
 	

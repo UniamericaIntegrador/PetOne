@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Paciente;
+import app.entity.Veterinario;
 import app.repository.PacienteRepository;
 
 import java.util.ArrayList;
@@ -39,10 +40,12 @@ public class PacienteControllerTest {
 		listaPaciente.add(null);
 		
 		Paciente paciente = new Paciente();
+		String especie = "Ave";
 
 		when(this.pacienteRepository.save(paciente)).thenReturn(paciente);
 		when(this.pacienteRepository.findAll()).thenReturn(listaPaciente);
 		when(this.pacienteRepository.findAllById(null)).thenReturn(listaPaciente);
+		when(this.pacienteRepository.findByEspecie(especie)).thenThrow(IllegalArgumentException.class);
 	}
 
 	@Test
@@ -138,6 +141,22 @@ public class PacienteControllerTest {
 	void testFindByIdException() {
 		long id = 0;
 		ResponseEntity<Paciente>response = pacienteController.findById(id);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
+	void testFindByEpecie() {
+		String especie = null;
+		ResponseEntity<List<Paciente>> response = pacienteController.findByEspecie(especie);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco com exception")
+	void testFindByEnderecoException() {
+		String especie = "Ave";
+		ResponseEntity<List<Paciente>> response = pacienteController.findByEspecie(especie);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 }

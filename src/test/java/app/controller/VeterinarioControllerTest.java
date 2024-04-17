@@ -37,10 +37,12 @@ public class VeterinarioControllerTest {
 		listaVeterinario.add(null);
 		
 		Veterinario veterinario = new Veterinario();
+		String endereco = "Japão";
 
 		when(this.veterinarioRepository.save(veterinario)).thenReturn(veterinario);
 		when(this.veterinarioRepository.findAll()).thenReturn(listaVeterinario);
 		when(this.veterinarioRepository.findAllById(null)).thenReturn(listaVeterinario);
+		when(this.veterinarioRepository.findByEndereco(endereco)).thenThrow(IllegalArgumentException.class);
 	}
 
 	@Test
@@ -52,8 +54,7 @@ public class VeterinarioControllerTest {
 		assertTrue(response.getStatusCode() == HttpStatus.CREATED);
 	}
 
-	// TESTE PEGANDO A VALIDAÇÃO DE CRMV QUE NÃO PODE SER NULO - ANNOTATION
-	// @NotBlank)
+	// TESTE PEGANDO A VALIDAÇÃO DE CRMV QUE NÃO PODE SER NULO - ANNOTATION @NotBlank)
 	@Test
 	@DisplayName("Teste de integração com o método save retornando assertThrows")
 	void testSaveCrmv() {
@@ -117,4 +118,30 @@ public class VeterinarioControllerTest {
 		ResponseEntity<Veterinario>response = veterinarioController.findById(id);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByCrmv")
+	void testFindByCrmv() {
+		String crmv = null;
+		ResponseEntity<Veterinario> response = veterinarioController.findByCrmv(crmv);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
+	void testFindByEndereco() {
+		String endereco = null;
+		ResponseEntity<List<Veterinario>> response = veterinarioController.findByEndereco(endereco);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco com exception")
+	void testFindByEnderecoException() {
+		String endereco = "Japão";
+		ResponseEntity<List<Veterinario>> response = veterinarioController.findByEndereco(endereco);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	
 }
