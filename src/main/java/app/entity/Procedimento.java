@@ -42,6 +42,7 @@ public class Procedimento {
 	@Size(min=5)
 	private String resultado;
 	
+	@Size(min = 7)
 	private String diagnostico;
 	
 	
