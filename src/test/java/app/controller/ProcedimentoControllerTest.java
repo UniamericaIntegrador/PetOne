@@ -135,7 +135,7 @@ public class ProcedimentoControllerTest {
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByVeterinarioNome")
-	void findByVeterinarioNome() {
+	void testFindByVeterinarioNome() {
 		String nome = "Dona Marocas";
 		
 		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVeterinarioNome(nome);
@@ -144,7 +144,7 @@ public class ProcedimentoControllerTest {
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByVeterinarioCrmv")
-	void findByVeterinarioCrmv() {
+	void testFindByVeterinarioCrmv() {
 		String crmv = "8320A";
 		
 		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVetarinarioCrmv(crmv);
@@ -153,7 +153,7 @@ public class ProcedimentoControllerTest {
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByNomeProcedimento")
-	void findByNomeProcedimento() {
+	void testFindByNomeProcedimento() {
 		String nomeProcedimento = "Castração";
 		
 		ResponseEntity<List<Procedimento>> response = procedimentoController.findByNomeProcedimento(nomeProcedimento);
@@ -162,7 +162,7 @@ public class ProcedimentoControllerTest {
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByResultado")
-	void findByResultado() {
+	void testFindByResultado() {
 		String resultado = "Negativo";
 		
 		ResponseEntity<List<Procedimento>> response = procedimentoController.findByResultado(resultado);
@@ -171,7 +171,7 @@ public class ProcedimentoControllerTest {
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByVeterinario")
-	void findByVeterinario() {		
+	void testFindByVeterinario() {		
 		Veterinario id = null;
 		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVeterinario(id);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -179,11 +179,10 @@ public class ProcedimentoControllerTest {
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByDiagnostico")
-	void findByDiagnostico() {
+	void testFindByDiagnostico() {
 		String diagnostico = "Ansiedade";
 		
 		ResponseEntity<List<Procedimento>> response = procedimentoController.findByDiagnostico(diagnostico);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
-	
 }

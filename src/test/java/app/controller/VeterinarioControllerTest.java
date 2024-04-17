@@ -142,5 +142,14 @@ public class VeterinarioControllerTest {
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByNome")
+	void testFindByNome() {
+		String nome = "Nhô Lau";
+
+		ResponseEntity<List<Veterinario>> response = veterinarioController.findByNome(nome);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
 	
 }

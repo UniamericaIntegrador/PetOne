@@ -64,7 +64,7 @@ public class TutorControllerTest {
 			ResponseEntity<String> response = tutorController.save(tutor);
 		});
 	}
-
+	
 	@Test
 	@DisplayName("Teste de integração com método save retornando uma exception")
 	void testSaveException() {
@@ -137,10 +137,37 @@ public class TutorControllerTest {
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByCpf")
 	void testFindByCpf() {
-		String cpf = null;
+		String cpf = "887.683.890-27";
 		ResponseEntity<List<Tutor>> response = tutorController.findByCpf(cpf);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByNome")
+	void testFindByNome() {
+		String nome = "Maria Cebolinha";
+		ResponseEntity<List<Tutor>> response = tutorController.findByNome(nome);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
+	void testFindByEndereco() {
+		String endereco = "Rua do Limão, Bairro do Limoeiro";
+		ResponseEntity<List<Tutor>> response = tutorController.findByEndereco(endereco);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByPacienteNome")
+	void testFindByPacienteNome() {
+		String nome = "Chovinista";
+		ResponseEntity<List<Tutor>> response = tutorController.findByPacienteNome(nome);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	
+	
 	
 	
 	
