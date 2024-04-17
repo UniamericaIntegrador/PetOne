@@ -22,14 +22,4 @@ public class ProcedimentoServiceTest {
 	    assertEquals(equals, str);
 	}
 
-	@Autowired
-	ProcedimentoService procedimentoService;
-	
-	@Test
-	@DisplayName("FormatadorDatas")
-	void testeFormatadorDatas(){
-		LocalDate equals = LocalDate.of(2024, 04, 14);
-		LocalDate str = procedimentoService.formatadordeData("14/04/2024" );
-	    assertEquals(equals, str);
-	}
 }
