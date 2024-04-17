@@ -80,7 +80,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByData/")
+	@GetMapping("/findByPeriodo/")
 	public ResponseEntity<List<Procedimento>>findAllByDataBetween(@RequestParam String data1, String data2){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findAllByDataBetween(data1, data2);

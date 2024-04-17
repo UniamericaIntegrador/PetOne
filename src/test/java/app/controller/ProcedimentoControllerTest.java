@@ -31,6 +31,7 @@ import org.mockito.MockitoAnnotations;
 
 import app.service.ProcedimentoService;
 
+@SpringBootTest
 public class ProcedimentoControllerTest {
 	@Autowired
 	@InjectMocks
@@ -48,6 +49,37 @@ public class ProcedimentoControllerTest {
 
 		when(this.procedimentoRepository.save(procedimento)).thenReturn(procedimento);
 		MockitoAnnotations.initMocks(this);
+
+		List<Procedimento> lista = new ArrayList<>();
+		lista.add(new Procedimento(1, "Procedimento1", LocalDate.of(2024,04,14), null, null, null, null));
+		lista.add(new Procedimento(2, "Procedimento2", LocalDate.of(2024,04,14), null, null, null, null));
+		when(this.procedimentoRepository.findAllByDataBetween(LocalDate.of(2024,04,14))).thenReturn(lista);
+	
+		List<Procedimento> listaResultado = new ArrayList<>();
+		listaResultado.add(new Procedimento(1, "Procedimento1", LocalDate.of(2024,04,14), "NÃO REALIZADO", "NÃO REALIZADO", null, null));
+		listaResultado.add(new Procedimento(2, "Procedimento2", LocalDate.of(2024,04,14), "NÃO REALIZADO", "NÃO REALIZADO", null, null));
+		when(this.procedimentoRepository.findByResultado("NÃO REALIZADO").thenReturn(listaResultado);
+
+		List<Procedimento> listaDiagnostico = new ArrayList<>();
+		listaDiagnostico.add(new Procedimento(1, "Procedimento1", LocalDate.of(2024,04,14), "NÃO REALIZADO", "NÃO REALIZADO", null, null));
+		listaDiagnostico.add(new Procedimento(2, "Procedimento2", LocalDate.of(2024,04,14), "NÃO REALIZADO", "NÃO REALIZADO", null, null));
+		when(this.procedimentoRepository.findByDiagnostico("NÃO REALIZADO").thenReturn(listaDiagnostico);
+
+		List<Veterinario> listaVeterinarioId = new ArrayList<>();
+		listaVeterinarioId.add(new Veterinario());
+		when(this.procedimentoRepository.findByVetarinario(1).thenReturn(listaVeterinarioId));
+
+		List<Veterinario> listaVeterinarioNome = new ArrayList<>();
+		listaVeterinarioNome.add(new Veterinario());
+		when(this.procedimentoRepository.findByVetarinarioNome("Teste").thenReturn(listaVeterinarioNome));
+
+		List<Veterinario> listaVeterinarioCrmv = new ArrayList<>();
+		listaVeterinarioCrmv.add(new Veterinario());
+		when(this.procedimentoRepository.findByVetarinarioCrmv("CRMV01").thenReturn(listaVeterinarioCrmv));
+
+		List<Veterinario> listaVeterinarioProcedimento = new ArrayList<>();
+		listaVeterinarioProcedimento.add(new Veterinario());
+		when(this.procedimentoRepository.findByNomeProcedimento("Raio X").thenReturn(listaVeterinarioProcedimento));
 	}
 
 	@Test
@@ -175,5 +207,54 @@ public class ProcedimentoControllerTest {
 
 		// Verifica se o corpo da resposta é nulo
 		assertNull(response.getBody());
+	}
+
+	@Test
+	public void testFindByPeriodo(){
+		ResponseEntity<List<Procedimento>> response = this.procedimentoController.findAllByPeriodoBetween("12/04/2024", "15/04/2024");
+		List<Procedimento> lista = response.getBody();
+		assertEquals(2, lista.size());
+	}
+
+	@Test
+	public void testFindByDiagnostico(){
+		ResponseEntity<List<Procedimento>> response = this.procedimentoController.findByDiagnostico("NÃO REALIZADO");
+		List<Procedimento> lista = response.getBody();
+		assertEquals(2, lista.size());
+	}
+
+	@Test
+	public void testFindByResultado(){
+		ResponseEntity<List<Procedimento>> response = this.procedimentoController.findByResultado("NÃO REALIZADO");
+		List<Procedimento> lista = response.getBody();
+		assertEquals(2, lista.size());
+	}
+
+	@Test
+	public void testFindByVeterinario(){
+		ResponseEntity<List<Procedimento>> response = this.procedimentoController.findByVetarinario(1);
+		List<Procedimento> lista = response.getBody();
+		assertEquals(1, lista.size());
+	}
+
+	@Test
+	public void testFindByVeterinarioNome(){
+		ResponseEntity<List<Procedimento>> response = this.procedimentoController.findByVetarinarioNome(1);
+		List<Procedimento> lista = response.getBody();
+		assertEquals(1, lista.size());
+	}
+
+	@Test
+	public void testFindByVeterinarioCrmv(){
+		ResponseEntity<List<Procedimento>> response = this.procedimentoController.findByVetarinarioCrmv("CRMV");
+		List<Procedimento> lista = response.getBody();
+		assertEquals(1, lista.size());
+	}
+
+	@Test
+	public void testFindByVeterinarioNomeProcedimento(){
+		ResponseEntity<List<Procedimento>> response = this.procedimentoController.findByNomeProcedimento("Raio X");
+		List<Procedimento> lista = response.getBody();
+		assertEquals(2, lista.size());
 	}
 }
