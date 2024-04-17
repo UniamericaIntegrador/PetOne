@@ -31,6 +31,5 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Long>{
     @Transactional
     @Modifying
     @Query("UPDATE Veterinario v SET v.endereco = :novoEndereco WHERE v.id = :id")
-    void updateEnderecoById(@Param("id") Long id, @Param("novoEndereco") String novoEndereco);
-
+    void updateEnderecoById(@Param("id") long id, @Param("novoEndereco") String novoEndereco);
 }

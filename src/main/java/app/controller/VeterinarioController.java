@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.entity.Paciente;
 import app.entity.Veterinario;
 import app.service.VeterinarioService;
 import jakarta.validation.Valid;
@@ -44,13 +45,12 @@ public class VeterinarioController {
 	// URL: http://localhost:8080/api/veterinario/update/{id}
 	// Endpoint para atualizar um veterinário existente pelo ID (CRUD Básico)
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@Valid @RequestBody Veterinario veterinario, @PathVariable long id) {
+	public ResponseEntity<String>update(@Valid @RequestBody Veterinario veterinario, @PathVariable("id") long id){
 		try {
 			String mensagem = this.veterinarioService.update(id, veterinario);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: " + e.getMessage(),
-					HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class VeterinarioController {
 	// URL: http://localhost:8080/api/veterinario/delete/{id}
 	// Endpoint para deletar um veterinário pelo ID (CRUD Básico)
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> delete(@PathVariable long id) {
+	public ResponseEntity<String> delete(@PathVariable("id") long id) {
 		try {
 			String mensagem = this.veterinarioService.delete(id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
@@ -85,7 +85,7 @@ public class VeterinarioController {
 	// URL: http://localhost:8080/api/veterinario/findById/{id}
 	// Endpoint para encontrar um veterinário pelo ID (CRUD Básico)
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Veterinario> findById(@PathVariable long id) {
+	public ResponseEntity<Veterinario> findById(@PathVariable("id") long id) {
 		try {
 			Veterinario veterinario = this.veterinarioService.findById(id);
 			return new ResponseEntity<>(veterinario, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class VeterinarioController {
 	// URL: http://localhost:8080/api/veterinario/findByNome/{nome}
 	// Endpoint para encontrar veterinários pelo nome (automatico)
 	@GetMapping("/findByNome/{nome}")
-	public ResponseEntity<List<Veterinario>> findByNome(@PathVariable String nome) {
+	public ResponseEntity<List<Veterinario>> findByNome(@PathVariable("nome") String nome) {
 		try {
 			List<Veterinario> veterinarios = this.veterinarioService.findByNome(nome);
 			return new ResponseEntity<>(veterinarios, HttpStatus.OK);
@@ -111,7 +111,7 @@ public class VeterinarioController {
 	// URL: http://localhost:8080/api/veterinario/findByCrmv/{crmv}
 	// Endpoint para encontrar veterinário pelo CRMV (automatico)
 	@GetMapping("/findByCrmv/{crmv}")
-	public ResponseEntity<Veterinario> findByCrmv(@PathVariable String crmv) {
+	public ResponseEntity<Veterinario> findByCrmv(@PathVariable("crmv") String crmv) {
 		try {
 			Veterinario veterinario = this.veterinarioService.findByCrmv(crmv);
 			return new ResponseEntity<>(veterinario, HttpStatus.OK);
@@ -124,7 +124,7 @@ public class VeterinarioController {
 	// URL: http://localhost:8080/api/veterinario/findByEndereco/{endereco}
 	// Endpoint para encontrar veterinários pelo endereço (automatico)
 	@GetMapping("/findByEndereco/{endereco}")
-	public ResponseEntity<List<Veterinario>> findByEndereco(@PathVariable String endereco) {
+	public ResponseEntity<List<Veterinario>> findByEndereco(@PathVariable("endereco") String endereco) {
 		try {
 			List<Veterinario> veterinarios = this.veterinarioService.findByEndereco(endereco);
 			return new ResponseEntity<>(veterinarios, HttpStatus.OK);
@@ -139,7 +139,7 @@ public class VeterinarioController {
 	// letra (JPQL)
 	@GetMapping("/findByNomeStartingWith/{letra}")
 
-	public ResponseEntity<List<Veterinario>> findByNomeStartingWith(@PathVariable String letra) {
+	public ResponseEntity<List<Veterinario>> findByNomeStartingWith(@PathVariable("letra") String letra) {
 		try {
 			List<Veterinario> veterinarios = this.veterinarioService.findByNomeStartingWith(letra);
 			return new ResponseEntity<>(veterinarios, HttpStatus.OK);
@@ -153,7 +153,8 @@ public class VeterinarioController {
 	// http://localhost:8080/api/veterinario/updateEnderecoById/{id}/{novoEndereco}
 	// Endpoint para atualizar o endereço do veterinário pelo ID (JPQL)
 	@PutMapping("/updateEnderecoById/{id}/{novoEndereco}")
-	public ResponseEntity<String> updateEnderecoById(@PathVariable long id, @PathVariable String novoEndereco) {
+	public ResponseEntity<String> updateEnderecoById(@PathVariable("id") long id,
+			@PathVariable("novoEndereco") String novoEndereco) {
 		try {
 			this.veterinarioService.updateEnderecoById(id, novoEndereco);
 			return new ResponseEntity<>("Endereço do veterinário atualizado com sucesso.", HttpStatus.OK);

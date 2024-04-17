@@ -1,4 +1,4 @@
-package app.entity;
+	package app.entity;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -44,13 +44,17 @@ public class Paciente {
 	@PastOrPresent
 	private LocalDate dataNascimento;
 	
+	
+	
 	@Size(min = 3)
 	@NotBlank(message = "A raça do paciente não pode estar vazio")
 	private String raca;
 	
+	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("pacientes")
+	@JsonIgnoreProperties("paciente")
 	private Tutor tutor;
+	
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "paciente_procedimento")
@@ -63,4 +67,5 @@ public class Paciente {
         this.dataNascimento = dataNascimento;
         this.raca = raca;
     }
+   
 }

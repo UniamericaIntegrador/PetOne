@@ -40,7 +40,7 @@ public class TutorController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String>update(@Valid @RequestBody Tutor tutor, @PathVariable long id){
+	public ResponseEntity<String>update(@Valid @RequestBody Tutor tutor, @PathVariable("id") long id){
 		try {
 			String mensagem = this.tutorService.update(id, tutor);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
@@ -50,7 +50,7 @@ public class TutorController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String>delete(@PathVariable long id){
+	public ResponseEntity<String>delete(@PathVariable("id") long id){
 		try {
 			String mensagem = this.tutorService.delete(id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
@@ -70,7 +70,7 @@ public class TutorController {
 	}
 	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Tutor>findById(@PathVariable long id){
+	public ResponseEntity<Tutor>findById(@PathVariable("id") long id){
 		try {
 			Tutor tutor = this.tutorService.findById(id);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
@@ -80,7 +80,7 @@ public class TutorController {
 	}
 	
 	@GetMapping("/findByNome")
-	public ResponseEntity<List<Tutor>>findByNome(@RequestParam String nome){
+	public ResponseEntity<List<Tutor>>findByNome(@RequestParam("nome") String nome){
 		try {
 			List<Tutor> tutor = this.tutorService.findByNome(nome);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
@@ -90,7 +90,7 @@ public class TutorController {
 	}
 	
 	@GetMapping("/findByCpf")
-	public ResponseEntity<List<Tutor>>findByCpf(@RequestParam String cpf){
+	public ResponseEntity<List<Tutor>>findByCpf(@RequestParam("cpf") String cpf){
 		try {
 			List<Tutor> tutor = this.tutorService.findByPacienteNome(cpf);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
@@ -100,7 +100,7 @@ public class TutorController {
 	}
 	
 	@GetMapping("/findByEndereco")
-	public ResponseEntity<List<Tutor>>findByEndereco(@RequestParam String endereco){
+	public ResponseEntity<List<Tutor>>findByEndereco(@RequestParam("endereco") String endereco){
 		try {
 			List<Tutor> tutor = this.tutorService.findByEndereco(endereco);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
@@ -110,7 +110,7 @@ public class TutorController {
 	}
 	
 	@GetMapping("/findByPacienteNome")
-	public ResponseEntity<List<Tutor>>findByPacienteNome(@RequestParam String nome){
+	public ResponseEntity<List<Tutor>>findByPacienteNome(@RequestParam("nome") String nome){
 		try {
 			List<Tutor> tutor = this.tutorService.findByPacienteNome(nome);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
@@ -120,7 +120,7 @@ public class TutorController {
 	}
 	
 	@GetMapping("/findByTrechoNome")
-	public ResponseEntity<List<Tutor>>findByTrechoNome(@RequestParam String nome){
+	public ResponseEntity<List<Tutor>>findByTrechoNome(@RequestParam("nome") String nome){
 		try {
 			List<Tutor> tutor = this.tutorService.findByTrechoNome(nome);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
@@ -130,7 +130,7 @@ public class TutorController {
 	}
 	
 	@GetMapping("/findByTrechoCpf")
-	public ResponseEntity<List<Tutor>>findByTrechoCpf(@RequestParam String cpf){
+	public ResponseEntity<List<Tutor>>findByTrechoCpf(@RequestParam("cpf") String cpf){
 		try {
 			List<Tutor> tutor = this.tutorService.findByTrechoCpf(cpf);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);

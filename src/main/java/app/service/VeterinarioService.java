@@ -23,10 +23,8 @@ public class VeterinarioService {
 	// Verificar se o ID existe antes de atualizar
 	public String update(long id, Veterinario veterinario) {
 		// Verifica se o veterinário com o ID fornecido existe
-		if (!veterinarioRepository.existsById(id)) {
-			throw new RuntimeException("ID inválido. O veterinário não existe.");
-		}
 		veterinario.setId(id);
+		
 		this.veterinarioRepository.save(veterinario);
 		return "Cadastro do veterinário(a) " + veterinario.getNome() + " alterado com sucesso!";
 	}
@@ -43,7 +41,6 @@ public class VeterinarioService {
 	}
 
 	// Método para listar todos os veterinários
-	// ver se tem como fazer uma verificação para dar mensagem de lista nula
 	public List<Veterinario> listAll() {
 		return this.veterinarioRepository.findAll();
 	}
