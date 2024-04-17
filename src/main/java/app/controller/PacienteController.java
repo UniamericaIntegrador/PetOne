@@ -82,7 +82,7 @@ public class PacienteController {
 	}
 
 	@GetMapping("/findByPart")
-	public ResponseEntity<List<Paciente>> findByPart(@RequestParam("nome") String nome) {
+	public ResponseEntity<List<Paciente>> findByPart(@RequestParam String nome) {
 		try {
 			List<Paciente> lista = this.pacienteService.findByPart(nome);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
