@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,11 +46,10 @@ public class Tutor {
 	@NotBlank(message = "O endereço do tutor não pode estar vazio")
 	private String endereco;
 	
-	
 	@OneToMany(mappedBy = "tutor")
+	@JsonIgnoreProperties("tutor")
 	private List<Paciente> paciente;
 	
-
     // Construtor correspondente aos parâmetros usados nos testes
     public Tutor(long id, String nome, String cpf, String endereco) {
         this.id = id;

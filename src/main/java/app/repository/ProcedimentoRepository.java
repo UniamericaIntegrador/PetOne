@@ -9,8 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import app.entity.Procedimento;
 import app.entity.Veterinario;
 
-public interface ProcedimentoRepository extends JpaRepository<Procedimento, Long> {
-
+public interface ProcedimentoRepository extends JpaRepository<Procedimento, Long>{
 	public List<Procedimento> findAllByDataBetween(LocalDate dataStart, LocalDate dataEnd);
 
 	public List<Procedimento> findByResultado(String resultado);
@@ -27,7 +26,4 @@ public interface ProcedimentoRepository extends JpaRepository<Procedimento, Long
 	
 	@Query("SELECT p FROM Procedimento p WHERE p.nomeProcedimento LIKE CONCAT ('%', :nomeProcedimento, '%')")
 	public List<Procedimento> BuscarPorNomeProcedimento(String nomeProcedimento);
-	
-	
-
 }

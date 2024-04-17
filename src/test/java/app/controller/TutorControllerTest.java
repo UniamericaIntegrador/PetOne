@@ -4,33 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Tutor;
-import app.service.TutorService;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import app.entity.Tutor;
 import app.repository.TutorRepository;
 
 @SpringBootTest
@@ -75,7 +64,7 @@ public class TutorControllerTest {
 			ResponseEntity<String> response = tutorController.save(tutor);
 		});
 	}
-
+	
 	@Test
 	@DisplayName("Teste de integração com método save retornando uma exception")
 	void testSaveException() {
@@ -148,10 +137,37 @@ public class TutorControllerTest {
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByCpf")
 	void testFindByCpf() {
-		String cpf = null;
+		String cpf = "887.683.890-27";
 		ResponseEntity<List<Tutor>> response = tutorController.findByCpf(cpf);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByNome")
+	void testFindByNome() {
+		String nome = "Maria Cebolinha";
+		ResponseEntity<List<Tutor>> response = tutorController.findByNome(nome);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
+	void testFindByEndereco() {
+		String endereco = "Rua do Limão, Bairro do Limoeiro";
+		ResponseEntity<List<Tutor>> response = tutorController.findByEndereco(endereco);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByPacienteNome")
+	void testFindByPacienteNome() {
+		String nome = "Chovinista";
+		ResponseEntity<List<Tutor>> response = tutorController.findByPacienteNome(nome);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	
+	
 	
 	
 	

@@ -16,40 +16,38 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import app.entity.Paciente;
 import app.entity.Procedimento;
+import app.entity.Veterinario;
 import app.repository.ProcedimentoRepository;
-
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import app.service.ProcedimentoService;
-
+@SpringBootTest
 public class ProcedimentoControllerTest {
 	@Autowired
-	@InjectMocks
 	ProcedimentoController procedimentoController;
-
+	
 	@MockBean
 	ProcedimentoRepository procedimentoRepository;
 
-	@Mock
-	private ProcedimentoService procedimentoServiceMock;
-
 	@BeforeEach
 	void setup() {
+		List<Procedimento>listaProcedimento = new ArrayList<>();
+		listaProcedimento.add(new Procedimento(1, "Castração", LocalDate.of(2023, 07, 19), null, null, null));
+		listaProcedimento.add(new Procedimento(2, "Vacina", LocalDate.of(2023, 07, 19), null, null, null));
+		listaProcedimento.add(new Procedimento(3, "Raio-x", LocalDate.of(2023, 07, 19), null, null, null));
+		listaProcedimento.add(null);
+		
+		
 		Procedimento procedimento = new Procedimento();
 
 		when(this.procedimentoRepository.save(procedimento)).thenReturn(procedimento);
-		MockitoAnnotations.initMocks(this);
+		when(this.procedimentoRepository.findAll()).thenReturn(listaProcedimento);
+		when(this.procedimentoRepository.findAllById(null)).thenReturn(listaProcedimento);
 	}
 
+	
 	@Test
 	@DisplayName("Teste de integração com o método save retornando sucesso")
 	void testSave() {
@@ -59,8 +57,7 @@ public class ProcedimentoControllerTest {
 		assertTrue(response.getStatusCode() == HttpStatus.CREATED);
 	}
 
-	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTÉRES PARA O NOME DO PROCEDIMENTO
-	// - ANNOTATION @Size(min = 3)
+	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTÉRES PARA O NOME DO PROCEDIMENTO - ANNOTATION @Size(min = 3)
 	@Test
 	@DisplayName("Teste de integração com o método save retornando assertThrows")
 	void testSaveNomeProcedimento() {
@@ -90,8 +87,7 @@ public class ProcedimentoControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
-	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA O DIAGNOSTICO -
-	// ANNOTATION @Size(min = 7)
+	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA O DIAGNOSTICO - ANNOTATION @Size(min = 7)
 	@Test
 	@DisplayName("Teste de integração com o método update retornando assertThrows")
 	void testUpdateDiagnostico() {
@@ -102,78 +98,91 @@ public class ProcedimentoControllerTest {
 			ResponseEntity<String> response = procedimentoController.update(procedimento, id);
 		});
 	}
-
+	
 	@Test
-	public void testFindById_Normal() {
-		// Mock do objeto Procedimento retornado pelo serviço
-		Procedimento mockProcedimento = new Procedimento();
-		mockProcedimento.setId(1L);
-		mockProcedimento.setNomeProcedimento("Consulta");
-
-		// Configura o comportamento do mock do serviço para retornar o mock do
-		// procedimento quando findById é chamado
-		when(procedimentoServiceMock.findById(1L)).thenReturn(mockProcedimento);
-
-		// Chama o método findById do controlador
-		ResponseEntity<Procedimento> response = procedimentoController.findById(1L);
-
-		// Verifica se a resposta HTTP é OK (200)
+	@DisplayName("Teste de integração mocando o repository para o método delete")
+	void testDelete() {
+		long id = 0;
+		ResponseEntity<String>response = procedimentoController.delete(id);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		// Verifica se o resultado retornado é igual ao mock do procedimento
-		assertEquals(mockProcedimento, response.getBody());
 	}
-
+	
 	@Test
-	public void testListAll_Normal() {
-		// Mock da lista de procedimentos retornada pelo serviço
-		List<Procedimento> mockProcedimentos = new ArrayList<>();
-		mockProcedimentos.add(new Procedimento(1L, "Consulta"));
-		mockProcedimentos.add(new Procedimento(2L, "Cirurgia"));
-
-		// Configura o comportamento do mock do serviço para retornar a lista de
-		// procedimentos quando listAll é chamado
-		when(procedimentoServiceMock.listAll()).thenReturn(mockProcedimentos);
-
-		// Chama o método listAll do controlador
-		ResponseEntity<List<Procedimento>> response = procedimentoController.listAll();
-
-		// Verifica se a resposta HTTP é OK (200)
+	@DisplayName("Teste de integração mocando o repository para o método delete com exception")
+	void testDeleteException() {
+		long id = -1;
+		ResponseEntity<String>response = procedimentoController.delete(id);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());	
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findAll")
+	void testFindAll() {
+		ResponseEntity<List<Procedimento>>response = this.procedimentoController.listAll();
+		List<Procedimento>listaProcedimento = response.getBody();
+		
+		assertEquals(4, listaProcedimento.size());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findById com exception")
+	void testFindByIdException() {
+		long id = 0;
+		
+		ResponseEntity<Procedimento>response = procedimentoController.findById(id);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByVeterinarioNome")
+	void testFindByVeterinarioNome() {
+		String nome = "Dona Marocas";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVeterinarioNome(nome);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		// Verifica se o resultado retornado é igual à lista mockada
-		assertEquals(mockProcedimentos, response.getBody());
 	}
-
+	
 	@Test
-	public void testFindById_Exception() {
-		// Configura o comportamento do mock do serviço para lançar uma exceção quando
-		// findById é chamado
-		when(procedimentoServiceMock.findById(1L)).thenThrow(new RuntimeException("Procedimento não encontrado"));
-
-		// Chama o método findById do controlador
-		ResponseEntity<Procedimento> response = procedimentoController.findById(1L);
-
-		// Verifica se a resposta HTTP é BAD REQUEST (400)
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-		// Verifica se o corpo da resposta é nulo
-		assertNull(response.getBody());
+	@DisplayName("Teste de integração mocando o repository para o método findByVeterinarioCrmv")
+	void testFindByVeterinarioCrmv() {
+		String crmv = "8320A";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVetarinarioCrmv(crmv);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
-
+	
 	@Test
-	public void testListAll_Exception() {
-		// Configura o comportamento do mock do serviço para lançar uma exceção quando
-		// listAll é chamado
-		when(procedimentoServiceMock.listAll()).thenThrow(new RuntimeException("Erro ao listar procedimentos"));
-
-		// Chama o método listAll do controlador
-		ResponseEntity<List<Procedimento>> response = procedimentoController.listAll();
-
-		// Verifica se a resposta HTTP é BAD REQUEST (400)
+	@DisplayName("Teste de integração mocando o repository para o método findByNomeProcedimento")
+	void testFindByNomeProcedimento() {
+		String nomeProcedimento = "Castração";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByNomeProcedimento(nomeProcedimento);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByResultado")
+	void testFindByResultado() {
+		String resultado = "Negativo";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByResultado(resultado);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByVeterinario")
+	void testFindByVeterinario() {		
+		Veterinario id = null;
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVeterinario(id);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-		// Verifica se o corpo da resposta é nulo
-		assertNull(response.getBody());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findByDiagnostico")
+	void testFindByDiagnostico() {
+		String diagnostico = "Ansiedade";
+		
+		ResponseEntity<List<Procedimento>> response = procedimentoController.findByDiagnostico(diagnostico);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 }

@@ -15,6 +15,7 @@ public class VeterinarioService {
 	private VeterinarioRepository veterinarioRepository;
 
 	public String save(Veterinario veterinario) {
+		verificarEndereco(veterinario);
 		this.veterinarioRepository.save(veterinario);
 		return "Vetarinário(a) " + veterinario.getNome() + " cadastrado com sucesso!";
 	}
@@ -23,10 +24,9 @@ public class VeterinarioService {
 	// Verificar se o ID existe antes de atualizar
 	public String update(long id, Veterinario veterinario) {
 		// Verifica se o veterinário com o ID fornecido existe
-		if (!veterinarioRepository.existsById(id)) {
-			throw new RuntimeException("ID inválido. O veterinário não existe.");
-		}
 		veterinario.setId(id);
+		verificarEndereco(veterinario);
+		
 		this.veterinarioRepository.save(veterinario);
 		return "Cadastro do veterinário(a) " + veterinario.getNome() + " alterado com sucesso!";
 	}
@@ -43,7 +43,6 @@ public class VeterinarioService {
 	}
 
 	// Método para listar todos os veterinários
-	// ver se tem como fazer uma verificação para dar mensagem de lista nula
 	public List<Veterinario> listAll() {
 		return this.veterinarioRepository.findAll();
 	}
@@ -83,4 +82,13 @@ public class VeterinarioService {
 		}
 		this.veterinarioRepository.updateEnderecoById(id, novoEndereco);
 	}
+	
+	public Veterinario verificarEndereco(Veterinario veterinario) {
+		if (veterinario.getEndereco().contains("Japão")) {
+			throw new IllegalArgumentException("Endereço inválido. O país não pode ser Japão.");
+		}
+		return veterinario;
+	}
+	
+	
 }

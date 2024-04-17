@@ -41,7 +41,7 @@ public class ProcedimentoController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String>update(@Valid @RequestBody Procedimento procedimento, @PathVariable long id){
+	public ResponseEntity<String>update(@Valid @RequestBody Procedimento procedimento, @PathVariable("id") long id){
 		try {
 			String mensagem = this.procedimentoService.update(id, procedimento);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
@@ -51,7 +51,7 @@ public class ProcedimentoController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String>delete(@PathVariable long id){
+	public ResponseEntity<String>delete(@PathVariable("id") long id){
 		try {
 			String mensagem = this.procedimentoService.delete(id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
@@ -71,7 +71,7 @@ public class ProcedimentoController {
 	}
 	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Procedimento>findById(@PathVariable long id){
+	public ResponseEntity<Procedimento>findById(@PathVariable("id") long id){
 		try {
 			Procedimento procedimento = this.procedimentoService.findById(id);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
@@ -79,8 +79,7 @@ public class ProcedimentoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	@GetMapping("/findByData/")
+	@GetMapping("/findByPeriodo/")
 	public ResponseEntity<List<Procedimento>>findAllByDataBetween(@RequestParam String data1, String data2){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findAllByDataBetween(data1, data2);
@@ -90,8 +89,8 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByResultado/")
-	public ResponseEntity<List<Procedimento>>findByResultado(@RequestParam String resultado){
+	@GetMapping("/findByResultado")
+	public ResponseEntity<List<Procedimento>>findByResultado(@RequestParam("resultado") String resultado){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findByResultado(resultado);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
@@ -100,8 +99,8 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByDiagnostico/")
-	public ResponseEntity<List<Procedimento>>findByDiagnostico(@RequestParam  String diagnostico){
+	@GetMapping("/findByDiagnostico")
+	public ResponseEntity<List<Procedimento>>findByDiagnostico(@RequestParam("diagnostico") String diagnostico){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findByDiagnostico(diagnostico);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
@@ -110,8 +109,8 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByVeterinario/")
-	public ResponseEntity<List<Procedimento>>findByVeterinario(@RequestParam  Veterinario veterinario){
+	@GetMapping("/findByVeterinario")
+	public ResponseEntity<List<Procedimento>>findByVeterinario(@RequestParam Veterinario veterinario){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findByVeterinario(veterinario);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
@@ -120,8 +119,8 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByVeterinarioNome/")
-	public ResponseEntity<List<Procedimento>>findByVeterinarioNome(@RequestParam  String nome){
+	@GetMapping("/findByVeterinarioNome")
+	public ResponseEntity<List<Procedimento>>findByVeterinarioNome(@RequestParam("nome")  String nome){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findByVeterinarioNome(nome);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
@@ -130,8 +129,8 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByVeterinarioCrmv/")
-	public ResponseEntity<List<Procedimento>>findByVetarinarioCrmv(@RequestParam String crmv){
+	@GetMapping("/findByVeterinarioCrmv")
+	public ResponseEntity<List<Procedimento>>findByVetarinarioCrmv(@RequestParam("crmv") String crmv){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findByVetarinarioCrmv(crmv);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
@@ -140,8 +139,8 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@GetMapping("/findByNomeProcedimento/")
-	public ResponseEntity<List<Procedimento>>findByNomeProcedimento(@RequestParam String nomeProcedimento){
+	@GetMapping("/findByNomeProcedimento")
+	public ResponseEntity<List<Procedimento>>findByNomeProcedimento(@RequestParam("nomeProcedimento") String nomeProcedimento){
 		try {
 			List<Procedimento> procedimento = this.procedimentoService.findByNomeProcedimento(nomeProcedimento);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);

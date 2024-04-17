@@ -128,5 +128,70 @@ public class ProcedimentoService {
 		String dataSaida = dataFormatada.format(formatadorSaida);
 		return LocalDate.parse(dataSaida, formatadorSaida);
 	}
+	
+	public List<Procedimento> findAllByDataBetween(String data, String data2) throws ParseException {
+		if (data == null) {
+			throw new RuntimeException("inválido");
+		} else {
+			return this.procedimentoRepository.findAllByDataBetween(formatadordeData(data), formatadordeData(data2));
+		}
+	}
+
+	public List<Procedimento> findByResultado(String resultado) {
+		if (resultado == null) {
+			throw new RuntimeException("inválido");
+		} else {
+			return this.procedimentoRepository.findByResultado(resultado);
+		}
+	}
+
+	public List<Procedimento> findByDiagnostico(String diagnostico) {
+		if (diagnostico == null) {
+			throw new RuntimeException("inválido");
+		} else {
+			return this.procedimentoRepository.findByDiagnostico(diagnostico);
+		}
+	}
+
+	public List<Procedimento> findByVeterinario(Veterinario veterinario) {
+		if (veterinario == null) {
+			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
+		} else {
+			return this.procedimentoRepository.findByVeterinario(veterinario);
+		}
+	}
+
+	public List<Procedimento> findByVeterinarioNome(String nome) {
+		if (nome == null) {
+			throw new RuntimeException("Nome inválido. O Nome deve ser valido");
+		} else {
+			return this.procedimentoRepository.findByVeterinarioNome(nome);
+		}
+	}
+
+	public List<Procedimento> findByVetarinarioCrmv(String crmv) {
+		if (crmv == null) {
+			throw new RuntimeException("CRMV inválido. O CRMV deve ser valido");
+		} else {
+			return this.procedimentoRepository.findByVeterinarioNome(crmv);
+		}
+	}
+
+	public List<Procedimento> findByNomeProcedimento(String nomeProcedimento) {
+		if (nomeProcedimento == null) {
+			throw new RuntimeException("Procedimento inválido. O Procedimento deve ser valido");
+		} else {
+			return this.procedimentoRepository.findByVeterinarioNome(nomeProcedimento);
+		}
+	}
+
+	public LocalDate formatadordeData(String data){
+		data = data. replaceAll(" [^0-9/]", "");
+		DateTimeFormatter formatadorEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy") ;
+		DateTimeFormatter formatadorSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dataFormatada = LocalDate.parse(data,formatadorEntrada);
+		String dataSaida = dataFormatada.format(formatadorSaida);
+		return LocalDate.parse(dataSaida, formatadorSaida);
+	}
 
 }

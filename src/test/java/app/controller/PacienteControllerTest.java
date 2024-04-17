@@ -17,39 +17,40 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Paciente;
+import app.entity.Veterinario;
 import app.repository.PacienteRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
-import app.service.PacienteService;
-
 @SpringBootTest
 public class PacienteControllerTest {
 	@Autowired
-	@InjectMocks
 	PacienteController pacienteController;
 
 	@MockBean
 	PacienteRepository pacienteRepository;
 
-	@Mock
-	private PacienteService pacienteServiceMock;
-
 	@BeforeEach
 	void setup() {
+		List<Paciente>listaPaciente = new ArrayList<>();
+		listaPaciente.add(new Paciente(1, "Mingau", "gato", LocalDate.of(2021, 1, 25), "Angorá", null,null));
+		listaPaciente.add(new Paciente(2, "Floquinho", "cachorro", LocalDate.of(2021, 1, 25), "SRD", null,null));
+		listaPaciente.add(new Paciente(3, "Chovinista", "porco", LocalDate.of(2021, 1, 25), "SRD", null,null));
+		listaPaciente.add(null);
+		
 		Paciente paciente = new Paciente();
+		String especie = "Ave";
 
 		when(this.pacienteRepository.save(paciente)).thenReturn(paciente);
+		when(this.pacienteRepository.findAll()).thenReturn(listaPaciente);
+		when(this.pacienteRepository.findByEspecie(especie)).thenThrow(IllegalArgumentException.class);
 	}
 
 	@Test
 	@DisplayName("Teste de integração com o método save retornando sucesso")
 	void testSave() {
-		Paciente paciente = new Paciente(1, "Machu Picchu", "gato", LocalDate.of(2021, 1, 25), "SRD", null, null);
+		Paciente paciente = new Paciente(1, "Machu Picchu", "gato", LocalDate.of(2021, 1, 25), "SRD", null,null);
 
 		ResponseEntity<String> response = pacienteController.save(paciente);
 		assertTrue(response.getStatusCode() == HttpStatus.CREATED);
@@ -59,19 +60,18 @@ public class PacienteControllerTest {
 	@Test
 	@DisplayName("Teste de integração com o método save retornando assertThrows")
 	void testSaveData() {
-		Paciente paciente = new Paciente(1, "Machu Picchu", "gato", LocalDate.of(2025, 1, 25), "SRD", null, null);
+		Paciente paciente = new Paciente(1, "Machu Picchu", "gato", LocalDate.of(2025, 1, 25), "SRD", null,null);
 
 		assertThrows(Exception.class, () -> {
 			ResponseEntity<String> response = pacienteController.save(paciente);
 		});
 	}
 
-	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA A ESPECIE - ANNOTATION
-	// @Size(min = 3)
+	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA A ESPECIE - ANNOTATION @Size(min = 3)
 	@Test
 	@DisplayName("Teste de integração com o método save retornando assertThrows")
 	void testSaveEspecie() {
-		Paciente paciente = new Paciente(1, "Machu Picchu", "ga", LocalDate.of(2021, 1, 25), "SRD", null, null);
+		Paciente paciente = new Paciente(1, "Machu Picchu", "ga", LocalDate.of(2021, 1, 25), "SRD", null,null);
 
 		assertThrows(Exception.class, () -> {
 			ResponseEntity<String> response = pacienteController.save(paciente);
@@ -90,7 +90,7 @@ public class PacienteControllerTest {
 	@Test
 	@DisplayName("Teste de integração com o método update retornando sucesso")
 	void testUpdate() {
-		Paciente paciente = new Paciente(3, "Malu", "gato", LocalDate.of(2014, 12, 29), "SRD", null, null);
+		Paciente paciente = new Paciente(3, "Malu", "gato", LocalDate.of(2014, 12, 29), "SRD", null,null);
 		long id = 0;
 
 		ResponseEntity<String> response = pacienteController.update(paciente, id);
@@ -98,93 +98,64 @@ public class PacienteControllerTest {
 
 	}
 
-	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA A RACA - ANNOTATION
-	// @Size(min = 3)
+	// TESTE PEGANDO A VALIDAÇÃO DE MINIMO DE CARACTERES PARA A RACA - ANNOTATION @Size(min = 3)
 	@Test
 	@DisplayName("Teste de integração com o método update retornando assertThrows")
 	void testUpdateRaca() {
-		Paciente paciente = new Paciente(3, "Malu", "gato", LocalDate.of(2014, 12, 29), "SR", null, null);
+		Paciente paciente = new Paciente(3, "Malu", "gato", LocalDate.of(2014, 12, 29), "SR", null,null);
 		long id = 0;
 
 		assertThrows(Exception.class, () -> {
 			ResponseEntity<String> response = pacienteController.update(paciente, id);
 		});
 	}
-
+	
 	@Test
-	public void testFindById_Normal() {
-		// Mock do objeto Paciente retornado pelo serviço
-		Paciente mockPaciente = new Paciente();
-		mockPaciente.setId(1L);
-		mockPaciente.setNome("Fido");
-		mockPaciente.setEspecie("Cachorro");
-		mockPaciente.setDataNascimento(LocalDate.of(2022, 01, 01));
-		mockPaciente.setRaca("Golden Retriever");
-
-		// Configura o comportamento do mock do serviço para retornar o mock do paciente
-		// quando findById é chamado
-		when(pacienteServiceMock.findById(1L)).thenReturn(mockPaciente);
-
-		// Chama o método findById do controlador
-		ResponseEntity<Paciente> response = pacienteController.findById(1L);
-
-		// Verifica se a resposta HTTP é OK (200)
+	@DisplayName("Teste de integração mocando o repository para o método delete")
+	void testDelete() {
+		long id = 0;
+		ResponseEntity<String>response = pacienteController.delete(id);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		// Verifica se o resultado retornado é igual ao mock do paciente
-		assertEquals(mockPaciente, response.getBody());
 	}
-
+	
 	@Test
-	public void testFindById_Exception() {
-		// Configura o comportamento do mock do serviço para lançar uma exceção quando
-		// findById é chamado
-		when(pacienteServiceMock.findById(1L)).thenThrow(new RuntimeException("Paciente não encontrado"));
-
-		// Chama o método findById do controlador
-		ResponseEntity<Paciente> response = pacienteController.findById(1L);
-
-		// Verifica se a resposta HTTP é BAD REQUEST (400)
+	@DisplayName("Teste de integração mocando o repository para o método delete com exception")
+	void testDeleteException() {
+		long id = -1;
+		ResponseEntity<String>response = pacienteController.delete(id);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());	
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findAll")
+	void testFindAll() {
+		ResponseEntity<List<Paciente>>response = this.pacienteController.listAll();
+		List<Paciente>listaPaciente = response.getBody();
+		
+		assertEquals(4, listaPaciente.size());
+	}
+	
+	@Test
+	@DisplayName("Teste de integração mocando o repository para o método findById com exception")
+	void testFindByIdException() {
+		long id = 0;
+		ResponseEntity<Paciente>response = pacienteController.findById(id);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-		// Verifica se o corpo da resposta é nulo
-		assertEquals(null, response.getBody());
 	}
-
+	
 	@Test
-	public void testListAll_Normal() {
-		// Mock da lista de pacientes retornada pelo serviço
-		List<Paciente> mockPacientes = new ArrayList<>();
-		mockPacientes.add(new Paciente(1L, "Fido", "Cachorro", LocalDate.of(2022, 01, 01), "Golden Retriever"));
-		mockPacientes.add(new Paciente(2L, "Whiskers", "Gato", LocalDate.of(2022, 02, 02), "Siamese"));
-
-		// Configura o comportamento do mock do serviço para retornar a lista de
-		// pacientes quando listAll é chamado
-		when(pacienteServiceMock.listAll()).thenReturn(mockPacientes);
-
-		// Chama o método listAll do controlador
-		ResponseEntity<List<Paciente>> response = pacienteController.listAll();
-
-		// Verifica se a resposta HTTP é OK (200)
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
+	void testFindByEpecie() {
+		String especie = null;
+		ResponseEntity<List<Paciente>> response = pacienteController.findByEspecie(especie);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-
-		// Verifica se o resultado retornado é igual à lista mockada
-		assertEquals(mockPacientes, response.getBody());
 	}
-
+	
 	@Test
-	public void testListAll_Exception() {
-		// Configura o comportamento do mock do serviço para lançar uma exceção quando
-		// listAll é chamado
-		when(pacienteServiceMock.listAll()).thenThrow(new RuntimeException("Erro ao listar pacientes"));
-
-		// Chama o método listAll do controlador
-		ResponseEntity<List<Paciente>> response = pacienteController.listAll();
-
-		// Verifica se a resposta HTTP é BAD REQUEST (400)
+	@DisplayName("Teste de integração mocando o repository para o método findByEndereco com exception")
+	void testFindByEnderecoException() {
+		String especie = "Ave";
+		ResponseEntity<List<Paciente>> response = pacienteController.findByEspecie(especie);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-		// Verifica se o corpo da resposta é nulo
-		assertEquals(null, response.getBody());
 	}
 }
