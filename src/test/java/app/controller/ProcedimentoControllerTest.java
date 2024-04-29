@@ -172,13 +172,15 @@ public class ProcedimentoControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
+	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByVeterinario")
 	void testFindByVeterinario() {		
-		Veterinario id = null;
+		long id = 0;
 		ResponseEntity<List<Procedimento>> response = procedimentoController.findByVeterinario(id);
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
+	
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByDiagnostico")

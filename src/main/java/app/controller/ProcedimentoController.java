@@ -110,9 +110,9 @@ public class ProcedimentoController {
 	}
 	
 	@GetMapping("/findByVeterinario")
-	public ResponseEntity<List<Procedimento>>findByVeterinario(@RequestParam Veterinario veterinario){
+	public ResponseEntity<List<Procedimento>>findByVeterinario(@RequestParam long id){
 		try {
-			List<Procedimento> procedimento = this.procedimentoService.findByVeterinario(veterinario);
+			List<Procedimento> procedimento = this.procedimentoService.findByVeterinario(id);
 			return new ResponseEntity<>(procedimento, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -128,7 +128,7 @@ public class ProcedimentoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+		
 	@GetMapping("/findByVeterinarioCrmv")
 	public ResponseEntity<List<Procedimento>>findByVetarinarioCrmv(@RequestParam("crmv") String crmv){
 		try {

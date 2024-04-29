@@ -80,6 +80,7 @@ public class PacienteController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 
 	@GetMapping("/findByPart")
 	public ResponseEntity<List<Paciente>> findByPart(@RequestParam String nome) {
@@ -87,7 +88,6 @@ public class PacienteController {
 			List<Paciente> lista = this.pacienteService.findByPart(nome);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -121,5 +121,4 @@ public class PacienteController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-
 }

@@ -21,15 +21,15 @@ public class ProcedimentoService {
 	public String save(Procedimento procedimento) {
 		if (procedimento == null)
 			throw new RuntimeException("Procedimento Invalido!");
-		/*if (procedimento.getAgendamento() != null) {
-			Date data = this.formatadordeData(procedimento.getAgendamento().toString());
-			procedimento.setAgendamento(data);
-		}*/
+		/*
+		 * if (procedimento.getAgendamento() != null) { Date data =
+		 * this.formatadordeData(procedimento.getAgendamento().toString());
+		 * procedimento.setAgendamento(data); }
+		 */
 		this.procedimentoRepository.save(procedimento);
 		return "Procedimento " + procedimento.getNomeProcedimento() + " cadastrado com sucesso!";
 	}
 
-	// fazer validaçao se o id existe ou não
 	public String update(long id, Procedimento procedimento) {
 		if (Objects.isNull(id) || id < 0) {
 			throw new RuntimeException("id invalido!");
@@ -40,7 +40,6 @@ public class ProcedimentoService {
 		}
 	}
 
-	// fazer validaçao se o id existe ou não
 	public String delete(long id) {
 		if (Objects.isNull(id) || id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
@@ -50,7 +49,6 @@ public class ProcedimentoService {
 		}
 	}
 
-	// ver se tem como fazer uma verificação para dar mensagem de lista nula
 	public List<Procedimento> listAll() {
 		return this.procedimentoRepository.findAll();
 	}
@@ -88,12 +86,11 @@ public class ProcedimentoService {
 		}
 	}
 
-	public List<Procedimento> findByVeterinario(Veterinario veterinario) {
-		if (veterinario == null) {
-			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
-		} else {
-			return this.procedimentoRepository.findByVeterinario(veterinario);
-		}
+	public List<Procedimento> findByVeterinario(long id) {
+		Veterinario veterinario = new Veterinario();
+		veterinario.setId(id);
+
+		return this.procedimentoRepository.findByVeterinario(veterinario);
 	}
 
 	public List<Procedimento> findByVeterinarioNome(String nome) {
@@ -108,7 +105,7 @@ public class ProcedimentoService {
 		if (crmv == null) {
 			throw new RuntimeException("CRMV inválido. O CRMV deve ser valido");
 		} else {
-			return this.procedimentoRepository.findByVeterinarioNome(crmv);
+			return this.procedimentoRepository.findByVeterinarioCrmv(crmv);
 		}
 	}
 
@@ -116,15 +113,15 @@ public class ProcedimentoService {
 		if (nomeProcedimento == null) {
 			throw new RuntimeException("Procedimento inválido. O Procedimento deve ser valido");
 		} else {
-			return this.procedimentoRepository.findByVeterinarioNome(nomeProcedimento);
+			return this.procedimentoRepository.buscarPorNomeProcedimento(nomeProcedimento);
 		}
 	}
 
-	public LocalDate formatadordeData(String data){
-		data = data. replaceAll(" [^0-9/]", "");
-		DateTimeFormatter formatadorEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy") ;
+	public LocalDate formatadordeData(String data) {
+		data = data.replaceAll(" [^0-9/]", "");
+		DateTimeFormatter formatadorEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		DateTimeFormatter formatadorSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate dataFormatada = LocalDate.parse(data,formatadorEntrada);
+		LocalDate dataFormatada = LocalDate.parse(data, formatadorEntrada);
 		String dataSaida = dataFormatada.format(formatadorSaida);
 		return LocalDate.parse(dataSaida, formatadorSaida);
 	}

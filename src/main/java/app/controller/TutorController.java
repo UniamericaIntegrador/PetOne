@@ -92,7 +92,7 @@ public class TutorController {
 	@GetMapping("/findByCpf")
 	public ResponseEntity<List<Tutor>>findByCpf(@RequestParam("cpf") String cpf){
 		try {
-			List<Tutor> tutor = this.tutorService.findByPacienteNome(cpf);
+			List<Tutor> tutor = this.tutorService.findByCpf(cpf);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -135,10 +135,8 @@ public class TutorController {
 			List<Tutor> tutor = this.tutorService.findByTrechoCpf(cpf);
 			return new ResponseEntity<>(tutor, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
-
 }
