@@ -21,4 +21,8 @@ public class ProcedimentoServiceTest {
 		LocalDate str = procedimentoService.formatadordeData("14/04/2024" );
 	    assertEquals(equals, str);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/UniamericaIntegrador/PetOne.git
 }

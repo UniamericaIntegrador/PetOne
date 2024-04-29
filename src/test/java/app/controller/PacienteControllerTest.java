@@ -3,13 +3,17 @@ package app.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,11 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Paciente;
-import app.entity.Veterinario;
 import app.repository.PacienteRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 public class PacienteControllerTest {
@@ -45,6 +45,7 @@ public class PacienteControllerTest {
 		when(this.pacienteRepository.save(paciente)).thenReturn(paciente);
 		when(this.pacienteRepository.findAll()).thenReturn(listaPaciente);
 		when(this.pacienteRepository.findByEspecie(especie)).thenThrow(IllegalArgumentException.class);
+		doNothing().when(this.pacienteRepository).deleteById(Mockito.anyLong());
 	}
 
 	@Test

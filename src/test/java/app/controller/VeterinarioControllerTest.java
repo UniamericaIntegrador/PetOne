@@ -3,11 +3,13 @@ package app.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -42,6 +44,7 @@ public class VeterinarioControllerTest {
 		when(this.veterinarioRepository.save(veterinario)).thenReturn(veterinario);
 		when(this.veterinarioRepository.findAll()).thenReturn(listaVeterinario);
 		when(this.veterinarioRepository.findByEndereco(endereco)).thenThrow(IllegalArgumentException.class);
+		doNothing().when(this.veterinarioRepository).deleteById(Mockito.anyLong());
 	}
 
 	@Test

@@ -3,6 +3,7 @@ package app.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -45,6 +47,7 @@ public class ProcedimentoControllerTest {
 		when(this.procedimentoRepository.save(procedimento)).thenReturn(procedimento);
 		when(this.procedimentoRepository.findAll()).thenReturn(listaProcedimento);
 		when(this.procedimentoRepository.findAllById(null)).thenReturn(listaProcedimento);
+		doNothing().when(this.procedimentoRepository).deleteById(Mockito.anyLong());
 	}
 
 	
