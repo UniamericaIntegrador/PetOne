@@ -44,8 +44,6 @@ public class Paciente {
 	@PastOrPresent
 	private LocalDate dataNascimento;
 	
-	
-	
 	@Size(min = 3)
 	@NotBlank(message = "A raça do paciente não pode estar vazio")
 	private String raca;
