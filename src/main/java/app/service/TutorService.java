@@ -67,7 +67,7 @@ public class TutorService {
 
 	// CPF QUE CONTENHA
 	public List<Tutor> findByTrechoCpf(String cpf) {
-		return this.tutorRepository.findByTrechoNome(cpf);
+		return this.tutorRepository.findByTrechoCpf(cpf);
 	}
 	//VERIFICAÇÃO DE IDADE DO TUTOR
 	public Tutor verificaIdadeTutor(Tutor tutor) {
