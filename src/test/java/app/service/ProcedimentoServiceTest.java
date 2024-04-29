@@ -21,5 +21,4 @@ public class ProcedimentoServiceTest {
 		LocalDate str = procedimentoService.formatadordeData("14/04/2024" );
 	    assertEquals(equals, str);
 	}
-
 }

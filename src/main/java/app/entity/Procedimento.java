@@ -36,12 +36,12 @@ public class Procedimento {
 	private String nomeProcedimento;
 	
 	@NotNull
+	@Temporal(TemporalType.DATE)
 	private LocalDate data;
 	
 	@Size(min=5)
 	private String resultado;
 	
-	@Size(min=7)
 	private String diagnostico;
 	
 	@ManyToOne(cascade = CascadeType.ALL)

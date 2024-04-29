@@ -32,6 +32,7 @@ public class ProcedimentoController {
 	@PostMapping("/save")
 	public ResponseEntity<String>save(@Valid @RequestBody Procedimento procedimento){
 		try {
+			
 			String mensagem = this.procedimentoService.save(procedimento);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -147,5 +148,4 @@ public class ProcedimentoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-
 }

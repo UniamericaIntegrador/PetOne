@@ -69,7 +69,6 @@ public class TutorService {
 	public List<Tutor> findByTrechoCpf(String cpf) {
 		return this.tutorRepository.findByTrechoNome(cpf);
 	}
-
 	//VERIFICAÇÃO DE IDADE DO TUTOR
 	public Tutor verificaIdadeTutor(Tutor tutor) {
 		if (tutor.getIdade() < 18) {
@@ -77,5 +76,4 @@ public class TutorService {
 		}
 		return tutor;
 	}
-
 }

@@ -55,6 +55,7 @@ public class Tutor {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
+        this.idade = idade;
         this.endereco = endereco;
     }
 }
