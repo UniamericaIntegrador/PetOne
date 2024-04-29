@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import app.entity.Paciente;
 
@@ -15,6 +16,6 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 	@Query("SELECT p FROM Paciente p WHERE YEAR (p.dataNascimento) > :ano")
 	public List<Paciente> findByAcimaAno(int ano);
 
-	@Query("FROM Paciente p WHERE p.nome LIKE '%:part%' ")
-	public List<Paciente> findByPart(String part);
+	@Query("FROM Paciente p WHERE p.nome LIKE %:part% ")
+	public List<Paciente> findByPart( @Param("part") String part);
 }

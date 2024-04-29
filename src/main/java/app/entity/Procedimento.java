@@ -44,12 +44,9 @@ public class Procedimento {
 	@Size(min=7)
 	private String diagnostico;
 	
-	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("procedimentos")
 	private Veterinario veterinario;
-	
-
 
 	public Procedimento(long id, String nomeProcedimento) {
         this.id = id;
