@@ -15,6 +15,7 @@ public class PacienteService {
 
 	public String save(Paciente paciente) {
 		verificarEspecie(paciente);
+	
 		this.pacienteRepository.save(paciente);
 		return "Paciente " + paciente.getNome() + " cadastrado com sucesso!";
 	}

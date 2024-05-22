@@ -44,19 +44,17 @@ public class Paciente {
 	@PastOrPresent
 	private LocalDate dataNascimento;
 	
-	
-	
 	@Size(min = 3)
 	@NotBlank(message = "A raça do paciente não pode estar vazio")
 	private String raca;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonIgnoreProperties("paciente")
 	private Tutor tutor;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "paciente_procedimento")
 	private List<Procedimento> procedimentos;
 
