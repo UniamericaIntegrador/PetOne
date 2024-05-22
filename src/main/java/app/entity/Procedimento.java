@@ -46,7 +46,7 @@ public class Procedimento {
 	private String diagnostico;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonIgnoreProperties("procedimentos")
 	private Veterinario veterinario;
 	
