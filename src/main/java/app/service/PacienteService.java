@@ -68,5 +68,9 @@ public class PacienteService {
 	    }
 		return paciente;
 	}
+	
+	public long count() {
+		return this.pacienteRepository.count();
+	}
 
 }

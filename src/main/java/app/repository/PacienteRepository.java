@@ -18,4 +18,8 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
 	@Query("FROM Paciente p WHERE p.nome LIKE %:part% ")
 	public List<Paciente> findByPart( @Param("part") String part);
+	
+	@Query("SELECT COUNT(p) FROM Paciente p")
+	public long counter();
+
 }

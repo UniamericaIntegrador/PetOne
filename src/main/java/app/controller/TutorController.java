@@ -141,4 +141,14 @@ public class TutorController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/count")
+	public ResponseEntity<Long> count(){
+		try {
+			long counter = this.tutorService.count();
+			return new ResponseEntity<>(counter, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}	
+	}
 }

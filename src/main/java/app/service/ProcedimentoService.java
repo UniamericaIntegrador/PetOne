@@ -126,4 +126,7 @@ public class ProcedimentoService {
 		return LocalDate.parse(dataSaida, formatadorSaida);
 	}
 
+	public long count() {
+		return this.procedimentoRepository.count();
+	}
 }
