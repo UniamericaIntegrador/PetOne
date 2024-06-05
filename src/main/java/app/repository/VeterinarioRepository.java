@@ -32,4 +32,7 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Long>{
     @Modifying
     @Query("UPDATE Veterinario v SET v.endereco = :novoEndereco WHERE v.id = :id")
     void updateEnderecoById(@Param("id") long id, @Param("novoEndereco") String novoEndereco);
+    
+    @Query("SELECT COUNT(p) FROM Veterinario p")
+    public long count();
 }

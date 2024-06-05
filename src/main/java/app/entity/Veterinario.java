@@ -4,11 +4,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -36,17 +39,23 @@ public class Veterinario {
 	@Column(unique = true)
 	private String crmv;
 	
+	/*
 	@NotBlank(message = "O endereço do veterinario não pode estar vazio")
 	private String endereco;
-
-	public Veterinario(long id, String nome, String crmv, String endereco) {
-        this.id = id;
-        this.nome = nome;
-        this.crmv = crmv;
-        this.endereco = endereco;
-    }
+	*/
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "endereco_id")
+    @JsonIgnoreProperties("veterinario")
+    private Endereco endereco;
 	
 	@OneToMany(mappedBy = "veterinario")
 	@JsonIgnoreProperties("veterinario")
 	private List<Procedimento> procedimentos;
+	
+	public Veterinario(long id, String nome, String crmv) {
+        this.id = id;
+        this.nome = nome;
+        this.crmv = crmv;
+    }
 }

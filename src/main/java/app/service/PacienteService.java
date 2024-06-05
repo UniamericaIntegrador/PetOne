@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entity.Especie;
 import app.entity.Paciente;
+import app.entity.Raca;
 import app.repository.PacienteRepository;
 
 @Service
@@ -14,7 +16,7 @@ public class PacienteService {
 	private PacienteRepository pacienteRepository;
 
 	public String save(Paciente paciente) {
-		verificarEspecie(paciente);
+		//verificarEspecie(paciente);
 	
 		this.pacienteRepository.save(paciente);
 		return "Paciente " + paciente.getNome() + " cadastrado com sucesso!";
@@ -22,7 +24,7 @@ public class PacienteService {
 
 	public String update(long id, Paciente paciente) {
 		paciente.setId(id);
-		verificarEspecie(paciente);
+		//verificarEspecie(paciente);
 	
 		this.pacienteRepository.save(paciente);
 		return "Cadastro do paciente " + paciente.getNome() + " alterado com sucesso!";
@@ -50,23 +52,62 @@ public class PacienteService {
 		return this.pacienteRepository.findByPart(nome);
 	}
 
+	/*
 	public List<Paciente> findByRaca(String raca) {
 		return this.pacienteRepository.findByRaca(raca);
 	}
+	*/
+	
 
-	public List<Paciente> findByEspecie(String especie) {
-		return pacienteRepository.findByEspecie(especie);
+	/*
+	public List<Paciente> findByEspecie(String nome) {
+		return pacienteRepository.findByRacaEspecie(nome);
 	}
+	*/
 
 	public List<Paciente> findByAcimaAno(int ano) {
 		return pacienteRepository.findByAcimaAno(ano);
 	}
+	
+	public List<Paciente>findByRaca(long id){
+		Raca raca = new Raca();
+		raca.setId(id);
+		return this.pacienteRepository.findByRaca(raca);
+	}
+	
+	public List<Paciente> findByEspecie(long id){
+		Especie especie = new Especie();
+		especie.setId(id);
+		return this.pacienteRepository.findByEspecie(especie);
+	}
 
+	/*
 	public Paciente verificarEspecie(Paciente paciente) {
 		if ("Ave".equals(paciente.getEspecie())) {
 	        throw new IllegalArgumentException("Espécie inválida: 'Ave'.");
 	    }
 		return paciente;
+	}
+	*/
+	
+	/*
+	public List<Paciente>findByRacaEspecieNome(String nome){
+		return this.pacienteRepository.findByRacaEspecieNome(nome);
+	}
+	*/
+	
+	/*
+	public List<Paciente> findByRacaEspecie(long id) {
+		Raca raca = new Raca();
+		raca.setId(id);
+		return this.pacienteRepository.findByRacaEspecie(raca);
+	}
+	*/
+	
+	
+	
+	public long count() {
+		return this.pacienteRepository.count();
 	}
 
 }

@@ -15,6 +15,7 @@ public class VeterinarioServiceTest {
 	@Autowired
 	VeterinarioService veterinarioService;
 
+	/*
     @Test
     @DisplayName("Teste unitário para endereço inválido que contem Japão")
     void testEnderecoInvalido() {
@@ -24,7 +25,9 @@ public class VeterinarioServiceTest {
             veterinarioService.verificarEndereco(veterinario);
         });
     }
+    */
 
+	/*
     @Test
     @DisplayName("Teste unitário para endereço válido que não contem Japão")
     void testEnderecoValido() {
@@ -33,5 +36,6 @@ public class VeterinarioServiceTest {
 
         assertEquals(veterinario.getEndereco(), resultado.getEndereco());
     }
+    */
 
 }

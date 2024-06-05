@@ -1,8 +1,9 @@
-	package app.entity;
+package app.entity;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -10,13 +11,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,34 +37,33 @@ public class Paciente {
 	@NotBlank(message = "O nome do paciente não pode estar vazio")
 	private String nome;
 	
-	@Size(min = 3)
-	@NotBlank(message = "A especie do paciente não pode estar vazio")
-	private String especie;
-	
 	@NotNull
 	@PastOrPresent
 	private LocalDate dataNascimento;
 	
-	@Size(min = 3)
-	@NotBlank(message = "A raça do paciente não pode estar vazio")
-	private String raca;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "especie_id")
+	//@JsonIgnoreProperties("paciente")
+	@JsonBackReference
+	private Especie especie;
 	
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "raca_id")
+    //@JsonIgnoreProperties("paciente")
+    @JsonBackReference
+    private Raca raca;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonIgnoreProperties("paciente")
 	private Tutor tutor;
 	
-	
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "paciente_procedimento")
 	private List<Procedimento> procedimentos;
 
-	public Paciente(long id, String nome, String especie, LocalDate dataNascimento, String raca) {
+	public Paciente(long id, String nome, LocalDate dataNascimento) {
         this.id = id;
         this.nome = nome;
-        this.especie = especie;
-        this.dataNascimento = dataNascimento;
-        this.raca = raca;
+        this.dataNascimento = dataNascimento;   
     }
-   
 }

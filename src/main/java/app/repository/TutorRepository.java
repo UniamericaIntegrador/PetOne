@@ -26,4 +26,7 @@ public interface TutorRepository extends JpaRepository<Tutor, Long>{
 	
 	@Query("SELECT t FROM Tutor t WHERE t.cpf LIKE CONCAT ('%', :cpf, '%')")
 	public List<Tutor> findByTrechoCpf(@Param("cpf") String cpf);
+	
+	@Query("SELECT COUNT(p) FROM Tutor p")
+	public long count();
 }

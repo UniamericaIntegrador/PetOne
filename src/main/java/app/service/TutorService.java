@@ -76,4 +76,8 @@ public class TutorService {
 		}
 		return tutor;
 	}
+	
+	public long count() {
+		return this.tutorRepository.count();
+	}
 }

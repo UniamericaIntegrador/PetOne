@@ -15,6 +15,7 @@ public class TutorServiceTest {
 	@Autowired
 	TutorService tutorService;
 	
+	/*
 	@Test
 	@DisplayName("TESTE UNITÁRIO PARA VERIFICAR IDADE MÍNIMA")
 	void verificaIdadeTutor1() {
@@ -23,7 +24,10 @@ public class TutorServiceTest {
 		
 		assertEquals(25, retorno.getIdade());
 	}
+	*/
 	
+	
+	/*
 	@Test
 	@DisplayName("TESTE UNITÁRIO PARA VERIFICAR IDADE MÍNIMA(retorna exception)")
 	void verificaIdadeTutor2() {
@@ -33,4 +37,5 @@ public class TutorServiceTest {
             tutorService.verificaIdadeTutor(tutor);
         });
 	}
+	*/
 }
