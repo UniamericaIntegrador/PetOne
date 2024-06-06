@@ -97,8 +97,4 @@ public class VeterinarioService {
 	public long count() {
 		return this.veterinarioRepository.count();
 	}
-	
-	public long count() {
-		return this.veterinarioRepository.count();
-	}
 }
