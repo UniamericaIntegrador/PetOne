@@ -23,7 +23,6 @@ import jakarta.validation.Valid;
 @RestController
 
 @RequestMapping("/api/especie")
-@Validated
 @CrossOrigin("*")
 public class EspecieController {
 	@Autowired

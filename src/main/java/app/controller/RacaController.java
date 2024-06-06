@@ -23,7 +23,6 @@ import jakarta.validation.Valid;
 @RestController
 
 @RequestMapping("/api/raca")
-@Validated
 @CrossOrigin("*")
 public class RacaController {
 	@Autowired
