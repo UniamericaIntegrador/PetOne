@@ -23,14 +23,13 @@ import jakarta.validation.Valid;
 @RestController
 
 @RequestMapping("/api/especie")
-@Validated
 @CrossOrigin("*")
 public class EspecieController {
 	@Autowired
 	private EspecieService especieService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<String>save(@Valid @RequestBody Especie especie){
+	public ResponseEntity<String>save(@RequestBody Especie especie){
 		try {
 			String mensagem = this.especieService.save(especie);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
@@ -42,7 +41,7 @@ public class EspecieController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@Valid @RequestBody Especie especie, @PathVariable("id") long id) {
+	public ResponseEntity<String> update(@RequestBody Especie especie, @PathVariable("id") long id) {
 		try {
 			String mensagem = this.especieService.update(id, especie);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);

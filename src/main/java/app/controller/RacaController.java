@@ -23,14 +23,13 @@ import jakarta.validation.Valid;
 @RestController
 
 @RequestMapping("/api/raca")
-@Validated
 @CrossOrigin("*")
 public class RacaController {
 	@Autowired
 	private RacaService racaService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<String>save(@Valid @RequestBody Raca raca){
+	public ResponseEntity<String>save(@RequestBody Raca raca){
 		try {
 			String mensagem = this.racaService.save(raca);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
@@ -42,7 +41,7 @@ public class RacaController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@Valid @RequestBody Raca raca, @PathVariable("id") long id) {
+	public ResponseEntity<String> update(@RequestBody Raca raca, @PathVariable("id") long id) {
 		try {
 			String mensagem = this.racaService.update(id, raca);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
