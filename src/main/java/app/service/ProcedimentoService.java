@@ -130,4 +130,7 @@ public class ProcedimentoService {
 		return this.procedimentoRepository.count();
 	}
 
+	public long count() {
+		return this.procedimentoRepository.count();
+	}
 }
