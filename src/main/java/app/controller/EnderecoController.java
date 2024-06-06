@@ -47,11 +47,15 @@ public class EnderecoController {
     }
     
     @PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@Valid @RequestBody Endereco endereco, @PathVariable("id") long id) {
+	public ResponseEntity<String> update(@RequestBody Endereco endereco, @PathVariable("id") long id) {
 		try {
+	    	System.out.println("ccc");
+
 			String mensagem = this.enderecoService.update(id, endereco);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro do endereco. Erro: " + e.getMessage(),
 					HttpStatus.BAD_REQUEST);
 		}

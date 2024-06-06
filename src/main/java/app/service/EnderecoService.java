@@ -20,6 +20,13 @@ public class EnderecoService {
         String url = "https://viacep.com.br/ws/" + cep + "/json/";
 
         EnderecoViaCep response = restTemplate.getForObject(url, EnderecoViaCep.class);
+        
+        System.out.println(response.getCep());
+        System.out.println(response.getBairro());
+        System.out.println(response.getLogradouro());
+        System.out.println(response.getLocalidade());
+        System.out.println(response.getUf());
+        
 
         if (response != null && response.getCep() != null) {
             Endereco endereco = new Endereco();
@@ -42,9 +49,11 @@ public class EnderecoService {
     }
     
     public String update(long id, Endereco endereco) {
-    	endereco.setId(id);
-    	
     	Endereco enderecoCompleto = buscarEnderecoPorCep(endereco.getCep());
+    	enderecoCompleto.setId(id);
+        enderecoCompleto.setNumero(endereco.getNumero());
+        enderecoCompleto.setComplemento(endereco.getComplemento());
+
 		this.enderecoRepository.save(enderecoCompleto);
 		return "Endereço alterado com sucesso!";
 	}
