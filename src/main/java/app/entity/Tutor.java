@@ -4,7 +4,11 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,7 +16,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -51,13 +54,17 @@ public class Tutor {
 	private String endereco;
 	*/
 	
+
 	@ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "endereco_id")
-    @JsonIgnoreProperties("tutor")
+    //@JoinColumn(name = "endereco_id")
+    //@JsonIgnoreProperties("tutor")
+	@JsonBackReference(value = "endereco-tutor")
     private Endereco endereco;
+    
 	
 	@OneToMany(mappedBy = "tutor")
 	@JsonIgnoreProperties("tutor")
+	//@JsonManagedReference
 	private List<Paciente> paciente;
 	
     // Construtor correspondente aos parâmetros usados nos testes

@@ -31,11 +31,11 @@ public class Especie {
 	
 	@OneToMany(mappedBy = "especie")
 	//@JsonIgnoreProperties("especie")
-	@JsonManagedReference
+	@JsonManagedReference(value = "especie-raca")
 	private List<Raca>raca;
 	
 	@OneToMany(mappedBy = "especie")
 	//@JsonIgnoreProperties("especie")
-	@JsonManagedReference
+	@JsonManagedReference(value = "especie-paciente")
 	private List<Paciente>paciente;
 }

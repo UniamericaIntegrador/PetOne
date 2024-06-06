@@ -15,7 +15,7 @@ public interface TutorRepository extends JpaRepository<Tutor, Long>{
 	
 	public List<Tutor> findByCpf (String cpf);
 	
-	public List<Tutor> findByEndereco (String endereco);
+	//public List<Tutor> findByEndereco (String endereco);
 	
 	public List<Tutor> findByPacienteNome (String nome);
 	

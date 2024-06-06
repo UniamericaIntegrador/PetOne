@@ -21,7 +21,7 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Long>{
     Veterinario findByCrmv(String crmv);
 
     // Método para encontrar veterinários pelo endereço
-    List<Veterinario> findByEndereco(String endereco);
+    //List<Veterinario> findByEndereco(String endereco);
 
     // JPQL para encontrar veterinários com nome iniciando com uma determinada letra
     @Query("SELECT v FROM Veterinario v WHERE v.nome LIKE CONCAT(:letra, '%')")

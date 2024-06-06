@@ -161,6 +161,7 @@ public class TutorControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
+	/*
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
 	void testFindByEndereco() {
@@ -168,6 +169,7 @@ public class TutorControllerTest {
 		ResponseEntity<List<Tutor>> response = tutorController.findByEndereco(endereco);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
+	*/
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByPacienteNome")

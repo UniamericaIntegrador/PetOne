@@ -43,7 +43,7 @@ public class VeterinarioControllerTest {
 
 		when(this.veterinarioRepository.save(veterinario)).thenReturn(veterinario);
 		when(this.veterinarioRepository.findAll()).thenReturn(listaVeterinario);
-		when(this.veterinarioRepository.findByEndereco(endereco)).thenThrow(IllegalArgumentException.class);
+		//when(this.veterinarioRepository.findByEndereco(endereco)).thenThrow(IllegalArgumentException.class);
 		doNothing().when(this.veterinarioRepository).deleteById(Mockito.anyLong());
 	}
 
@@ -137,6 +137,7 @@ public class VeterinarioControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
+	/*
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
 	void testFindByEndereco() {
@@ -144,7 +145,9 @@ public class VeterinarioControllerTest {
 		ResponseEntity<List<Veterinario>> response = veterinarioController.findByEndereco(endereco);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
+	*/
 	
+	/*
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByEndereco com exception")
 	void testFindByEnderecoException() {
@@ -152,6 +155,7 @@ public class VeterinarioControllerTest {
 		ResponseEntity<List<Veterinario>> response = veterinarioController.findByEndereco(endereco);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
+	*/
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByNome")

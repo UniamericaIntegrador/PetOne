@@ -3,6 +3,7 @@ package app.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -36,12 +37,12 @@ public class Raca {
 	@NotNull(message = "A especie não pode ser nula")
 	@ManyToOne(cascade = CascadeType.MERGE)
 	//@JsonIgnoreProperties("raca")
-	@JsonBackReference
+	@JsonBackReference(value = "especie-raca")
 	private Especie especie;
 	
 	@OneToMany(mappedBy = "raca")
 	//@JsonIgnoreProperties("raca")
-	@JsonManagedReference 
+	@JsonManagedReference(value = "raca-paciente")
 	private List<Paciente>paciente;
 }
 	

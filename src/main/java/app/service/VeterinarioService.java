@@ -64,10 +64,12 @@ public class VeterinarioService {
 		return this.veterinarioRepository.findByCrmv(crmv);
 	}
 
+	/*
 	// Método para encontrar veterinários pelo endereço
 	public List<Veterinario> findByEndereco(String endereco) {
 		return this.veterinarioRepository.findByEndereco(endereco);
 	}
+	*/
 
 	// JPQL para encontrar veterinários com nome iniciando com uma determinada letra
 	public List<Veterinario> findByNomeStartingWith(String letra) {

@@ -1,5 +1,7 @@
 package app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -32,11 +34,38 @@ public class EnderecoService {
         }
     }
 
-    public Endereco salvarEndereco(Endereco endereco) {
+    public Endereco save(Endereco endereco) {
         Endereco enderecoCompleto = buscarEnderecoPorCep(endereco.getCep());
         enderecoCompleto.setNumero(endereco.getNumero());
         enderecoCompleto.setComplemento(endereco.getComplemento());
         return enderecoRepository.save(enderecoCompleto);
     }
+    
+    public String update(long id, Endereco endereco) {
+    	
+    	Endereco enderecoCompleto = buscarEnderecoPorCep(endereco.getCep());
+    	endereco.setId(id);
+		this.enderecoRepository.save(enderecoCompleto);
+		return "Endereço alterado com sucesso!";
+	}
+	
+	public String delete(long id) {
+		if(id < 0) {
+			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
+		}else {
+			this.enderecoRepository.deleteById(id);
+			return "Endereço deletado com sucesso!";
+		}
+	}
+	
+	public List<Endereco>listAll(){
+		return this.enderecoRepository.findAll();
+	}
+	
+	public Endereco findById(long id) {
+		Endereco endereco = this.enderecoRepository.findById(id).get();
+		return endereco;
+	}
+
 
 }

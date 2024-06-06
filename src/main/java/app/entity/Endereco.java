@@ -3,6 +3,7 @@ package app.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,12 +47,18 @@ public class Endereco {
 	@NotBlank
 	private String estado;
 	
-	@OneToMany(mappedBy = "endereco")
-	@JsonIgnoreProperties("endereco")
-	private List<Tutor>tutor;
 	
 	@OneToMany(mappedBy = "endereco")
-	@JsonIgnoreProperties("endereco")
+	//@JsonIgnoreProperties("endereco")
+	@JsonManagedReference(value = "endereco-tutor")
+	private List<Tutor>tutor;
+	
+	
+	
+	@OneToMany(mappedBy = "endereco")
+	//@JsonIgnoreProperties("endereco")
+	@JsonManagedReference(value = "endereco-veterinario")
 	private List<Veterinario>veterinario;
-
+	
+	
 }

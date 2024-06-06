@@ -2,7 +2,11 @@ package app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,7 +14,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -44,13 +47,17 @@ public class Veterinario {
 	private String endereco;
 	*/
 	
+	
 	@ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "endereco_id")
-    @JsonIgnoreProperties("veterinario")
+    //@JoinColumn(name = "endereco_id")
+    //@JsonIgnoreProperties("veterinario")
+	@JsonBackReference(value = "endereco-veterinario")
     private Endereco endereco;
+    
 	
 	@OneToMany(mappedBy = "veterinario")
 	@JsonIgnoreProperties("veterinario")
+	//@JsonManagedReference
 	private List<Procedimento> procedimentos;
 	
 	public Veterinario(long id, String nome, String crmv) {

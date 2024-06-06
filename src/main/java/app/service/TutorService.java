@@ -52,9 +52,11 @@ public class TutorService {
 		return this.tutorRepository.findByCpf(cpf);
 	}
 
+	/*
 	public List<Tutor> findByEndereco(String endereco) {
 		return this.tutorRepository.findByEndereco(endereco);
 	}
+	*/
 
 	public List<Tutor> findByPacienteNome(String nome) {
 		return this.tutorRepository.findByPacienteNome(nome);

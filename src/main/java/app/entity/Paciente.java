@@ -44,17 +44,18 @@ public class Paciente {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "especie_id")
 	//@JsonIgnoreProperties("paciente")
-	@JsonBackReference
+	@JsonBackReference(value = "especie-paciente")
 	private Especie especie;
 	
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "raca_id")
     //@JsonIgnoreProperties("paciente")
-    @JsonBackReference
+    @JsonBackReference(value="raca-paciente")
     private Raca raca;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonIgnoreProperties("paciente")
+	//@JsonBackReference
 	private Tutor tutor;
 	
 	@ManyToMany(cascade = CascadeType.MERGE)
