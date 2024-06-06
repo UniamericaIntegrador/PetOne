@@ -80,31 +80,6 @@ public class PacienteService {
 		especie.setId(id);
 		return this.pacienteRepository.findByEspecie(especie);
 	}
-
-	/*
-	public Paciente verificarEspecie(Paciente paciente) {
-		if ("Ave".equals(paciente.getEspecie())) {
-	        throw new IllegalArgumentException("Espécie inválida: 'Ave'.");
-	    }
-		return paciente;
-	}
-	*/
-	
-	/*
-	public List<Paciente>findByRacaEspecieNome(String nome){
-		return this.pacienteRepository.findByRacaEspecieNome(nome);
-	}
-	*/
-	
-	/*
-	public List<Paciente> findByRacaEspecie(long id) {
-		Raca raca = new Raca();
-		raca.setId(id);
-		return this.pacienteRepository.findByRacaEspecie(raca);
-	}
-	*/
-	
-	
 	
 	public long count() {
 		return this.pacienteRepository.count();
