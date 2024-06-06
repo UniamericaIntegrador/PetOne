@@ -48,12 +48,6 @@ public class Tutor {
 	
 	@NotNull
 	private int idade;
-	
-	/*
-	@NotBlank(message = "O endereço do tutor não pode estar vazio")
-	private String endereco;
-	*/
-	
 
 	@ManyToOne(cascade = CascadeType.MERGE)
     //@JoinColumn(name = "endereco_id")
@@ -61,7 +55,6 @@ public class Tutor {
 	@JsonBackReference(value = "endereco-tutor")
     private Endereco endereco;
     
-	
 	@OneToMany(mappedBy = "tutor")
 	@JsonIgnoreProperties("tutor")
 	//@JsonManagedReference

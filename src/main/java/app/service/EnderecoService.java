@@ -42,9 +42,9 @@ public class EnderecoService {
     }
     
     public String update(long id, Endereco endereco) {
+    	endereco.setId(id);
     	
     	Endereco enderecoCompleto = buscarEnderecoPorCep(endereco.getCep());
-    	endereco.setId(id);
 		this.enderecoRepository.save(enderecoCompleto);
 		return "Endereço alterado com sucesso!";
 	}
