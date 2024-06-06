@@ -122,6 +122,7 @@ public class VeterinarioController {
 		}
 	}
 
+	/*
 	// Método: GET
 	// URL: http://localhost:8080/api/veterinario/findByEndereco/{endereco}
 	// Endpoint para encontrar veterinários pelo endereço (automatico)
@@ -134,6 +135,7 @@ public class VeterinarioController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	*/
 
 	// Método: GET
 	// URL: http://localhost:8080/api/veterinario/findByNomeStartingWith/{letra}

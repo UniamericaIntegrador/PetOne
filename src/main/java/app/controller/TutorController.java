@@ -101,6 +101,7 @@ public class TutorController {
 		}
 	}
 	
+	/*
 	@GetMapping("/findByEndereco")
 	public ResponseEntity<List<Tutor>>findByEndereco(@RequestParam("endereco") String endereco){
 		try {
@@ -110,6 +111,7 @@ public class TutorController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	*/
 	
 	@GetMapping("/findByPacienteNome")
 	public ResponseEntity<List<Tutor>>findByPacienteNome(@RequestParam("nome") String nome){

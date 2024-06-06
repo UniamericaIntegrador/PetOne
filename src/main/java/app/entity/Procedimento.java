@@ -2,6 +2,7 @@ package app.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -47,7 +48,8 @@ public class Procedimento {
 	
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
-	@JsonIgnoreProperties("procedimentos")
+	//@JsonIgnoreProperties("procedimentos")
+	@JsonBackReference
 	private Veterinario veterinario;
 	
 

@@ -94,7 +94,28 @@ public class PacienteController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/findByRaca")
+	public ResponseEntity<List<Paciente>>findByRaca(@RequestParam long id){
+		try {
+			List<Paciente>lista = this.pacienteService.findByRaca(id);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByEspecie")
+	public ResponseEntity<List<Paciente>>findByEspecie(@RequestParam long id){
+		try {
+			List<Paciente>lista = this.pacienteService.findByEspecie(id);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
 
+	/*
 	@GetMapping("/findByRaca")
 	public ResponseEntity<List<Paciente>> findByRaca(@RequestParam("raca") String raca) {
 		try {
@@ -104,16 +125,31 @@ public class PacienteController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	*/
 
+	/*
 	@GetMapping("/findByEspecie")
-	public ResponseEntity<List<Paciente>> findByEspecie(@RequestParam("especie") String especie) {
+	public ResponseEntity<List<Paciente>> findByRacaEspecieNome(@RequestParam("nome") String nome) {
 		try {
-			List<Paciente> lista = this.pacienteService.findByEspecie(especie);
+			List<Paciente> lista = this.pacienteService.findByRacaEspecieNome(nome);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	*/
+	
+	/*
+	@GetMapping("/findByEspecie")
+	public ResponseEntity<List<Paciente>>findByRacaEspecie(@RequestParam long id){
+		try {
+			List<Paciente>lista = this.pacienteService.findByRacaEspecie(id);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	*/
 
 	@GetMapping("/findByAcimaAno")
 	public ResponseEntity<List<Paciente>> findByAcimaAno(@RequestParam int ano) {

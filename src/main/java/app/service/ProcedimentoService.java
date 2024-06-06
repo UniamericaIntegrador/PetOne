@@ -125,6 +125,10 @@ public class ProcedimentoService {
 		String dataSaida = dataFormatada.format(formatadorSaida);
 		return LocalDate.parse(dataSaida, formatadorSaida);
 	}
+	
+	public long count() {
+		return this.procedimentoRepository.count();
+	}
 
 	public long count() {
 		return this.procedimentoRepository.count();

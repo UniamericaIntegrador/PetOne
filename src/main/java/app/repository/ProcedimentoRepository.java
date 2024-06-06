@@ -30,5 +30,4 @@ public interface ProcedimentoRepository extends JpaRepository<Procedimento, Long
 	
 	@Query("SELECT COUNT(p) FROM Procedimento p")
 	public long count();
-
 }

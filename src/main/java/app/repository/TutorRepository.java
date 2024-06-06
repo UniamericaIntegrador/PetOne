@@ -15,12 +15,11 @@ public interface TutorRepository extends JpaRepository<Tutor, Long>{
 	
 	public List<Tutor> findByCpf (String cpf);
 	
-	public List<Tutor> findByEndereco (String endereco);
+	//public List<Tutor> findByEndereco (String endereco);
 	
 	public List<Tutor> findByPacienteNome (String nome);
 	
 	// -----JPQL-----
-	
 	@Query("SELECT t FROM Tutor t WHERE t.nome LIKE CONCAT ('%', :nome, '%')")
 	public List<Tutor> findByTrechoNome(@Param("nome") String nome);
 	
@@ -29,5 +28,4 @@ public interface TutorRepository extends JpaRepository<Tutor, Long>{
 	
 	@Query("SELECT COUNT(p) FROM Tutor p")
 	public long count();
-
 }
