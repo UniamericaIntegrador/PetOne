@@ -2,6 +2,7 @@ package app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -29,21 +30,21 @@ public class Endereco {
 	@NotBlank
 	private String cep;
 	
-	@NotBlank
+	//@NotBlank
 	private String logradouro;
 	
-	@NotBlank
+	//@NotBlank
 	private String numero;
 	
 	private String complemento;
 	
-	@NotBlank
+	//@NotBlank
 	private String bairro;
 	
-	@NotBlank
+	//@NotBlank
 	private String cidade;
 	
-	@NotBlank
+	//@NotBlank
 	private String estado;
 	
 	@OneToMany(mappedBy = "endereco")
@@ -52,7 +53,7 @@ public class Endereco {
 	private List<Tutor>tutor;
 	
 	@OneToMany(mappedBy = "endereco")
-	//@JsonIgnoreProperties("endereco")
-	@JsonManagedReference(value = "endereco-veterinario")
+	@JsonIgnoreProperties("endereco")
+	//@JsonManagedReference(value = "endereco-veterinario")
 	private List<Veterinario>veterinario;
 }
