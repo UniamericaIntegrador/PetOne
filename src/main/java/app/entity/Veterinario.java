@@ -50,8 +50,8 @@ public class Veterinario {
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
     //@JoinColumn(name = "endereco_id")
-    //@JsonIgnoreProperties("veterinario")
-	@JsonBackReference(value = "endereco-veterinario")
+    @JsonIgnoreProperties("veterinario")
+	//@JsonBackReference(value = "endereco-veterinario")
     private Endereco endereco;
     
 	

@@ -51,8 +51,8 @@ public class Tutor {
 
 	@ManyToOne(cascade = CascadeType.MERGE)
     //@JoinColumn(name = "endereco_id")
-    //@JsonIgnoreProperties("tutor")
-	@JsonBackReference(value = "endereco-tutor")
+    @JsonIgnoreProperties("tutor")
+	//@JsonBackReference(value = "endereco-tutor")
     private Endereco endereco;
     
 	@OneToMany(mappedBy = "tutor")
