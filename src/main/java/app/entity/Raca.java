@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -27,23 +28,26 @@ import lombok.Setter;
 
 @Entity
 public class Raca {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@NotBlank(message = "A raça não pode estar vazia")
-	private String nome;
-	
-	@NotNull(message = "A especie não pode ser nula")
-	@ManyToOne(cascade = CascadeType.MERGE)
-	//@JsonIgnoreProperties("raca")
-	@JsonBackReference(value = "especie-raca")
-	private Especie especie;
-	
-	@OneToMany(mappedBy = "raca")
-	//@JsonIgnoreProperties("raca")
-	@JsonManagedReference(value = "raca-paciente")
-	private List<Paciente>paciente;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+  
+  @NotBlank(message = "A raça não pode estar vazia")
+  private String nome;
+  
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  private Especie especie;
+
+  /*
+  @NotNull(message = "A especie não pode ser nula")
+  @ManyToOne(cascade = CascadeType.MERGE)
+  @JsonBackReference(value = "especie-raca")
+  private Especie especie;
+  */
+  @ManyToMany
+  @JsonManagedReference(value = "raca-paciente")
+  private List<Paciente> paciente; // Renamed to plural form
 }
+
 	
 

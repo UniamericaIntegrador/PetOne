@@ -48,8 +48,8 @@ public class Procedimento {
 	
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
-	//@JsonIgnoreProperties("procedimentos")
-	@JsonBackReference
+	@JsonIgnoreProperties("procedimentos")
+	//@JsonBackReference
 	private Veterinario veterinario;
 	
 
