@@ -28,24 +28,24 @@ import lombok.Setter;
 
 @Entity
 public class Procedimento {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Size(min=3)
-	@NotBlank(message = "O nome do procedimento não pode estar vazio")
-	private String nomeProcedimento;
-	
-	@NotNull
-	@Temporal(TemporalType.DATE)
-	private LocalDate data;
-	
-	@Size(min=5)
-	private String resultado;
-	
-	@Size(min = 7)
-	private String diagnostico;
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    
+    @Size(min=3)
+    @NotBlank(message = "O nome do procedimento não pode estar vazio")
+    private String nomeProcedimento;
+    
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private LocalDate data;
+    
+    @Size(min=5)
+    private String resultado;
+    
+    @Size(min = 7)
+    private String diagnostico;
+    
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonIgnoreProperties("procedimentos")

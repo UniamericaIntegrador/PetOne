@@ -17,12 +17,21 @@ public class PacienteService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 
+	/*
 	@Autowired
 	private RacaRepository racaRepository;
 	
 	@Autowired
 	private EspecieRepository especieRepository;
-
+	*/
+	public String save(Paciente paciente) {
+		//verificarEspecie(paciente);
+	
+		this.pacienteRepository.save(paciente);
+		return "Paciente " + paciente.getNome() + " cadastrado com sucesso!";
+	}
+	
+	/*
 	public String save(Paciente paciente) {
 		// verificarEspecie(paciente); // 
 		if (paciente.getRaca().getId() == 0) {
@@ -38,7 +47,7 @@ public class PacienteService {
 		pacienteRepository.save(paciente);
 		return "Paciente " + paciente.getNome() + " cadastrado com sucesso!";
 	}
-
+	*/
 	public String update(long id, Paciente paciente) {
 		paciente.setId(id);
 		// verificarEspecie(paciente);
@@ -98,7 +107,7 @@ public class PacienteService {
 	public long count() {
 		return this.pacienteRepository.count();
 	}
-
+	/*
 	public Paciente racaToEspecie(Paciente paciente) {
 		Raca raca = new Raca();
 		raca = paciente.getRaca();
@@ -106,5 +115,5 @@ public class PacienteService {
 		paciente.setRaca(raca);
 		return paciente;
 	}
-
+	*/
 }
