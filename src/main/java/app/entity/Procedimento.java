@@ -2,7 +2,6 @@ package app.entity;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -11,8 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -32,29 +29,24 @@ public class Procedimento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
-    @Size(min=3)
+    @Size(min = 3)
     @NotBlank(message = "O nome do procedimento não pode estar vazio")
     private String nomeProcedimento;
     
     @NotNull
-    @Temporal(TemporalType.DATE)
     private LocalDate data;
     
-    @Size(min=5)
+    @Size(min = 5)
     private String resultado;
     
     @Size(min = 7)
     private String diagnostico;
     
-	
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JsonIgnoreProperties("procedimentos")
-	//@JsonBackReference
-	private Veterinario veterinario;
-	
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonIgnoreProperties("procedimentos")
+    private Veterinario veterinario;
 
-
-	public Procedimento(long id, String nomeProcedimento) {
+    public Procedimento(long id, String nomeProcedimento) {
         this.id = id;
         this.nomeProcedimento = nomeProcedimento;
     }
