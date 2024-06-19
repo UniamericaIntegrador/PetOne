@@ -37,10 +37,16 @@ public class Paciente {
 	@NotBlank(message = "O nome do paciente não pode estar vazio")
 	private String nome;
 	
+	@NotBlank(message = "O nome do raca não pode estar vazio")
+	private String raca;
+	
+	@NotBlank(message = "O nome da especie não pode estar vazio")
+	private String especie;
+	
 	@NotNull
 	@PastOrPresent
 	private LocalDate dataNascimento;
-	
+	/*
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "especie_id")
 	//@JsonIgnoreProperties("paciente")
@@ -52,7 +58,7 @@ public class Paciente {
     //@JsonIgnoreProperties("paciente")
     @JsonBackReference(value="raca-paciente")
     private Raca raca;
-	
+	*/
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonIgnoreProperties("paciente")
 	//@JsonBackReference

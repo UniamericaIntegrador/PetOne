@@ -1,3 +1,4 @@
+
 package app.entity;
 
 import java.util.List;
@@ -48,8 +49,8 @@ public class Endereco {
 	private String estado;
 	
 	@OneToMany(mappedBy = "endereco")
-	//@JsonIgnoreProperties("endereco")
-	@JsonManagedReference(value = "endereco-tutor")
+	@JsonIgnoreProperties("endereco")
+	//@JsonManagedReference(value = "endereco-tutor")
 	private List<Tutor>tutor;
 	
 	@OneToMany(mappedBy = "endereco")
