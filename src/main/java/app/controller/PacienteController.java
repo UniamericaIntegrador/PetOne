@@ -105,6 +105,8 @@ public class PacienteController {
 		}
 	}
 	
+	
+	/*
 	@GetMapping("/findByEspecie")
 	public ResponseEntity<List<Paciente>>findByEspecie(@RequestParam long id){
 		try {
@@ -114,6 +116,7 @@ public class PacienteController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	*/
 
 	/*
 	@GetMapping("/findByRaca")

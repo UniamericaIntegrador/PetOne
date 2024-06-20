@@ -19,7 +19,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 	
 	public List<Paciente> findByRaca(Raca raca);
 	
-	public List<Paciente>findByEspecie(Especie especie);
+	//public List<Paciente>findByEspecie(Especie especie);
 
 	@Query("SELECT p FROM Paciente p WHERE YEAR (p.dataNascimento) > :ano")
 	public List<Paciente> findByAcimaAno(int ano);

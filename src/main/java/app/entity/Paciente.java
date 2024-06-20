@@ -41,11 +41,13 @@ public class Paciente {
 	@PastOrPresent
 	private LocalDate dataNascimento;
 	
+	/*
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "especie_id")
 	//@JsonIgnoreProperties("paciente")
 	@JsonBackReference(value = "especie-paciente")
 	private Especie especie;
+	*/
 	
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "raca_id")

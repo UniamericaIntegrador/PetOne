@@ -75,11 +75,13 @@ public class PacienteService {
 		return this.pacienteRepository.findByRaca(raca);
 	}
 	
+	/*
 	public List<Paciente> findByEspecie(long id){
 		Especie especie = new Especie();
 		especie.setId(id);
 		return this.pacienteRepository.findByEspecie(especie);
 	}
+	*/
 	
 	public long count() {
 		return this.pacienteRepository.count();
