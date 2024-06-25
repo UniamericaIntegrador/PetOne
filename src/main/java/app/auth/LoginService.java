@@ -31,5 +31,4 @@ public class LoginService {
 		
 		return jwtToken;
 	}
-
 }

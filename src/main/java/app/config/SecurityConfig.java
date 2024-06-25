@@ -40,6 +40,7 @@ public class SecurityConfig  {
 				.requestMatchers("/api/login").permitAll()
 				.requestMatchers("/api/register").permitAll()
 				
+				/*
 				//PERMISSÕES PACIENTE -- ADMIN, USERVET E USERTUTOR
 				.requestMatchers("/api/paciente/listAll").hasAnyRole("ADMIN", "USERVET", "USERTUTOR")
 				.requestMatchers("/api/paciente/save").hasAnyRole("ADMIN", "USERTUTOR")
@@ -60,6 +61,7 @@ public class SecurityConfig  {
 				.requestMatchers("/api/procedimento/count").hasRole("ADMIN")
 				*/
 				
+				/*
 				//PERMISSÕES TUTOR -- ADMIN
 				.requestMatchers("/api/tutor/listAll").hasRole("ADMIN")
 				.requestMatchers("/api/tutor/save").hasRole("ADMIN")
@@ -89,6 +91,7 @@ public class SecurityConfig  {
 				.requestMatchers("/api/endereco/save").hasRole("ADMIN")
 				.requestMatchers("/api/endereco/delete").hasRole("ADMIN")
 				.requestMatchers("/api/endereco/update").hasRole("ADMIN")
+				*/
 				
 				.anyRequest().authenticated())
 		.authenticationProvider(authenticationProvider)

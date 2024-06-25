@@ -2,6 +2,7 @@ package app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -30,8 +31,7 @@ public class Especie {
 	private String nome;
 	
 	@OneToMany(mappedBy = "especie")
-	//@JsonIgnoreProperties("especie")
-	@JsonManagedReference(value = "especie-raca")
+	@JsonIgnoreProperties("especie")
 	private List<Raca>raca;
 	
 	/*

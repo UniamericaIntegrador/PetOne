@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -49,10 +50,9 @@ public class Paciente {
 	private Especie especie;
 	*/
 	
-    @ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "raca_id")
-    //@JsonIgnoreProperties("paciente")
-    @JsonBackReference(value="raca-paciente")
+	@JsonIgnoreProperties("paciente")
     private Raca raca;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)

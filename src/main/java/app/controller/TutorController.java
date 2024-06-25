@@ -3,9 +3,9 @@ package app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +31,7 @@ public class TutorController {
 	@Autowired
 	private TutorService tutorService;
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PostMapping("/save")
 	public ResponseEntity<String>save(@Valid @RequestBody Tutor tutor){
 		try {
@@ -41,6 +42,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String>update(@Valid @RequestBody Tutor tutor, @PathVariable("id") long id){
 		try {
@@ -51,6 +53,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String>delete(@PathVariable("id") long id){
 		try {
@@ -61,6 +64,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Tutor>>listAll(){
 		try {
@@ -71,6 +75,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Tutor>findById(@PathVariable("id") long id){
 		try {
@@ -81,6 +86,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByNome")
 	public ResponseEntity<List<Tutor>>findByNome(@RequestParam("nome") String nome){
 		try {
@@ -91,6 +97,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByCpf")
 	public ResponseEntity<List<Tutor>>findByCpf(@RequestParam("cpf") String cpf){
 		try {
@@ -113,6 +120,7 @@ public class TutorController {
 	}
 	*/
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByPacienteNome")
 	public ResponseEntity<List<Tutor>>findByPacienteNome(@RequestParam("nome") String nome){
 		try {
@@ -123,6 +131,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByTrechoNome")
 	public ResponseEntity<List<Tutor>>findByTrechoNome(@RequestParam("nome") String nome){
 		try {
@@ -133,6 +142,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByTrechoCpf")
 	public ResponseEntity<List<Tutor>>findByTrechoCpf(@RequestParam("cpf") String cpf){
 		try {
@@ -144,6 +154,7 @@ public class TutorController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/count")
 	public ResponseEntity<Long> count(){
 		try {

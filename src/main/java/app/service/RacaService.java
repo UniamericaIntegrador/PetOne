@@ -13,16 +13,16 @@ public class RacaService {
 	@Autowired
 	private RacaRepository racaRepository;
 	
-	public String save(Raca raca) {
-		this.racaRepository.save(raca);
-		return "Raça " + raca.getNome() + " cadastrada com sucesso!";
+	public Raca save(Raca raca) {
+		return this.racaRepository.save(raca);
+		//return "Raça " + raca.getNome() + " cadastrada com sucesso!";
 	}
 	
 	
-	public String update(long id, Raca raca) {
+	public Raca update(long id, Raca raca) {
 		raca.setId(id);
-		this.racaRepository.save(raca);
-		return "Cadastro de raça " + raca.getNome() + " alterado com sucesso!";
+		return this.racaRepository.save(raca);
+		//return "Cadastro de raça " + raca.getNome() + " alterado com sucesso!";
 	}
 	
 	

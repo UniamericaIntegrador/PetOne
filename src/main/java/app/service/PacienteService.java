@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entity.Especie;
 import app.entity.Paciente;
 import app.entity.Raca;
 import app.repository.PacienteRepository;
