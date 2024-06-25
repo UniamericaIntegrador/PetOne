@@ -31,4 +31,19 @@ public class LoginController {
 		}
 	}
 
+	@PostMapping("/cadastro")
+	public ResponseEntity<String> cadastro(@RequestBody Usuario usuario	) {
+		try {
+			return ResponseEntity.ok(loginService.cadastro(usuario));
+		}catch(AuthenticationException ex) {
+			System.out.println(ex.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+
 }
