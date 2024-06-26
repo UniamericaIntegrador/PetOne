@@ -38,7 +38,7 @@ public class SecurityConfig  {
 		.authorizeHttpRequests((requests) -> requests
 				//PERMISSÕES LIVRES
 				.requestMatchers("/api/login").permitAll()
-				.requestMatchers("/api/register").permitAll()
+				.requestMatchers("/api/login/cadastro").permitAll()
 				
 				/*
 				//PERMISSÕES PACIENTE -- ADMIN, USERVET E USERTUTOR
