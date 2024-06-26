@@ -12,6 +12,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -27,6 +28,7 @@ import lombok.Setter;
 
 @Entity
 public class Raca {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -42,6 +44,8 @@ public class Raca {
 	@OneToMany(mappedBy = "raca")
 	@JsonIgnoreProperties("raca")
 	private List<Paciente>paciente;
+
 }
+
 	
 

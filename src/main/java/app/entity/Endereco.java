@@ -1,3 +1,4 @@
+
 package app.entity;
 
 import java.util.List;

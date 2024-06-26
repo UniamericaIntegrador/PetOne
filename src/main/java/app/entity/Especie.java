@@ -27,7 +27,7 @@ public class Especie {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotBlank(message = "A espécie não pode estar vazia")
+	//@NotBlank(message = "A espécie não pode estar vazia")
 	private String nome;
 	
 	@OneToMany(mappedBy = "especie")
