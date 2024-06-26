@@ -44,7 +44,7 @@ public class LoginService {
 		
 		return jwtToken;
 	}
-
+  
 	public String cadastro(Usuario usuario) throws Exception {
 		Optional<Usuario> existingUser = repository.findByEmail(usuario.getEmail());
 		if (existingUser.isPresent()) {

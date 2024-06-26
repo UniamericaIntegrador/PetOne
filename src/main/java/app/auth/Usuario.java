@@ -68,9 +68,6 @@ public class Usuario implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -95,7 +92,4 @@ public class Usuario implements UserDetails{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-
 }

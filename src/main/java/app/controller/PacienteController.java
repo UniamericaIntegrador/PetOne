@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,7 @@ public class PacienteController {
 	@Autowired
 	private PacienteService pacienteService;
 
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Paciente paciente) {
 		try {
@@ -42,6 +44,7 @@ public class PacienteController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@Valid @RequestBody Paciente paciente, @PathVariable("id") long id) {
 		try {
@@ -53,6 +56,7 @@ public class PacienteController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id) {
 		try {
@@ -64,6 +68,7 @@ public class PacienteController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Paciente>> listAll() {
 		try {
@@ -74,6 +79,7 @@ public class PacienteController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Paciente> findById(@PathVariable("id") long id) {
 		try {
@@ -85,6 +91,7 @@ public class PacienteController {
 	}
 	
 
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByPart")
 	public ResponseEntity<List<Paciente>> findByPart(@RequestParam String nome) {
 		try {
@@ -95,6 +102,7 @@ public class PacienteController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByRaca")
 	public ResponseEntity<List<Paciente>>findByRaca(@RequestParam long id){
 		try {
@@ -105,6 +113,8 @@ public class PacienteController {
 		}
 	}
 	
+	
+	/*
 	@GetMapping("/findByEspecie")
 	public ResponseEntity<List<Paciente>>findByEspecie(@RequestParam long id){
 		try {
@@ -114,6 +124,7 @@ public class PacienteController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	*/
 
 	/*
 	@GetMapping("/findByRaca")
@@ -151,6 +162,7 @@ public class PacienteController {
 	}
 	*/
 
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/findByAcimaAno")
 	public ResponseEntity<List<Paciente>> findByAcimaAno(@RequestParam int ano) {
 		try {
@@ -161,6 +173,7 @@ public class PacienteController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@GetMapping("/count")
 	public ResponseEntity<Long> count(){
 		try {

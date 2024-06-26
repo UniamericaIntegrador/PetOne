@@ -13,15 +13,16 @@ public class EspecieService {
 	@Autowired
 	private EspecieRepository especieRepository;
 	
-	public String save(Especie especie) {
-		this.especieRepository.save(especie);
-		return "Espécie " + especie.getNome() + " cadastrada com sucesso!";
+	public Especie save(Especie especie) {
+		return this.especieRepository.save(especie);
+		//return "Espécie " + especie.getNome() + " cadastrada com sucesso!";
 	}
 	
-	public String update(long id, Especie especie) {
+	public Especie update(long id, Especie especie) {
 		especie.setId(id);
-		this.especieRepository.save(especie);
-		return "Cadastro da espécie " + especie.getNome() + " alterado com sucesso!";
+		return this.especieRepository.save(especie);
+		
+		//return "Cadastro da espécie " + especie.getNome() + " alterado com sucesso!";
 	}
 	
 	public String delete(long id) {

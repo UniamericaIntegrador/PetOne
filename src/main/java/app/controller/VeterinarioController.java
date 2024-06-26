@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Paciente;
 import app.entity.Veterinario;
 import app.service.VeterinarioService;
 import jakarta.validation.Valid;
@@ -32,6 +32,7 @@ public class VeterinarioController {
 	// Método: POST
 	// URL: http://localhost:8080/api/veterinario/save
 	// Endpoint para salvar um novo veterinário (CRUD Básico)
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Veterinario veterinario) {
 		try {
