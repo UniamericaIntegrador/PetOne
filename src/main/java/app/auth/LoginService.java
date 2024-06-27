@@ -62,7 +62,7 @@ public class LoginService {
 		// Logar o usuário após cadastro
 		Login login = new Login();
 		login.setEmail(usuario.getEmail());
-		login.setPassword(usuario.getPassword()); // Use a senha original aqui, não codificada
+		login.setPassword(usuario.getPassword()); 
 
 		return logar(login);
 	}

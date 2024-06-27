@@ -32,7 +32,7 @@ public class VeterinarioController {
 	// Método: POST
 	// URL: http://localhost:8080/api/veterinario/save
 	// Endpoint para salvar um novo veterinário (CRUD Básico)
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Veterinario veterinario) {
 		try {
@@ -47,6 +47,7 @@ public class VeterinarioController {
 	// Método: PUT
 	// URL: http://localhost:8080/api/veterinario/update/{id}
 	// Endpoint para atualizar um veterinário existente pelo ID (CRUD Básico)
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String>update(@Valid @RequestBody Veterinario veterinario, @PathVariable("id") long id){
 		try {
@@ -60,6 +61,7 @@ public class VeterinarioController {
 	// Método: DELETE
 	// URL: http://localhost:8080/api/veterinario/delete/{id}
 	// Endpoint para deletar um veterinário pelo ID (CRUD Básico)
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id) {
 		try {

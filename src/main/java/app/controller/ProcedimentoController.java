@@ -31,7 +31,7 @@ public class ProcedimentoController {
 	@Autowired
 	private ProcedimentoService procedimentoService;
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
 	@PostMapping("/save")
 	public ResponseEntity<String>save(@Valid @RequestBody Procedimento procedimento){
 		try {
@@ -43,7 +43,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String>update(@Valid @RequestBody Procedimento procedimento, @PathVariable("id") long id){
 		try {
@@ -54,7 +54,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String>delete(@PathVariable("id") long id){
 		try {
@@ -65,7 +65,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Procedimento>>listAll(){
 		try {
@@ -76,7 +76,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Procedimento>findById(@PathVariable("id") long id){
 		try {
@@ -87,7 +87,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByPeriodo/")
 	public ResponseEntity<List<Procedimento>>findAllByDataBetween(@RequestParam String data1, String data2){
 		try {
@@ -98,7 +98,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByResultado")
 	public ResponseEntity<List<Procedimento>>findByResultado(@RequestParam("resultado") String resultado){
 		try {
@@ -109,7 +109,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByDiagnostico")
 	public ResponseEntity<List<Procedimento>>findByDiagnostico(@RequestParam("diagnostico") String diagnostico){
 		try {
@@ -120,7 +120,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByVeterinario")
 	public ResponseEntity<List<Procedimento>>findByVeterinario(@RequestParam long id){
 		try {
@@ -131,7 +131,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByVeterinarioNome")
 	public ResponseEntity<List<Procedimento>>findByVeterinarioNome(@RequestParam("nome")  String nome){
 		try {
@@ -142,7 +142,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByVeterinarioCrmv")
 	public ResponseEntity<List<Procedimento>>findByVetarinarioCrmv(@RequestParam("crmv") String crmv){
 		try {
@@ -153,7 +153,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByNomeProcedimento")
 	public ResponseEntity<List<Procedimento>>findByNomeProcedimento(@RequestParam("nomeProcedimento") String nomeProcedimento){
 		try {
@@ -164,7 +164,7 @@ public class ProcedimentoController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
 	@GetMapping("/count")
 	public ResponseEntity<Long> count(){
 		try {

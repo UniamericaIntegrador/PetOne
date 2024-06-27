@@ -68,7 +68,7 @@ public class PacienteController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Paciente>> listAll() {
 		try {
@@ -79,7 +79,7 @@ public class PacienteController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Paciente> findById(@PathVariable("id") long id) {
 		try {
@@ -91,7 +91,7 @@ public class PacienteController {
 	}
 	
 
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByPart")
 	public ResponseEntity<List<Paciente>> findByPart(@RequestParam String nome) {
 		try {
@@ -102,7 +102,7 @@ public class PacienteController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findByRaca")
 	public ResponseEntity<List<Paciente>>findByRaca(@RequestParam long id){
 		try {
