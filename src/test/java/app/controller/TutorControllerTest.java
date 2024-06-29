@@ -72,6 +72,7 @@ public class TutorControllerTest {
 	}
 	*/
 	
+	/*
 	@Test
 	@DisplayName("Teste de integração com método save retornando uma exception")
 	void testSaveException() {
@@ -80,6 +81,7 @@ public class TutorControllerTest {
 		ResponseEntity<String> response = tutorController.save(null);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
+	*/
 
 	// ------- POR CAUSA DA VALIDAÇÀO @CPF, O CPF DEVE SER UM DOCUMENTO QUE
 	// REALMENTE EXISTA. NA HORA DE TESTAR, SUBSTITUIR O QUE ESTÁ COM X -------

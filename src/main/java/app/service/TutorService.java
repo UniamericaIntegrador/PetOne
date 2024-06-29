@@ -13,11 +13,14 @@ public class TutorService {
 	@Autowired
 	private TutorRepository tutorRepository;
 
+	/*
 	public String save(Tutor tutor) {
 		this.verificaIdadeTutor(tutor);
 		this.tutorRepository.save(tutor);
 		return "Tutor(a) " + tutor.getNome() + " cadastrado com sucesso!";
 	}
+	*/
+
 
 	public String update(long id, Tutor tutor) {
 		tutor.setId(id);

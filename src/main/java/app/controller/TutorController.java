@@ -31,6 +31,7 @@ public class TutorController {
 	@Autowired
 	private TutorService tutorService;
 	
+	/*
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PostMapping("/save")
 	public ResponseEntity<String>save(@Valid @RequestBody Tutor tutor){
@@ -41,6 +42,7 @@ public class TutorController {
 			return new ResponseEntity<String>("Algo deu errado ao tentar salvar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
+	*/
 	
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PutMapping("/update/{id}")

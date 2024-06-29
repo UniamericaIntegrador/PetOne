@@ -38,7 +38,8 @@ public class SecurityConfig  {
 		.authorizeHttpRequests((requests) -> requests
 				//PERMISSÕES LIVRES
 				.requestMatchers("/api/login").permitAll()
-				.requestMatchers("/api/login/cadastro").permitAll()
+				.requestMatchers("/api/login/cadastroTutor").permitAll()
+				.requestMatchers("/api/endereco/save").permitAll()
 				.anyRequest().authenticated())
 		.authenticationProvider(authenticationProvider)
 		.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
