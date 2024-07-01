@@ -3,7 +3,9 @@ package app.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import app.entity.Tutor;
 import app.repository.TutorRepository;
@@ -21,6 +23,7 @@ public class TutorService {
 	}
 	*/
 
+	
 
 	public String update(long id, Tutor tutor) {
 		tutor.setId(id);
@@ -28,6 +31,8 @@ public class TutorService {
 		this.tutorRepository.save(tutor);
 		return "Cadastro do tutor(a) " + tutor.getNome() + " alterado com sucesso!";
 	}
+	
+	
 
 	public String delete(long id) {
 		if (id < 0) {

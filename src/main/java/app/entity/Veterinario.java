@@ -2,6 +2,8 @@ package app.entity;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -13,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,6 +48,22 @@ public class Veterinario {
     @OneToMany(mappedBy = "veterinario")
     @JsonIgnoreProperties("veterinario")
     private List<Procedimento> procedimentos;
+    
+    @NotBlank(message = "O CPF do tutor não pode estar vazio")
+	@CPF
+	@Column(unique = true)
+	private String cpf;
+    
+    private String username;
+
+	@NotNull
+	private String password;
+
+	@NotNull
+	private String email;
+
+
+	private String role;
 
     public Veterinario(long id, String nome, String crmv) {
         this.id = id;

@@ -32,21 +32,21 @@ public class SecurityConfig  {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http    
-		.csrf(AbstractHttpConfigurer::disable)
-		.cors(AbstractHttpConfigurer::disable)
-		.authorizeHttpRequests((requests) -> requests
-				//PERMISSÕES LIVRES
-				.requestMatchers("/api/login").permitAll()
-				.requestMatchers("/api/login/cadastroTutor").permitAll()
-				.requestMatchers("/api/endereco/save").permitAll()
-				.anyRequest().authenticated())
-		.authenticationProvider(authenticationProvider)
-		.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-		.sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+	    http
+	        .csrf(AbstractHttpConfigurer::disable)
+	        .cors(AbstractHttpConfigurer::disable)
+	        .authorizeHttpRequests((requests) -> requests
+	                .requestMatchers("/api/login").permitAll()
+	                .requestMatchers("/api/login/cadastroTutor").permitAll()
+	                .requestMatchers("/api/endereco/save").permitAll()
+	                .anyRequest().authenticated())
+	        .authenticationProvider(authenticationProvider)
+	        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+	        .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-		return http.build();
+	    return http.build();
 	}
+
 	
 	
 	@Bean

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +43,7 @@ public class TutorController {
 	}
 	*/
 	
+	
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String>update(@Valid @RequestBody Tutor tutor, @PathVariable("id") long id){
@@ -54,6 +54,9 @@ public class TutorController {
 			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
+	 
 	
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@DeleteMapping("/delete/{id}")

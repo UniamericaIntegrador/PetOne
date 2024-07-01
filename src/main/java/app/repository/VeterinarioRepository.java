@@ -1,6 +1,7 @@
 package app.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,23 +16,26 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Long>{
     // Métodos automáticos CRUD
 
     // Método para encontrar veterinários pelo nome
-    List<Veterinario> findByNome(String nome);
+    public List<Veterinario> findByNome(String nome);
 
     // Método para encontrar veterinários pelo CRMV
-    Veterinario findByCrmv(String crmv);
+   public  Veterinario findByCrmv(String crmv);
 
     // Método para encontrar veterinários pelo endereço
     //List<Veterinario> findByEndereco(String endereco);
+    
+	public Optional<Veterinario> findByEmail(String email);
+
 
     // JPQL para encontrar veterinários com nome iniciando com uma determinada letra
     @Query("SELECT v FROM Veterinario v WHERE v.nome LIKE CONCAT(:letra, '%')")
-    List<Veterinario> findByNomeStartingWith(@Param("letra") String letra);
+    public List<Veterinario> findByNomeStartingWith(@Param("letra") String letra);
 
     // JPQL para atualizar o endereço do veterinário pelo ID
     @Transactional
     @Modifying
     @Query("UPDATE Veterinario v SET v.endereco = :novoEndereco WHERE v.id = :id")
-    void updateEnderecoById(@Param("id") long id, @Param("novoEndereco") String novoEndereco);
+    public void updateEnderecoById(@Param("id") long id, @Param("novoEndereco") String novoEndereco);
     
     @Query("SELECT COUNT(p) FROM Veterinario p")
     public long count();

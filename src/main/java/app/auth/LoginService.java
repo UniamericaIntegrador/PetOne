@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import app.config.JwtServiceGenerator;
 import app.entity.Endereco;
 import app.entity.Tutor;
+import app.entity.Veterinario;
+import app.repository.VeterinarioRepository;
 import app.service.EnderecoService;
 
 @Service
@@ -20,14 +22,21 @@ public class LoginService {
 
     @Autowired
     private LoginRepository repository;
+    
     @Autowired
     private JwtServiceGenerator jwtService;
+    
     @Autowired
     private AuthenticationManager authenticationManager;
+    
     @Autowired
     private EnderecoService enderecoService;
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private VeterinarioRepository veterinarioRepository;
 
     @Bean
     public PasswordEncoder encoder() {
@@ -75,6 +84,44 @@ public class LoginService {
 
         return logar(login);
     }
+    
+    
+    public String cadastrarVeterinario(Veterinario veterinario) throws Exception {
+        Optional<Veterinario> existingUser = veterinarioRepository.findByEmail(veterinario.getEmail());
+        if (existingUser.isPresent()) {
+            throw new Exception("Usuário já cadastrado com este email");
+        }
+
+        // Salvando o endereço primeiro
+        Endereco enderecoSalvo = enderecoService.save(veterinario.getEndereco());
+
+        // Associando o endereço salvo ao tutor
+        veterinario.setEndereco(enderecoSalvo);
+
+        // Configurando dados adicionais do tutor
+        veterinario.setUsername(veterinario.getEmail());
+        String rawPassword = veterinario.getPassword(); // Guardar a senha original
+        veterinario.setPassword(passwordEncoder.encode(rawPassword));
+        veterinario.setRole("USERVET");
+
+        // Salvando o tutor no banco de dados
+        veterinarioRepository.save(veterinario);
+
+        // Logando o usuário após cadastro
+        Login login = new Login();
+        login.setEmail(veterinario.getEmail());
+        login.setPassword(rawPassword); // Usar a senha original para o login
+
+        return logar(login);
+    }
+    
+    
+    
+    public Veterinario findByEmailVet(String email) {
+        return veterinarioRepository.findByEmail(email).orElse(null);
+    }
+    
+    
 
     public Tutor findByEmail(String email) {
         return repository.findByEmail(email).orElse(null);

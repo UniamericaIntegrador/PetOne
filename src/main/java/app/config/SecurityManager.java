@@ -46,6 +46,4 @@ public class SecurityManager {
 		return username -> loginRepository.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado") );
 	}
-
-
 }

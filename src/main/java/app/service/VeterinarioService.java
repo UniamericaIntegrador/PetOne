@@ -13,6 +13,10 @@ public class VeterinarioService {
 
 	@Autowired
 	private VeterinarioRepository veterinarioRepository;
+	
+	 public Veterinario findByEmailVet(String email) {
+	        return veterinarioRepository.findByEmail(email).orElse(null);
+	    }
 
 	public String save(Veterinario veterinario) {
 		//verificarEndereco(veterinario);
