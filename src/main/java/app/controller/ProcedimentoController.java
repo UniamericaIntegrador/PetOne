@@ -2,10 +2,15 @@ package app.controller;
 
 import java.util.List;
 
+import app.config.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,9 +33,17 @@ import jakarta.validation.Valid;
 @Validated
 @CrossOrigin("*")
 public class ProcedimentoController {
+
 	@Autowired
 	private ProcedimentoService procedimentoService;
-	
+
+	private final SecurityManager securityManager;
+
+	@Autowired
+	public ProcedimentoController(SecurityManager securityManager) {
+		this.securityManager = securityManager;
+	}
+
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
 	@PostMapping("/save")
 	public ResponseEntity<String>save(@Valid @RequestBody Procedimento procedimento){
@@ -69,6 +82,8 @@ public class ProcedimentoController {
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Procedimento>>listAll(){
 		try {
+			UserDetails userDetails = securityManager.getCurrentUser();
+			System.out.println(userDetails.getUsername());
 			List<Procedimento>lista = this.procedimentoService.listAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
