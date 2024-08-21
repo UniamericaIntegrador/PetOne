@@ -2,10 +2,12 @@ package app.controller;
 
 import java.util.List;
 
+import app.config.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +31,13 @@ import jakarta.validation.Valid;
 public class TutorController {
 	@Autowired
 	private TutorService tutorService;
+
+	private final SecurityManager securityManager;
+
+	@Autowired
+	public TutorController(SecurityManager securityManager) {
+		this.securityManager = securityManager;
+	}
 	
 	/*
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
@@ -48,7 +57,8 @@ public class TutorController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String>update(@Valid @RequestBody Tutor tutor, @PathVariable("id") long id){
 		try {
-			String mensagem = this.tutorService.update(id, tutor);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.tutorService.update(id, tutor, userDetails.getUsername());
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -62,7 +72,8 @@ public class TutorController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String>delete(@PathVariable("id") long id){
 		try {
-			String mensagem = this.tutorService.delete(id);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.tutorService.delete(id, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar deletar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -48,8 +48,8 @@ public class ProcedimentoController {
 	@PostMapping("/save")
 	public ResponseEntity<String>save(@Valid @RequestBody Procedimento procedimento){
 		try {
-			
-			String mensagem = this.procedimentoService.save(procedimento);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.procedimentoService.save(procedimento, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar salvar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -60,7 +60,8 @@ public class ProcedimentoController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String>update(@Valid @RequestBody Procedimento procedimento, @PathVariable("id") long id){
 		try {
-			String mensagem = this.procedimentoService.update(id, procedimento);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.procedimentoService.update(id, procedimento, userDetails.getUsername());
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -71,7 +72,8 @@ public class ProcedimentoController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String>delete(@PathVariable("id") long id){
 		try {
-			String mensagem = this.procedimentoService.delete(id);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.procedimentoService.delete(id, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar deletar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -82,8 +84,6 @@ public class ProcedimentoController {
 	@GetMapping("/listAll")
 	public ResponseEntity<List<Procedimento>>listAll(){
 		try {
-			UserDetails userDetails = securityManager.getCurrentUser();
-			System.out.println(userDetails.getUsername());
 			List<Procedimento>lista = this.procedimentoService.listAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {

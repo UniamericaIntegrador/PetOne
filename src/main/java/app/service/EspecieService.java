@@ -12,6 +12,9 @@ import app.repository.EspecieRepository;
 public class EspecieService {
 	@Autowired
 	private EspecieRepository especieRepository;
+
+	@Autowired
+	private LogsService logsService;
 	
 	public Especie save(Especie especie) {
 		return this.especieRepository.save(especie);

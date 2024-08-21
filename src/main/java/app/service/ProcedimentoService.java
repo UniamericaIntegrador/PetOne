@@ -18,7 +18,10 @@ public class ProcedimentoService {
 	@Autowired
 	private ProcedimentoRepository procedimentoRepository;
 
-	public String save(Procedimento procedimento) {
+	@Autowired
+	private LogsService logsService;
+
+	public String save(Procedimento procedimento, String email) {
 		if (procedimento == null)
 			throw new RuntimeException("Procedimento Invalido!");
 		/*
@@ -27,23 +30,26 @@ public class ProcedimentoService {
 		 * procedimento.setAgendamento(data); }
 		 */
 		this.procedimentoRepository.save(procedimento);
+		this.logsService.Created("procedimento", procedimento.getNomeProcedimento(), email);
 		return "Procedimento " + procedimento.getNomeProcedimento() + " cadastrado com sucesso!";
 	}
 
-	public String update(long id, Procedimento procedimento) {
+	public String update(long id, Procedimento procedimento, String email) {
 		if (Objects.isNull(id) || id < 0) {
 			throw new RuntimeException("id invalido!");
 		} else {
 			procedimento.setId(id);
+			this.logsService.Updated("procedimento", procedimento.getNomeProcedimento(), email);
 			this.procedimentoRepository.save(procedimento);
 			return "Cadastro do procedimento " + procedimento.getNomeProcedimento() + " alterado com sucesso!";
 		}
 	}
 
-	public String delete(long id) {
+	public String delete(long id, String email) {
 		if (Objects.isNull(id) || id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
 		} else {
+			this.logsService.Deleted("veterinario", this.procedimentoRepository.findById(id).get().getNomeProcedimento(), email);
 			this.procedimentoRepository.deleteById(id);
 			return "Cadastro do procedimento deletado com sucesso!";
 		}

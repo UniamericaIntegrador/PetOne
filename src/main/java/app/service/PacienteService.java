@@ -16,6 +16,9 @@ public class PacienteService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 
+	@Autowired
+	private LogsService logsService;
+
 	/*
 	@Autowired
 	private RacaRepository racaRepository;
@@ -23,10 +26,11 @@ public class PacienteService {
 	@Autowired
 	private EspecieRepository especieRepository;
 	*/
-	public String save(Paciente paciente) {
+	public String save(Paciente paciente, String email) {
 		//verificarEspecie(paciente);
 	
 		this.pacienteRepository.save(paciente);
+		this.logsService.Created("paciente", paciente.getNome(), email);
 		return "Paciente " + paciente.getNome() + " cadastrado com sucesso!";
 	}
 	
@@ -47,18 +51,19 @@ public class PacienteService {
 		return "Paciente " + paciente.getNome() + " cadastrado com sucesso!";
 	}
 	*/
-	public String update(long id, Paciente paciente) {
+	public String update(long id, Paciente paciente, String email) {
 		paciente.setId(id);
 		// verificarEspecie(paciente);
-
+		this.logsService.Updated("paciente", paciente.getNome(), email);
 		this.pacienteRepository.save(paciente);
 		return "Cadastro do paciente " + paciente.getNome() + " alterado com sucesso!";
 	}
 
-	public String delete(long id) {
+	public String delete(long id, String email) {
 		if (id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
 		} else {
+			this.logsService.Deleted("veterinario", this.pacienteRepository.findById(id).get().getNome(), email);
 			this.pacienteRepository.deleteById(id);
 			return "Cadastro do paciente deletado com sucesso!";
 		}

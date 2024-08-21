@@ -2,12 +2,14 @@ package app.controller;
 
 import java.util.List;
 
+import app.config.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,11 +36,19 @@ public class PacienteController {
 	@Autowired
 	private PacienteService pacienteService;
 
+	private final SecurityManager securityManager;
+
+	@Autowired
+	public PacienteController(SecurityManager securityManager) {
+		this.securityManager = securityManager;
+	}
+
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Paciente paciente) {
 		try {
-			String mensagem = this.pacienteService.save(paciente);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.pacienteService.save(paciente, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -51,7 +61,8 @@ public class PacienteController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@Valid @RequestBody Paciente paciente, @PathVariable("id") long id) {
 		try {
-			String mensagem = this.pacienteService.update(id, paciente);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.pacienteService.update(id, paciente, userDetails.getUsername());
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: " + e.getMessage(),
@@ -63,7 +74,8 @@ public class PacienteController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id) {
 		try {
-			String mensagem = this.pacienteService.delete(id);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.pacienteService.delete(id, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar deletar o cadastro. Erro: " + e.getMessage(),

@@ -17,8 +17,7 @@ public class LogsController {
     @Autowired
     private LogsService logsService;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/listAll")
+    @GetMapping("/listAll")
     public ResponseEntity<List<Logs>> listAll() {
         try {
             List<Logs> list = logsService.listAll();

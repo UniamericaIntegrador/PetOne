@@ -2,10 +2,12 @@ package app.controller;
 
 import java.util.List;
 
+import app.config.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +31,13 @@ public class VeterinarioController {
 	@Autowired
 	private VeterinarioService veterinarioService;
 
+	private final SecurityManager securityManager;
+
+	@Autowired
+	public VeterinarioController(SecurityManager securityManager) {
+		this.securityManager = securityManager;
+	}
+
 	// Método: POST
 	// URL: http://localhost:8080/api/veterinario/save
 	// Endpoint para salvar um novo veterinário (CRUD Básico)
@@ -36,7 +45,8 @@ public class VeterinarioController {
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@Valid @RequestBody Veterinario veterinario) {
 		try {
-			String mensagem = this.veterinarioService.save(veterinario);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.veterinarioService.save(veterinario, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar salvar o cadastro. Erro: " + e.getMessage(),
@@ -51,7 +61,8 @@ public class VeterinarioController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String>update(@Valid @RequestBody Veterinario veterinario, @PathVariable("id") long id){
 		try {
-			String mensagem = this.veterinarioService.update(id, veterinario);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.veterinarioService.update(id, veterinario, userDetails.getUsername());
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: "+e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -65,7 +76,8 @@ public class VeterinarioController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id) {
 		try {
-			String mensagem = this.veterinarioService.delete(id);
+			UserDetails userDetails = securityManager.getCurrentUser();
+			String mensagem = this.veterinarioService.delete(id, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar deletar o cadastro. Erro: " + e.getMessage(),

@@ -33,7 +33,7 @@ public class Logs {
     private String descricao;
 
     @NotNull
-    private Long usuario;
+    private String usuario;
 
 
 }

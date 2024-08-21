@@ -15,6 +15,9 @@ public class TutorService {
 	@Autowired
 	private TutorRepository tutorRepository;
 
+	@Autowired
+	private LogsService logsService;
+
 	/*
 	public String save(Tutor tutor) {
 		this.verificaIdadeTutor(tutor);
@@ -25,19 +28,21 @@ public class TutorService {
 
 	
 
-	public String update(long id, Tutor tutor) {
+	public String update(long id, Tutor tutor, String email) {
 		tutor.setId(id);
 		this.verificaIdadeTutor(tutor);
 		this.tutorRepository.save(tutor);
+		this.logsService.Updated("tutores", tutor.getNome(), email);
 		return "Cadastro do tutor(a) " + tutor.getNome() + " alterado com sucesso!";
 	}
 	
 	
 
-	public String delete(long id) {
+	public String delete(long id, String email) {
 		if (id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
 		} else {
+			this.logsService.Deleted("tutores", this.tutorRepository.findById(id).get().getNome(), email);
 			this.tutorRepository.deleteById(id);
 			return "Cadastro do tutor(a) deletado com sucesso!";
 		}
