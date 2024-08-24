@@ -2,14 +2,15 @@ package app.service;
 
 import java.util.List;
 
+import app.dto.AgendamentoDTO;
+import app.dto.PacienteDTO;
+import app.entity.Tutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Paciente;
 import app.entity.Raca;
-import app.repository.EspecieRepository;
 import app.repository.PacienteRepository;
-import app.repository.RacaRepository;
 
 @Service
 public class PacienteService {
@@ -17,8 +18,10 @@ public class PacienteService {
 	private PacienteRepository pacienteRepository;
 
 	@Autowired
-	private LogsService logsService;
+	private TutorService tutorService;
 
+	@Autowired
+	private LogsService logsService;
 	/*
 	@Autowired
 	private RacaRepository racaRepository;
@@ -63,7 +66,7 @@ public class PacienteService {
 		if (id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
 		} else {
-			this.logsService.Deleted("veterinario", this.pacienteRepository.findById(id).get().getNome(), email);
+			this.logsService.Deleted("paciente", this.pacienteRepository.findById(id).get().getNome(), email);
 			this.pacienteRepository.deleteById(id);
 			return "Cadastro do paciente deletado com sucesso!";
 		}
@@ -123,4 +126,33 @@ public class PacienteService {
 		return paciente;
 	}
 	*/
+
+
+
+	public List<Paciente> findByTutor(String email){
+		Tutor tutor = this.tutorService.findByEmail(email);
+		if(tutor != null){
+			return this.pacienteRepository.findByTutorId(tutor.getId());
+		}else {
+			return null;
+		}
+	}
+
+	public List<PacienteDTO> listAllDTO() {
+		return this.EntityToDTO(this.pacienteRepository.findAll());
+	}
+
+	private List<PacienteDTO> EntityToDTO(List<Paciente> lista) {
+		PacienteDTO NovoPaciente = new PacienteDTO();
+		List<PacienteDTO> listaFormatada = List.of();
+		for (Paciente paciente : lista) {
+			NovoPaciente.setId(paciente.getId());
+			NovoPaciente.setNome(paciente.getNome());
+			NovoPaciente.setRacaId(paciente.getRaca().getId());
+			NovoPaciente.setTutorId(paciente.getTutor().getId());
+			NovoPaciente.setDataNascimento(paciente.getDataNascimento());
+			listaFormatada.add(NovoPaciente);
+		}
+        return listaFormatada;
+    }
 }

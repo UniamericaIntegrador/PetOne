@@ -3,6 +3,7 @@ package app.controller;
 import java.util.List;
 
 import app.config.SecurityManager;
+import app.dto.PacienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,6 +90,19 @@ public class PacienteController {
 		try {
 			//System.out.println(this.email);
 			List<Paciente> lista = this.pacienteService.listAll();
+			return new ResponseEntity<>(lista, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
+	@GetMapping("/findbyuser")
+	public ResponseEntity<List<Paciente>> findByUser() {
+		try {
+			UserDetails userDetails = securityManager.getCurrentUser();
+			List<Paciente> lista = this.pacienteService.findByTutor(userDetails.getUsername());
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

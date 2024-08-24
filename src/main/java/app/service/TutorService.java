@@ -71,6 +71,10 @@ public class TutorService {
 	}
 	*/
 
+	public Tutor findByEmail(String email) {
+		return this.tutorRepository.findByEmail(email);
+	}
+
 	public List<Tutor> findByPacienteNome(String nome) {
 		return this.tutorRepository.findByPacienteNome(nome);
 	}

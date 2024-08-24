@@ -23,6 +23,9 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 	@Query("SELECT p FROM Paciente p WHERE YEAR (p.dataNascimento) > :ano")
 	public List<Paciente> findByAcimaAno(int ano);
 
+	//Busca pela id do tutor
+	public List<Paciente> findByTutorId(Long id);
+
 	@Query("FROM Paciente p WHERE p.nome LIKE %:part% ")
 	public List<Paciente> findByPart( @Param("part") String part);
 	

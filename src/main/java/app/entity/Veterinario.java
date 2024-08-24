@@ -1,19 +1,7 @@
 package app.entity;
 
-import java.util.List;
-
-import org.hibernate.validator.constraints.br.CPF;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -21,49 +9,50 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
+
+import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Entity
 public class Veterinario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @NotBlank(message = "O nome do veterinario não pode estar vazio")
     @Pattern(regexp = "^(?=.*\\p{L}.*\\s\\p{L})(?=.*\\p{L}).*$", message = "O nome do veterinario deve conter apenas caracteres alfabéticos e pontos, separados por espaços.")
     private String nome;
-    
+
     @NotBlank(message = "O CRMV do veterinario não pode estar vazio")
     @Column(unique = true)
     private String crmv;
-    
+
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("veterinario")
+    @JsonIgnoreProperties("veterinarios") // Ajuste conforme o nome da propriedade em Endereco
     private Endereco endereco;
-    
+
     @OneToMany(mappedBy = "veterinario")
     @JsonIgnoreProperties("veterinario")
-    private List<Procedimento> procedimentos;
-    
+    private List<Agendamento> agendamentos;
+
     @NotBlank(message = "O CPF do tutor não pode estar vazio")
-	@CPF
-	@Column(unique = true)
-	private String cpf;
-    
+    @CPF
+    @Column(unique = true)
+    private String cpf;
+
     private String username;
 
-	@NotNull
-	private String password;
+    @NotNull
+    private String password;
 
-	@NotNull
-	private String email;
+    @NotNull
+    private String email;
 
-
-	private String role;
+    private String role;
 
     public Veterinario(long id, String nome, String crmv) {
         this.id = id;

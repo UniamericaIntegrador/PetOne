@@ -49,7 +49,7 @@ public class ProcedimentoService {
 		if (Objects.isNull(id) || id < 0) {
 			throw new RuntimeException("ID inválido. O ID deve ser maior que 0.");
 		} else {
-			this.logsService.Deleted("veterinario", this.procedimentoRepository.findById(id).get().getNomeProcedimento(), email);
+			this.logsService.Deleted("procedimento", this.procedimentoRepository.findById(id).get().getNomeProcedimento(), email);
 			this.procedimentoRepository.deleteById(id);
 			return "Cadastro do procedimento deletado com sucesso!";
 		}
@@ -65,53 +65,6 @@ public class ProcedimentoService {
 		} else {
 			Procedimento procedimento = this.procedimentoRepository.findById(id).get();
 			return procedimento;
-		}
-	}
-
-	public List<Procedimento> findAllByDataBetween(String data, String data2) throws ParseException {
-		if (data == null) {
-			throw new RuntimeException("inválido");
-		} else {
-			return this.procedimentoRepository.findAllByDataBetween(formatadordeData(data), formatadordeData(data2));
-		}
-	}
-
-	public List<Procedimento> findByResultado(String resultado) {
-		if (resultado == null) {
-			throw new RuntimeException("inválido");
-		} else {
-			return this.procedimentoRepository.findByResultado(resultado);
-		}
-	}
-
-	public List<Procedimento> findByDiagnostico(String diagnostico) {
-		if (diagnostico == null) {
-			throw new RuntimeException("inválido");
-		} else {
-			return this.procedimentoRepository.findByDiagnostico(diagnostico);
-		}
-	}
-
-	public List<Procedimento> findByVeterinario(long id) {
-		Veterinario veterinario = new Veterinario();
-		veterinario.setId(id);
-
-		return this.procedimentoRepository.findByVeterinario(veterinario);
-	}
-
-	public List<Procedimento> findByVeterinarioNome(String nome) {
-		if (nome == null) {
-			throw new RuntimeException("Nome inválido. O Nome deve ser valido");
-		} else {
-			return this.procedimentoRepository.findByVeterinarioNome(nome);
-		}
-	}
-
-	public List<Procedimento> findByVetarinarioCrmv(String crmv) {
-		if (crmv == null) {
-			throw new RuntimeException("CRMV inválido. O CRMV deve ser valido");
-		} else {
-			return this.procedimentoRepository.findByVeterinarioCrmv(crmv);
 		}
 	}
 

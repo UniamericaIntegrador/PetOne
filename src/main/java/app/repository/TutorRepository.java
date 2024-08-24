@@ -18,7 +18,8 @@ public interface TutorRepository extends JpaRepository<Tutor, Long>{
 	
 	public List<Tutor> findByPacienteNome (String nome);
 	
-	
+	public Tutor findByEmail(String email);
+
 	// -----JPQL-----
 	@Query("SELECT t FROM Tutor t WHERE t.nome LIKE CONCAT ('%', :nome, '%')")
 	public List<Tutor> findByTrechoNome(@Param("nome") String nome);
