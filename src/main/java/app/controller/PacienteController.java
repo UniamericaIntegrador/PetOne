@@ -1,31 +1,19 @@
 package app.controller;
 
-import java.util.List;
-
 import app.config.SecurityManager;
-import app.dto.PacienteDTO;
+import app.entity.Paciente;
+import app.service.PacienteService;
+import app.service.RacaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import app.entity.Paciente;
-import app.service.PacienteService;
-import jakarta.validation.Valid;
+import java.util.List;
 
 @RestController
 
@@ -36,6 +24,9 @@ public class PacienteController {
 
 	@Autowired
 	private PacienteService pacienteService;
+
+	@Autowired
+	private RacaService racaService;
 
 	private final SecurityManager securityManager;
 
@@ -49,6 +40,7 @@ public class PacienteController {
 	public ResponseEntity<String> save(@Valid @RequestBody Paciente paciente) {
 		try {
 			UserDetails userDetails = securityManager.getCurrentUser();
+			paciente.setRaca(this.racaService.findByNome(paciente.getRaca().getNome(), paciente.getRaca().getEspecie().getId()));
 			String mensagem = this.pacienteService.save(paciente, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -64,6 +56,7 @@ public class PacienteController {
 		try {
 			UserDetails userDetails = securityManager.getCurrentUser();
 			String mensagem = this.pacienteService.update(id, paciente, userDetails.getUsername());
+			paciente.setRaca(this.racaService.findByNome(paciente.getRaca().getNome(), paciente.getRaca().getEspecie().getId()));
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao tentar alterar o cadastro. Erro: " + e.getMessage(),

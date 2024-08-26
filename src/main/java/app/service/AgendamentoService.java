@@ -1,6 +1,5 @@
 package app.service;
 
-import app.dto.AgendamentoDTO;
 import app.entity.Agendamento;
 import app.entity.Veterinario;
 import app.repository.AgendamentoRepository;
@@ -25,23 +24,26 @@ public class AgendamentoService {
 	private VeterinarioService veterinarioService;
 
 	@Autowired
+	private ProcedimentoService procedimentoService;
+
+	@Autowired
 	private LogsService logsService;
 
-	public String save(AgendamentoDTO Agendamento, String email) {
+	public String save(Agendamento Agendamento, String email) {
 		if (Agendamento == null)
 			throw new RuntimeException("Agendamento Invalido!");
-		this.AgendamentoRepository.save(this.DTOtoEntity(Agendamento, 0));
+		this.AgendamentoRepository.save(Agendamento);
 		this.logsService.Created("Agendamento", Agendamento.getNome(), email);
 		return "Agendamento " + Agendamento.getNome() + " cadastrado com sucesso!";
 	}
 
-	public String update(long id, AgendamentoDTO Agendamento, String email) {
+	public String update(long id, Agendamento Agendamento, String email) {
 		if (Objects.isNull(id) || id < 0) {
 			throw new RuntimeException("id invalido!");
 		} else {
 			Agendamento.setId(id);
 			this.logsService.Updated("Agendamento", Agendamento.getNome(), email);
-			this.AgendamentoRepository.save(this.DTOtoEntity(Agendamento, 1));
+			this.AgendamentoRepository.save(Agendamento);
 			return "Cadastro do Agendamento " + Agendamento.getNome() + " alterado com sucesso!";
 		}
 	}
@@ -56,8 +58,8 @@ public class AgendamentoService {
 		}
 	}
 
-	public List<AgendamentoDTO> listAll() {
-		return this.EntitytoDTO(this.AgendamentoRepository.findAll());
+	public List<Agendamento> listAll() {
+		return this.AgendamentoRepository.findAll();
 	}
 
 	public List<Agendamento>findByPaciente(Long id) {
@@ -142,6 +144,7 @@ public class AgendamentoService {
 		return this.AgendamentoRepository.count();
 	}
 
+	/*
 	private List<AgendamentoDTO> EntitytoDTO(List<Agendamento> lista){
 		List<AgendamentoDTO> listaFormatada = List.of();
 
@@ -182,4 +185,5 @@ public class AgendamentoService {
 			return formatedAgendamento;
 		}
 	}
+	 */
 }

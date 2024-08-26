@@ -1,17 +1,20 @@
 package app.service;
 
-import java.util.List;
-
+import app.entity.Especie;
+import app.entity.Raca;
+import app.repository.RacaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entity.Raca;
-import app.repository.RacaRepository;
+import java.util.List;
 
 @Service
 public class RacaService {
 	@Autowired
 	private RacaRepository racaRepository;
+
+	@Autowired
+	private EspecieService especieService;
 	
 	public Raca save(Raca raca) {
 		return this.racaRepository.save(raca);
@@ -42,6 +45,20 @@ public class RacaService {
 	public Raca findById(long id) {
 		Raca raca = this.racaRepository.findById(id).get();
 		return raca;
+	}
+
+	public Raca findByNome(String nome, Long id) {
+		Especie especie = this.especieService.findById(id);
+		Raca raca = this.racaRepository.findByNome(nome);
+		if (raca != null){
+			return raca;
+		}else {
+			Raca nova = new Raca();
+			nova.setNome(nome);
+			nova.setEspecie(especie);
+			this.racaRepository.save(nova);
+			return nova;
+		}
 	}
 
 }

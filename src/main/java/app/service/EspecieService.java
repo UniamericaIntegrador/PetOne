@@ -1,12 +1,11 @@
 package app.service;
 
-import java.util.List;
-
+import app.entity.Especie;
+import app.repository.EspecieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entity.Especie;
-import app.repository.EspecieRepository;
+import java.util.List;
 
 @Service
 public class EspecieService {
@@ -17,7 +16,15 @@ public class EspecieService {
 	private LogsService logsService;
 	
 	public Especie save(Especie especie) {
-		return this.especieRepository.save(especie);
+		List<Especie> lista = this.especieRepository.findAll();
+		lista.forEach((especie1 -> {
+			if (especie1.getNome() == especie.getNome()){
+				return;
+			}else {
+				this.especieRepository.save(especie);
+			}
+		}));
+		return null;
 		//return "Espécie " + especie.getNome() + " cadastrada com sucesso!";
 	}
 	

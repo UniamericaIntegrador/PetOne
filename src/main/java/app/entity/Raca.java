@@ -2,7 +2,6 @@ package app.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +18,7 @@ public class Raca {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@NotBlank(message = "A raça não pode estar vazia")
+	//@NotBlank(message = "A raça não pode estar vazia")
 	private String nome;
 
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

@@ -1,14 +1,12 @@
 package app.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
+import app.dto.TutorDTO;
 import app.entity.Tutor;
 import app.repository.TutorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TutorService {
@@ -98,5 +96,17 @@ public class TutorService {
 	
 	public long count() {
 		return this.tutorRepository.count();
+	}
+
+	public TutorDTO active(String username) {
+		Tutor tutor = this.tutorRepository.findByEmail(username);
+		TutorDTO tutorformatado = new TutorDTO();
+		tutorformatado.setId(tutor.getId());
+		tutorformatado.setEmail(tutor.getEmail());
+		tutorformatado.setRole(tutor.getRole());
+		tutorformatado.setEndereco(tutor.getEndereco());
+		tutorformatado.setNome(tutor.getNome());
+		System.out.println(tutorformatado);
+		return tutorformatado;
 	}
 }

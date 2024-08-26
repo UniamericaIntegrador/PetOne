@@ -43,9 +43,15 @@ public class Paciente {
 	@ManyToOne
 	@JoinColumn(name = "especie_id")
 	@JsonIgnoreProperties("pacientes")
-	private Especie especie; // Adicionando o relacionamento com Especie
+	private Especie especie;
 
+	/*
 	@OneToMany(mappedBy = "paciente")
 	@JsonManagedReference
+	private List<Agendamento> agendamentos;*/
+
+	@OneToMany(mappedBy = "paciente")
+	@JsonManagedReference // Liga ao @JsonBackReference em Agendamento
 	private List<Agendamento> agendamentos;
+
 }

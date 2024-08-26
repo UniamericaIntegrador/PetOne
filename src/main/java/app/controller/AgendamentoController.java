@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.config.SecurityManager;
-import app.dto.AgendamentoDTO;
 import app.entity.Agendamento;
 import app.service.AgendamentoService;
 import jakarta.validation.Valid;
@@ -32,11 +31,12 @@ public class AgendamentoController {
 		this.securityManager = securityManager;
 	}
 
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@PostMapping("/save")
-	public ResponseEntity<String>save(@Valid @RequestBody AgendamentoDTO agendamento){
+	public ResponseEntity<String>save(@Valid @RequestBody Agendamento agendamento){
 		try {
 			UserDetails userDetails = securityManager.getCurrentUser();
+			agendamento.setId_paciente(agendamento.getPaciente().getId());
 			String mensagem = this.agendamentoService.save(agendamento, userDetails.getUsername());
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -46,9 +46,10 @@ public class AgendamentoController {
 	
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String>update(@Valid @RequestBody AgendamentoDTO agendamento, @PathVariable("id") long id){
+	public ResponseEntity<String>update(@Valid @RequestBody Agendamento agendamento, @PathVariable("id") long id){
 		try {
 			UserDetails userDetails = securityManager.getCurrentUser();
+			agendamento.setId_paciente(agendamento.getPaciente().getId());
 			String mensagem = this.agendamentoService.update(id, agendamento, userDetails.getUsername());
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
@@ -70,9 +71,9 @@ public class AgendamentoController {
 	
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USERVET')")
 	@GetMapping("/findall")
-	public ResponseEntity<List<AgendamentoDTO>>listAll(){
+	public ResponseEntity<List<Agendamento>>listAll(){
 		try {
-			List<AgendamentoDTO>lista = this.agendamentoService.listAll();
+			List<Agendamento>lista = this.agendamentoService.listAll();
 			System.out.println(lista);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
@@ -93,7 +94,7 @@ public class AgendamentoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER') OR hasRole('USERVET')")
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Agendamento>findById(@PathVariable("id") long id){
