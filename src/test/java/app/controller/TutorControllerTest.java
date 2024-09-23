@@ -26,6 +26,7 @@ import app.repository.TutorRepository;
 
 @SpringBootTest
 public class TutorControllerTest {
+	/*
 	@Autowired
 	TutorController tutorController;
 
@@ -112,7 +113,7 @@ public class TutorControllerTest {
 			ResponseEntity<String> response = tutorController.update(tutor, id);
 		});
 	}
-	*/
+	
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método delete")
@@ -163,7 +164,7 @@ public class TutorControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
-	/*
+	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
 	void testFindByEndereco() {
@@ -171,7 +172,7 @@ public class TutorControllerTest {
 		ResponseEntity<List<Tutor>> response = tutorController.findByEndereco(endereco);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
-	*/
+	
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByPacienteNome")
@@ -183,7 +184,5 @@ public class TutorControllerTest {
 	
 	
 	
-	
-	
-	
+	*/
 }

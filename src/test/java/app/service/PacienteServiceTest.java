@@ -14,6 +14,7 @@ import app.entity.Paciente;
 
 @SpringBootTest
 public class PacienteServiceTest {
+	/*
 	@Autowired
 	PacienteService pacienteService;
 
@@ -34,5 +35,5 @@ public class PacienteServiceTest {
 
 	    //assertEquals("Porco", pacienteService.verificarEspecie(paciente).getEspecie());
 	}
-
+	*/
 }

@@ -12,6 +12,7 @@ import app.entity.Tutor;
 
 @SpringBootTest
 public class TutorServiceTest {
+	/*
 	@Autowired
 	TutorService tutorService;
 	

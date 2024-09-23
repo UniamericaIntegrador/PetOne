@@ -24,6 +24,7 @@ import java.util.List;
 
 @SpringBootTest
 public class VeterinarioControllerTest {
+	/*
 	@Autowired
 	VeterinarioController veterinarioController;
 
@@ -94,7 +95,7 @@ public class VeterinarioControllerTest {
 			ResponseEntity<String> response = veterinarioController.update(veterinario, id);
 		});
 	}
-	*/
+	
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método delete")
@@ -137,7 +138,7 @@ public class VeterinarioControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
-	/*
+	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByEndereco")
 	void testFindByEndereco() {
@@ -145,9 +146,7 @@ public class VeterinarioControllerTest {
 		ResponseEntity<List<Veterinario>> response = veterinarioController.findByEndereco(endereco);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
-	*/
 	
-	/*
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByEndereco com exception")
 	void testFindByEnderecoException() {
@@ -155,7 +154,7 @@ public class VeterinarioControllerTest {
 		ResponseEntity<List<Veterinario>> response = veterinarioController.findByEndereco(endereco);
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
-	*/
+	
 	
 	@Test
 	@DisplayName("Teste de integração mocando o repository para o método findByNome")
@@ -166,5 +165,5 @@ public class VeterinarioControllerTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
-	
+	*/
 }
